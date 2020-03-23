@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>DSWD XII IMT v0.1! | </title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -112,7 +112,7 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> DSWDI IMT v0.1!</h1>
+                  <h1><img src="./images/pantawid.svg" style="width: 40px;fill:#ffffff;"> DSWD XII IMT v0.1!</h1>
                   <p>DSWD XII © 2020 All Rights Reserved.</p>
                 </div>
                               <div id=rmessagebox></div>
