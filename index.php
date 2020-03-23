@@ -11,7 +11,7 @@
 <head>
 
 <script type="text/javascript">
-    window.location = "pages/login.php";
+    window.location = "production/login.php";
 
 </script>
 
