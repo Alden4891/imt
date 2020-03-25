@@ -1,10 +1,4 @@
 <?php
-$html = "<b>sample interv</b><div><ul><li>the quick brow fox jumps over the lazy dog near the riover bank!</li><li>john smith is a gay</li><li>who is john gult</li><li>therer is no spoon</li><li><strike>greed is good</strike></li><li>have some foccee</li></ul></div>";
-
-$data = htmlToText($html);
-echo "$data<hr>";
-
-//html to string
 function htmlToText($htm){
 
     $htm =  str_replace("<br>", "", $htm);
@@ -28,5 +22,28 @@ function htmlToText($htm){
     $data = str_replace("<br>", "\n", $data); 
 
     return $data;
+}
+
+function encode_arr($data) {
+    return base64_encode(serialize($data));
+}
+
+function decode_arr($data) {
+    return unserialize(base64_decode($data));
+}
+
+function array2csv(array &$array)
+{
+   if (count($array) == 0) {
+     return null;
+   }
+   ob_start();
+   $df = fopen("php://output", 'w');
+   fputcsv($df, array_keys(reset($array)));
+   foreach ($array as $row) {
+      fputcsv($df, $row);
+   }
+   fclose($df);
+   return ob_get_clean();
 }
 ?>

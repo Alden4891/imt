@@ -124,22 +124,26 @@
             var numYDS = $('#numYDS').val();
             var dtDateConducted = $('#dtDateConducted').val();
             var txtTitle = $('#txtTitle').val();
-            var txtIntervDescription = $('#txtIntervDescription').val();
+            //var txtIntervDescription = $('#txtIntervDescription').val();
+            var txtIntervDescription = $('#editor-one').html();
 
             var has_error = false;
             if (cmbProgram < 0) {
-                $('#cmbProgram').closest('div').addClass('has-error');
-                $('#cmbClassification').closest('div').addClass('has-error');
-                $('#cmbComponents').closest('div').addClass('has-error');
+                notification_show('The following fields are required! <br> <ul><li>Compoents</li><li>Classification</li><li>Program/Service</li></ul>');
+                // $('#cmbProgram').closest('div').addClass('has-error');
+                // $('#cmbClassification').closest('div').addClass('has-error');
+                // $('#cmbComponents').closest('div').addClass('has-error');
                 has_error = true;
             } else if (numYDS <= 0) {
-                $('#numYDS').closest('div').addClass('has-error');
+                notification_show('YDS field is required!');
                 has_error = true;
             } else if (txtTitle == "") {
+                notification_show('Title field is required!');
                 $('#txtTitle').closest('div').addClass('has-error');
                 has_error = true;
             } else if (txtIntervDescription == "" > 0) {
-                $('#txtIntervDescription').closest('div').addClass('has-error');
+                notification_show('Intervention field is required!');
+                //$('#txtIntervDescription').closest('div').addClass('has-error');
                 has_error = true;
             } else {
                 //save data
@@ -157,6 +161,7 @@
                         user_id: "<?=$user_id?>"
                     },
                     success: function(response) {
+                        //console.log(response);
                         $('#intev_tablebody_container').html(response);
                         $('#interv_list_editor_modal').modal('hide');
 
@@ -260,6 +265,11 @@
         }
     });
 
+    function  notification_show(msg){
+        $('#editors-notification').removeAttr('hidden');
+        $('#editors-notification-container').html(msg);
+    }
+
     //open intervention editor
     $(document).on('click', "#btn_interv_list_editor_open", function(e) {
         e.preventDefault();
@@ -347,9 +357,11 @@
                     $('#numYDS').val(arr[3]);
                     $('#dtDateConducted').val(arr[2]);
                     $('#txtTitle').val(arr[0]);
-                    $('#txtIntervDescription').val(arr[1]);
                     $('#hidden_interv_id').val(inv_id);
                     $('#hidden_hhid').val(arr[5]);
+
+                    //$('#txtIntervDescription').val(arr[1]);
+                    $('#editor-one').html(arr[1]);
 
                 }
             });
@@ -382,7 +394,8 @@
                     $('#cmbClassification').html('<option value="-1">Select</option>;');
                     $('#cmbProgram').html('<option value="-1">Select</option>;');
                     $('#txtTitle').val('');
-                    $('#txtIntervDescription').val('');
+                    // $('#txtIntervDescription').val('');
+                    $('#editor-one').html('');
                     $('#dtDateConducted').val(getCurrentDate());
                     $('#numYDS').val(0);
                     $('#hidden_interv_id').val(0);
@@ -574,6 +587,14 @@
                 </div>
 
                 <div class="modal-body">
+                    <div class="alert alert-warning alert-dismissible fade show " role="alert" id="editors-notification" hidden>
+                      <font color="black">
+                        <strong>Notice!</strong> <span id="editors-notification-container"></span>
+                      </font>
+                      <!--button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button-->
+                    </div>
                     <form>
                         <div class="form-group">
                             <input type="hidden" name="hidden_interv_id" id="hidden_interv_id" value="0">
@@ -624,11 +645,97 @@
                                 <input id="txtTitle" name="txtTitle" type="text" class="form-control" required="required">
                             </div>
                         </div>
+<!--                         
                         <div class="form-group">
                             <label for="txtIntervDescription" class="control-label">Intervention Details</label>
                             <textarea id="txtIntervDescription" name="txtIntervDescription" cols="40" rows="5" class="form-control" aria-describedby="txtIntervDescriptionHelpBlock" required="required"></textarea>
                             <span id="txtIntervDescriptionHelpBlock" class="help-block">State the comprehensive intervention</span>
                         </div>
+ -->
+                        <div class="form-group">
+                            <label for="txtIntervDescription" class="control-label">Intervention Details</label>
+
+                            <!-- editor-one wrapper -->
+                            <div class="x_content">
+                              <div id="alerts"></div>
+                              <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
+                                <div class="btn-group">
+                                  <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
+                                  <ul class="dropdown-menu">
+                                  </ul>
+                                </div>
+
+                                <div class="btn-group">
+                                  <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                                  <ul class="dropdown-menu">
+                                    <li>
+                                      <a data-edit="fontSize 5">
+                                        <p style="font-size:17px">Huge</p>
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a data-edit="fontSize 3">
+                                        <p style="font-size:14px">Normal</p>
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a data-edit="fontSize 1">
+                                        <p style="font-size:11px">Small</p>
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+
+                                <div class="btn-group">
+                                  <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+                                  <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+                                  <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+                                  <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+                                </div>
+
+                                <div class="btn-group">
+                                  <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
+                                  <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
+                                  <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
+                                  <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
+                                </div>
+
+                                <div class="btn-group">
+                                  <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+                                  <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+                                  <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
+                                  <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+                                </div>
+
+                                <div class="btn-group">
+                                  <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
+                                  <div class="dropdown-menu input-append">
+                                    <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
+                                    <button class="btn" type="button">Add</button>
+                                  </div>
+                                  <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
+                                </div>
+
+                                <div class="btn-group">
+                                  <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
+                                  <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+                                </div>
+
+                                <div class="btn-group">
+                                  <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
+                                  <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
+                                </div>
+                              </div>
+                              <div id="editor-one" class="editor-wrapper"></div>
+                              <textarea name="descr" id="descr" style="display:none;"></textarea>
+                              <br />
+                              <div class="ln_solid"></div>
+                            </div>
+                         <!-- /editor-one wrapper -->
+
+
+                        </div>
+
                         <div class="form-group">
                             <button name="submit" type="submit" class="btn btn-primary" id=btnSubmitIntv name=btnSubmitIntv>Save</button>
                         </div>
