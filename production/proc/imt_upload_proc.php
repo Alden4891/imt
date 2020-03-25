@@ -1,4 +1,5 @@
 <?php
+require_once('../udf/udf.php');
 include '../dbconnect.php';
 
 $countfiles = count($_FILES['files']['name']);
@@ -75,7 +76,5 @@ include '../dbclose.php';
    // print_r($files);
 //echo json_encode($files_arr);
 //die;
-function decode_arr($data) {
-    return unserialize(base64_decode($data));
-}
+
 ?>
