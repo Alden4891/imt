@@ -17,6 +17,14 @@
             </ul>
             <div class="clearfix"></div>
         </div>
+
+        <div class="x_title">
+            <h2>Filter <small>...</small></h2>
+            
+            <div class="clearfix"></div>
+        </div>
+
+
         <div class="x_content">
             <p class="text-muted font-13 m-b-30">
                 Below are the list of Pantawid Pamilyang Pilipino Program beneficiaire with 2019 SWDI Scores and level of Well Being (LOWB).
@@ -38,7 +46,7 @@
                 </thead>
 
                 <tbody id=clientlist>
-                    <?php 
+                    <?php
                             $cnt=0;
                             $res_intvlist = mysqli_query($con, "
 
@@ -48,10 +56,10 @@
                                 , r.SEX
                                 , r.PROVINCE
                                 , r.MUNICIPALITY
-                                , r.BARANGAY    
+                                , r.BARANGAY
                                 , s.SWDI_SCORE
                                 , s.LOWB
-                                , COUNT(i.interv_id) AS INTERV_COUNT    
+                                , COUNT(i.interv_id) AS INTERV_COUNT
                                 FROM
                                 `db_imt`.`grantees` g
                                 INNER JOIN `db_imt`.`roster` r
@@ -62,7 +70,7 @@
                                     ON (i.HOUSEHOLD_ID = g.HOUSEHOLD_ID)
                                 GROUP BY s.HOUSEHOLD_ID
                                 ORDER BY 2
-                                LIMIT 0, 50    
+                                LIMIT 0, 50
                                 ;
 
                             ") or die(mysqli_error());
@@ -70,13 +78,13 @@
 
                                 $cnt++;
                                 $HOUSEHOLD_ID = $r['HOUSEHOLD_ID'];
-                                $FULLNAME = strtoupper($r['Fullname']); 
-                                $SEX = $r['SEX']; 
-                                $PROVINCE = $r['PROVINCE']; 
-                                $MUNICIPALITY = $r['MUNICIPALITY']; 
-                                $BARANGAY = $r['BARANGAY']; 
-                                $SWDI_SCORE = $r['SWDI_SCORE']; 
-                                $LOWB = $r['LOWB']; 
+                                $FULLNAME = strtoupper($r['Fullname']);
+                                $SEX = $r['SEX'];
+                                $PROVINCE = $r['PROVINCE'];
+                                $MUNICIPALITY = $r['MUNICIPALITY'];
+                                $BARANGAY = $r['BARANGAY'];
+                                $SWDI_SCORE = $r['SWDI_SCORE'];
+                                $LOWB = $r['LOWB'];
                                 $INTERV_COUNT =  $r['INTERV_COUNT'];
 
                                 $btn_detail_class = "";
@@ -191,7 +199,7 @@
                 hhid: hhid
             },
             success: function(response) {
-
+              //console.log(response)
                 var r = response.split('|');
                 /*
                 r[0]=household_id
@@ -220,6 +228,47 @@
                 $('#ih_ipaffil').html(r[10]);
                 $('#ih_setgroup').html(r[11]);
 
+                //economic Sufficiency
+                $('#swdi_ES1').html(r[12]);
+                $('#swdi_ES2').html(r[13]);
+                $('#swdi_ES3').html(r[14]);
+                $('#swdi_ES4').html(r[15]);
+
+                //health
+                $('#swdi_HCS1').html(r[16]);
+                $('#swdi_HCS2').html(r[17]);
+                $('#swdi_NC1').html(r[18]);
+                $('#swdi_NC2').html(r[19]);
+                $('#swdi_WSC1').html(r[20]);
+                $('#swdi_WSC2').html(r[21]);
+                $('#swdi_WSC3').html(r[22]);
+
+                //housing
+                $('#swdi_HC1').html(r[23]);
+                $('#swdi_HC2').html(r[24]);
+                $('#swdi_HC3').html(r[25]);
+                $('#swdi_HC4').html(r[26]);
+
+                //EDUC
+                $('#swdi_EC1').html(r[27]);
+                $('#swdi_EC2').html(r[28]);
+
+                //ROLE
+                $('#swdi_RP1').html(r[29]);
+                $('#swdi_RP2').html(r[30]);
+                $('#swdi_RP3').html(r[31]);
+
+                //FAM AWARENESS
+                $('#swdi_FA1').html(r[32]);
+                $('#swdi_FA2').html(r[33]);
+                $('#swdi_FA3').html(r[34]);
+
+                //SWDI RESULTS
+                $('#swdi_SocAdeq').html(r[35]);
+                $('#swdi_EconSuff').html(r[36]);
+                $('#swdi_SWDI_SCORE').html(r[37]);
+                $('#swdi_LOWB').html(r[38]);
+                $('#swdi_LOWB_DESC').html(r[39]);
             }
 
         });
@@ -367,7 +416,7 @@
             });
 
             //$("#dtDateConducted").val(date_conducted);
-            //get title 
+            //get title
             //get intervention details
 
         } else {
@@ -492,15 +541,15 @@
                                                           <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span> New Intervention
                                                         </button>
                                                     </div>
-                                                 </div>                                
+                                                 </div>
                                               </h2>
                                         </div>
                                         <!-- /.col -->
                                     <!--/div-->
                                     <!-- info row -->
                                     <div class="row invoice-info">
-                                        <div class="col-sm-4 invoice-col">
-                                            Household Info
+                                        <div class="col-sm-3 invoice-col">
+                                            HOUSEHOLD INFORMATION
                                             <hr>
                                             <address>
                                                   <strong>Grantee: </strong> <span id="ih_grantee"></span>
@@ -510,19 +559,19 @@
                                             </address>
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-4 invoice-col">
+                                        <div class="col-sm-3 invoice-col">
                                             <br>
                                             <hr>
                                             <address>
                                                   <strong>Address</strong>
-                                                  <br><span id="ih_barangay"></span>, 
+                                                  <br><span id="ih_barangay"></span>,
                                                   <br><span id="ih_municipality"></span>
                                                   <br><span id="ih_province"></span>
 
                                               </address>
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-4 invoice-col">
+                                        <div class="col-sm-3 invoice-col">
                                             <br>
                                             <hr>
                                             <b>Household Status:</b> <span id="ih_hhstatus"></span>
@@ -530,8 +579,94 @@
                                             <br><b>Set-Group:</b> <span id="ih_setgroup"></span>
                                         </div>
                                         <!-- /.col -->
+                                        <div class="col-sm-3 invoice-col">
+                                            <br>
+                                            <hr>
+                                            <b>Level of Well-being:</b>
+                                            <br>Economic Sufficiency: <span id="swdi_EconSuff"></span>
+                                            <br>Social Adequacy: <span id="swdi_SocAdeq"></span>
+                                            <br>Total Score: <span id="swdi_SWDI_SCORE"></span>
+                                            <br>LOWB: <span id="swdi_LOWB"></span>
+                                            <br>Description: <span id="swdi_LOWB_DESC"></span>
+
+                                        </div>
+                                        <!-- /.col -->
+
                                     </div>
                                     <!-- /.row -->
+                                    <!-- ========================================================================= -->
+                                    <!-- info row -->
+
+                                    <div class="row invoice-info">
+                                        <div class="col-sm-3 invoice-col">
+                                            SWDI SCORE DETAILS
+                                            <hr>
+                                            <address>
+                                                  <strong>Economic Sufficiency (ES) </strong>
+                                                  <br>Employable Skills (ES1): <span id="swdi_ES1"></span>
+                                                  <br>Employment (ES2): <span id="swdi_ES2"></span>
+                                                  <br>Income (ES3): <span id="swdi_ES3"></span>
+                                                  <br>Social Security (ES4): <span id="swdi_ES4"></span>
+
+                                            </address>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-3 invoice-col">
+                                            <br>
+                                            <hr>
+                                            <address>
+                                              <strong>HEALTH (SA1):</strong>
+                                              <br>Health Services (HCS1): <span id="swdi_HCS1"></span>
+                                              <br>Health Condition (HCS2): <span id="swdi_HCS2"></span>
+                                              <br>Meals (NC1): <span id="swdi_NC1"></span>
+                                              <br>Nutritional Status (NC2): <span id="swdi_NC2"></span>
+                                              <br>Drinking Water (WS1): <span id="swdi_WSC1"></span>
+                                              <br>Toilet (WS2): <span id="swdi_WSC2"></span>
+                                              <br>Garbage (WS3): <span id="swdi_WSC3"></span>
+                                              </address>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-3 invoice-col">
+                                          <br>
+                                          <hr>
+                                          <address>
+                                            <strong>HOUSING (SA2):</strong>
+                                            <br>Roof (HC1):<span id="swdi_HC1"></span>
+                                            <br>Outer Walls (HC2):<span id="swdi_HC2"></span>
+                                            <br>Tenure Status (HC3):<span id="swdi_HC3"></span>
+                                            <br>Lightning (HC4):<span id="swdi_HC4"></span>
+                                            <br><br>
+                                            <strong>EDUCATION (SA3):</strong>
+                                            <br>Literacy (EC1):<span id="swdi_EC1"></span>
+                                            <br>Enrolment (EC2):<span id="swdi_EC2"></span>
+                                            </address>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-3 invoice-col">
+                                          <br>
+                                          <hr>
+                                          <address>
+                                            <strong>ROLE PERFORMANCE (SA4):</strong>
+                                            <br>Family Activities (RP1) :<span id="swdi_RP1"></span>
+                                            <br>Problems (RP2):<span id="swdi_RP2"></span>
+                                            <br>Organizations (RP3):<span id="swdi_RP3"></span>
+
+                                            <br><br>
+
+                                            <strong>FAMILY AWARENESS (SA5)</strong>
+                                            <br>Children (FA1):<span id="swdi_FA1"></span>
+                                            <br>Gender (FA2):<span id="swdi_FA2"></span>
+                                            <br>Disaster (FA3):<span id="swdi_FA3"></span>
+
+                                          </address>
+                                        </div>
+                                        <!-- /.col -->
+
+
+                                    </div>
+                                    <!-- /.row -->
+                                    <!-- ======================================================================== -->
+
 
                                     <!-- Table row -->
                                     <div class="row">
@@ -645,7 +780,7 @@
                                 <input id="txtTitle" name="txtTitle" type="text" class="form-control" required="required">
                             </div>
                         </div>
-<!--                         
+<!--
                         <div class="form-group">
                             <label for="txtIntervDescription" class="control-label">Intervention Details</label>
                             <textarea id="txtIntervDescription" name="txtIntervDescription" cols="40" rows="5" class="form-control" aria-describedby="txtIntervDescriptionHelpBlock" required="required"></textarea>
@@ -749,4 +884,3 @@
     </div>
 </div>
 <!-- /INTERVENTION EDITOR Modal  -->
-
