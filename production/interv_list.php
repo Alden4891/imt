@@ -1,3 +1,40 @@
+<?php
+
+    $list_filter = " and 1=2 ";  //prevent roster from loading automatically
+    $search_province = "";
+    $search_municipality  = "";
+    $search_barangay  = "";
+    $search_lowb  = "";
+    $filter_municipality = "";
+    $filter_province  = "";
+    $filter_barangay  = "";
+    $filter_lowb  = "";
+    $search_lowb  = "";
+    $search_keyword  = "";
+    $search_criteria  = "";
+
+
+    if (isset($_REQUEST['apply_filter'])){
+      $search_province = isset($_REQUEST['filter_province'])? $_REQUEST["filter_province"] :'';
+      $search_municipality =  isset($_REQUEST['filter_municipality'])? $_REQUEST["filter_municipality"] :'';
+      $search_barangay =  isset($_REQUEST['filter_barangay'])? $_REQUEST["filter_barangay"] :'';
+      $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
+
+      $filter_province = $search_province == ''?'':" AND r.province = '$search_province'";
+      $filter_municipality = $search_municipality == ''?'':" AND r.municipality = '$search_municipality'";
+      $filter_barangay = $search_barangay == ''?'':" AND r.barangay = '$search_barangay'";
+      $filter_lowb = $search_lowb == ''?'':" AND s.lowb = '$search_lowb'";
+
+      $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
+      $search_keyword = isset($_REQUEST['filter_criteria'])? $_REQUEST["filter_criteria"] :'';
+
+      //AND (TRIM(UPPER(CONCAT(r.FIRST_NAME,' ', r.MID_NAME, ' ', r.LAST_NAME, ' ', r.EXT_NAME))) LIKE '%ba%' OR r.HOUSEHOLD_ID = 'ba')
+      $search_criteria =  isset($_REQUEST['filter_criteria'])? " AND (TRIM(UPPER(CONCAT(r.FIRST_NAME,' ', r.MID_NAME, ' ', r.LAST_NAME, ' ', r.EXT_NAME))) LIKE '%".$_REQUEST['filter_criteria']."%' OR r.HOUSEHOLD_ID = '".$_REQUEST['filter_criteria']."') " :'';
+      $list_filter = "$filter_province $filter_municipality $filter_barangay $filter_lowb $search_criteria";
+  }
+
+?>
+
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
@@ -19,8 +56,73 @@
         </div>
 
         <div class="x_title">
-            <h2>Filter <small>...</small></h2>
-            
+            <form class="" action="" method="post" novalidate="" id="filter_form">
+                  <span class="section">Filter</span>
+                  <div class="field item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3  label-align">Region</label>
+                      <div class="col-md-6 col-sm-6">
+                        <select class="form-control" name=filter_region id=filter_region>
+                          <option value="" selected>SELECT</option>
+                          <option value="XII">Region XII</option>
+
+                        </select>
+                      </div>
+                  </div>
+                  <div class="field item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3  label-align">Province</label>
+                      <div class="col-md-6 col-sm-6">
+                        <select class="form-control" id="filter_province" name="filter_province">
+
+                            <?php
+                                // if ($search_province == "COTABATO (NORTH COTABATO)") echo "<option value=\"COTABATO (NORTH COTABATO)\" selected>COTABATO (NORTH COTABATO)</option>"; else echo "<option value=\"COTABATO (NORTH COTABATO)\">COTABATO (NORTH COTABATO)</option>";
+                                // if ($search_province == "COTABATO CITY") echo "<option value=\"COTABATO CITY\" selected>COTABATO CITY</option>"; else echo "<option value=\"COTABATO CITY\">COTABATO CITY</option>";
+                                // if ($search_province == "SARANGANI") echo "<option value=\"SARANGANI\" selected>SARANGANI</option>"; else echo "<option value=\"SARANGANI\">SARANGANI</option>";
+                                // if ($search_province == "SOUTH COTABATO") echo "<option value=\"SOUTH COTABATO\" selected>SOUTH COTABATO</option>"; else echo "<option value=\"SOUTH COTABATO\">SOUTH COTABATO</option>";
+                                // if ($search_province == "SULTAN KUDARAT") echo "<option value=\"SULTAN KUDARAT\" selected>SULTAN KUDARAT</option>"; else echo "<option value=\"SULTAN KUDARAT\">SULTAN KUDARAT</option>";
+                             ?>
+
+                        </select></div>
+                  </div>
+                  <div class="field item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3  label-align">Municipality</label>
+                      <div class="col-md-6 col-sm-6">
+                        <select class="form-control" id="filter_municipality" name="filter_municipality" required>
+
+                        </select></div>
+                  </div>
+                  <div class="field item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3  label-align">Barangay</label>
+                      <div class="col-md-6 col-sm-6">
+                        <select class="form-control" id="filter_barangay" name="filter_barangay">
+
+                        </select></div>
+                  </div>
+                  <div class="field item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3  label-align">LOWB</label>
+                      <div class="col-md-6 col-sm-6">
+                        <select class="form-control" id="filter_lowb" name="filter_lowb">
+                          <option value="" selected>All</option>
+                          <option value="1" >Survival (Level 1)</option>
+                          <option value="2" >Subsistence (Level 2)</option>
+                          <option value="3" >Self-Sufficient (Level 3)</option>
+
+                        </select></div>
+                  </div>
+
+                  <div class="field item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3  label-align">SEARCH CRITERIA</label>
+                      <div class="col-md-6 col-sm-6">
+                        <input type="text" id="filter_criteria" name="filter_criteria" class="form-control ">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-md-6 offset-md-3">
+                          <button type="submit" class="btn btn-primary" name=apply_filter value="1">Apply Fitler</button>
+                          <button type="button" class="btn btn-success" id="reset_filter">Reset</button>
+                      </div>
+                  </div>
+
+              </form>
             <div class="clearfix"></div>
         </div>
 
@@ -68,9 +170,11 @@
                                     ON (s.`HOUSEHOLD_ID` = g.`HOUSEHOLD_ID`)
                                 LEFT JOIN `db_imt`.intervensions i
                                     ON (i.HOUSEHOLD_ID = g.HOUSEHOLD_ID)
+                                WHERE 1 = 1
+                                    $list_filter
                                 GROUP BY s.HOUSEHOLD_ID
                                 ORDER BY 2
-                                LIMIT 0, 50
+                                LIMIT 0, 1000
                                 ;
 
                             ") or die(mysqli_error());
@@ -501,6 +605,7 @@
                 valueMember: "program_id",
                 displayMember: "program",
                 condition: "subcomp_id = " + value,
+                defaultValue: '',
             },
             success: function(response) {
 
@@ -508,6 +613,163 @@
             }
         });
     });
+
+
+
+
+$( document ).ready(function() {
+    //ON LOAD FILTERS
+    $('#filter_lowb option[value="<?=$search_lowb?>"]').prop('selected', true);
+    $('#filter_criteria').val("<?=$search_keyword ?>");
+    $('#filter_region option[value="XII"]').prop('selected', true);
+
+    $.ajax({
+        type: 'GET',
+        url: './proc/getComboData.php',
+        data: {
+            tableName: "lib_address",
+            valueMember: "DISTINCT PROVINCE",
+            displayMember: "PROVINCE",
+            condition: "REGION = 'XII'",
+            defaultValue: '',
+            selected: "<?=$search_province?>"
+        },
+        success: function(response) {
+
+            $('#filter_province').html(response);
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: './proc/getComboData.php',
+        data: {
+            tableName: "lib_address",
+            valueMember: "DISTINCT MUNICIPALITY",
+            displayMember: "MUNICIPALITY",
+            condition: "PROVINCE = '<?=$search_province?>'",
+            defaultValue: '',
+            selected: "<?=$search_municipality?>"
+        },
+        success: function(response) {
+
+            $('#filter_municipality').html(response);
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: './proc/getComboData.php',
+        data: {
+            tableName: "lib_address",
+            valueMember: "DISTINCT BARANGAY",
+            displayMember: "BARANGAY",
+            condition: "MUNICIPALITY = '<?=$search_municipality?>'",
+            defaultValue: '',
+            selected: "<?=$search_barangay?>"
+        },
+        success: function(response) {
+
+            $('#filter_barangay').html(response);
+        }
+    });
+
+
+});
+
+    //on filter submit
+    $(document).on('submit','#filter_form',function(){
+        var mun = $('#filter_municipality').val();
+        if (!$.trim(mun)){
+            alert("Municipality is required!");
+            return false;
+        }
+    });
+
+    //on reset filter
+    $(document).on('click','#reset_filter',function(e){
+      e.preventDefault();
+      $('#filter_region option[value=""]').prop('selected', true);
+      $('#filter_province').html('');
+      $('#filter_municipality').html('');
+      $('#filter_barangay').html('');
+      $('#filter_lowb option[value=""]').prop('selected', true);
+      $('#filter_criteria').val('');
+
+    });
+
+
+
+    //on change #filter_region
+    $(document).on('change', "#filter_region", function(e) {
+        e.preventDefault();
+        var value = $(this).children("option:selected").val()
+
+        $.ajax({
+            type: 'GET',
+            url: './proc/getComboData.php',
+            data: {
+                tableName: "lib_address",
+                valueMember: "DISTINCT PROVINCE",
+                displayMember: "PROVINCE",
+                condition: "REGION = '"+value+"'",
+                defaultValue: '',
+            },
+            success: function(response) {
+
+                $('#filter_province').html(response);
+                $('#filter_municipality').html('');
+                $('#filter_barangay').html('');
+            }
+        });
+    });
+
+    //on change #filter_province
+    $(document).on('change', "#filter_province", function(e) {
+        e.preventDefault();
+        var value = $(this).children("option:selected").val()
+
+        $.ajax({
+            type: 'GET',
+            url: './proc/getComboData.php',
+            data: {
+                tableName: "lib_address",
+                valueMember: "DISTINCT MUNICIPALITY",
+                displayMember: "MUNICIPALITY",
+                condition: "PROVINCE = '"+value+"'",
+                defaultValue: '',
+            },
+            success: function(response) {
+
+                $('#filter_municipality').html(response);
+                $('#filter_barangay').html('');
+            }
+        });
+    });
+
+    //on change #filter_barangay
+    $(document).on('change', "#filter_municipality", function(e) {
+        e.preventDefault();
+        var value = $(this).children("option:selected").val()
+        //value = value.replace("'","\\'")
+        $.ajax({
+            type: 'GET',
+            url: './proc/getComboData.php',
+            data: {
+                tableName: "lib_address",
+                valueMember: "BARANGAY",
+                displayMember: "BARANGAY",
+                condition: "MUNICIPALITY = '"+value+"'",
+                defaultValue: '',
+            },
+            success: function(response) {
+
+                $('#filter_barangay').html(response);
+            }
+        });
+    });
+
+
 </script>
 
 <div class="modal fade interv_list_modal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id=interv_list_modal>
