@@ -20,16 +20,16 @@
       $search_barangay =  isset($_REQUEST['filter_barangay'])? $_REQUEST["filter_barangay"] :'';
       $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
 
-      $filter_province = $search_province == ''?'':" AND r.province = '$search_province'";
-      $filter_municipality = $search_municipality == ''?'':" AND r.municipality = '$search_municipality'";
-      $filter_barangay = $search_barangay == ''?'':" AND r.barangay = '$search_barangay'";
-      $filter_lowb = $search_lowb == ''?'':" AND s.lowb = '$search_lowb'";
+      $filter_province = $search_province == ''?'':" AND `swdi`.`psgc_province` = '$search_province'";
+      $filter_municipality = $search_municipality == ''?'':" AND `swdi`.`psgc_city` = '$search_municipality'";
+      $filter_barangay = $search_barangay == ''?'':" AND `swdi`.`psgc_brgy` = '$search_barangay'";
+      $filter_lowb = $search_lowb == ''?'':" AND `swdi`.`LOWB` = '$search_lowb'";
 
       $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
       $search_keyword = isset($_REQUEST['filter_criteria'])? $_REQUEST["filter_criteria"] :'';
 
       //AND (TRIM(UPPER(CONCAT(r.FIRST_NAME,' ', r.MID_NAME, ' ', r.LAST_NAME, ' ', r.EXT_NAME))) LIKE '%ba%' OR r.HOUSEHOLD_ID = 'ba')
-      $search_criteria =  isset($_REQUEST['filter_criteria'])? " AND (TRIM(UPPER(CONCAT(r.FIRST_NAME,' ', r.MID_NAME, ' ', r.LAST_NAME, ' ', r.EXT_NAME))) LIKE '%".$_REQUEST['filter_criteria']."%' OR r.HOUSEHOLD_ID = '".$_REQUEST['filter_criteria']."') " :'';
+      $search_criteria =  isset($_REQUEST['filter_criteria'])? " AND (TRIM(UPPER(CONCAT(swdi.FIRSTNAME,' ', swdi.MIDDLENAME, ' ', swdi.LASTNAME))) LIKE '%".$_REQUEST['filter_criteria']."%' OR swdi.HOUSEHOLD_ID = '".$_REQUEST['filter_criteria']."') " :'';
       $list_filter = "$filter_province $filter_municipality $filter_barangay $filter_lowb $search_criteria";
   }
 
@@ -136,7 +136,6 @@
                     <tr>
                         <th>Household No.</th>
                         <th>Name</th>
-                        <th>Sex</th>
                         <th>Province</th>
                         <th>Municipality</th>
                         <th>Barangay</th>
@@ -150,43 +149,40 @@
                 <tbody id=clientlist>
                     <?php
                             $cnt=0;
-                            $res_intvlist = mysqli_query($con, "
+                            $sql1 = "
 
-                                SELECT
-                                  s.HOUSEHOLD_ID
-                                , TRIM(UPPER(CONCAT(r.FIRST_NAME,' ', r.MID_NAME, ' ', r.LAST_NAME, ' ', r.EXT_NAME))) AS Fullname
-                                , r.SEX
-                                , r.PROVINCE
-                                , r.MUNICIPALITY
-                                , r.BARANGAY
-                                , s.SWDI_SCORE
-                                , s.LOWB
-                                , COUNT(i.interv_id) AS INTERV_COUNT
-                                FROM
-                                `db_imt`.`grantees` g
-                                INNER JOIN `db_imt`.`roster` r
-                                    ON (g.`ENTRY_ID` = r.`ENTRY_ID`)
-                                INNER JOIN `db_imt`.`swdi` s
-                                    ON (s.`HOUSEHOLD_ID` = g.`HOUSEHOLD_ID`)
-                                LEFT JOIN `db_imt`.intervensions i
-                                    ON (i.HOUSEHOLD_ID = g.HOUSEHOLD_ID)
-                                WHERE 1 = 1
-                                    $list_filter
-                                GROUP BY s.HOUSEHOLD_ID
-                                ORDER BY 2
-                                LIMIT 0, 1000
-                                ;
+                            SELECT
+                                `swdi`.`HOUSEHOLD_ID`
+                                , CONCAT(`swdi`.`FIRSTNAME`,' ', `swdi`.`LASTNAME`, ' ', `swdi`.`MIDDLENAME`) AS FULLNAME
+                                , `swdi`.`psgc_province`
+                                , `swdi`.`psgc_city`
+                                , `swdi`.`psgc_brgy`
+                                , `swdi`.`SWDI_SCORE`
+                                , `swdi`.`LOWB`
+                                , COUNT(`intervensions`.`interv_id`) AS INTERV_COUNT
+                            FROM
+                                `db_imt`.`swdi`
+                                LEFT JOIN `db_imt`.`intervensions`
+                                    ON (`swdi`.`HOUSEHOLD_ID` = `intervensions`.`HOUSEHOLD_ID`)
+                            WHERE 1 = 1
 
-                            ") or die(mysqli_error());
+                              $list_filter
+
+                            GROUP BY `swdi`.`LASTNAME`, `swdi`.`FIRSTNAME`, `swdi`.`MIDDLENAME`, `swdi`.`psgc_province`, `swdi`.`psgc_city`, `swdi`.`psgc_brgy`, `swdi`.`SWDI_SCORE`, `swdi`.`LOWB`, `swdi`.`psgc_city`, `swdi`.`psgc_brgy`
+                            ORDER BY COUNT(`intervensions`.`interv_id`) DESC, `swdi`.`FIRSTNAME` ASC;
+
+
+                            ";
+                            //echo "$sql1";
+                            $res_intvlist = mysqli_query($con, $sql1) or die(mysqli_error());
                             while ($r=mysqli_fetch_array($res_intvlist,MYSQLI_ASSOC)) {
 
                                 $cnt++;
                                 $HOUSEHOLD_ID = $r['HOUSEHOLD_ID'];
-                                $FULLNAME = strtoupper($r['Fullname']);
-                                $SEX = $r['SEX'];
-                                $PROVINCE = $r['PROVINCE'];
-                                $MUNICIPALITY = $r['MUNICIPALITY'];
-                                $BARANGAY = $r['BARANGAY'];
+                                $FULLNAME = strtoupper($r['FULLNAME']);
+                                $PROVINCE = $r['psgc_province'];
+                                $MUNICIPALITY = $r['psgc_city'];
+                                $BARANGAY = $r['psgc_brgy'];
                                 $SWDI_SCORE = $r['SWDI_SCORE'];
                                 $LOWB = $r['LOWB'];
                                 $INTERV_COUNT =  $r['INTERV_COUNT'];
@@ -197,7 +193,6 @@
                                     <tr class=\"\">
                                         <td class=\"even gradeC\"> $HOUSEHOLD_ID</td>
                                         <td>$FULLNAME</td>
-                                        <td>$SEX</td>
                                         <td>$PROVINCE</td>
                                         <td>$MUNICIPALITY</td>
                                         <td>$BARANGAY</td>
@@ -236,8 +231,8 @@
             var numYDS = $('#numYDS').val();
             var dtDateConducted = $('#dtDateConducted').val();
             var txtTitle = $('#txtTitle').val();
-            //var txtIntervDescription = $('#txtIntervDescription').val();
-            var txtIntervDescription = $('#editor-one').html();
+            var txtIntervDescription = $('#txtIntervDescription').val();
+            //var txtIntervDescription = $('#editor-one').html();
 
             var has_error = false;
             if (cmbProgram < 0) {
@@ -513,8 +508,8 @@
                     $('#hidden_interv_id').val(inv_id);
                     $('#hidden_hhid').val(arr[5]);
 
-                    //$('#txtIntervDescription').val(arr[1]);
-                    $('#editor-one').html(arr[1]);
+                    $('#txtIntervDescription').val(arr[1]);
+                    //$('#editor-one').html(arr[1]);
 
                 }
             });
@@ -527,6 +522,9 @@
             //* LOAD DATA ENTRY FOR NEW INTERVENTION
 
             $('#interv_list_editor_modal_label').html('New intervention for HH#' + hhid);
+
+            $('#txtIntervDescription').val('test');
+
 
             //get interv component values
             $.ajax({
@@ -680,8 +678,10 @@ $( document ).ready(function() {
     //on filter submit
     $(document).on('submit','#filter_form',function(){
         var mun = $('#filter_municipality').val();
-        if (!$.trim(mun)){
-            alert("Municipality is required!");
+        var brgy = $('#filter_barangay').val();
+
+        if  (!$.trim(brgy)){
+            alert("Municipality and barangay are required!");
             return false;
         }
     });
@@ -1042,17 +1042,15 @@ $( document ).ready(function() {
                                 <input id="txtTitle" name="txtTitle" type="text" class="form-control" required="required">
                             </div>
                         </div>
-<!--
                         <div class="form-group">
                             <label for="txtIntervDescription" class="control-label">Intervention Details</label>
                             <textarea id="txtIntervDescription" name="txtIntervDescription" cols="40" rows="5" class="form-control" aria-describedby="txtIntervDescriptionHelpBlock" required="required"></textarea>
                             <span id="txtIntervDescriptionHelpBlock" class="help-block">State the comprehensive intervention</span>
                         </div>
- -->
-                        <div class="form-group">
+
+                        <!--div class="form-group">
                             <label for="txtIntervDescription" class="control-label">Intervention Details</label>
 
-                            <!-- editor-one wrapper -->
                             <div class="x_content">
                               <div id="alerts"></div>
                               <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
@@ -1128,10 +1126,9 @@ $( document ).ready(function() {
                               <br />
                               <div class="ln_solid"></div>
                             </div>
-                         <!-- /editor-one wrapper -->
 
 
-                        </div>
+                        </div -->
 
                         <div class="form-group">
                             <button name="submit" type="submit" class="btn btn-primary" id=btnSubmitIntv name=btnSubmitIntv>Save</button>

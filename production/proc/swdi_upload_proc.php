@@ -49,10 +49,10 @@ for($index = 0;$index < $countfiles;$index++){
       for($i=0;$i<$sheetCount;$i++){
           $sql = "";
           $Reader->ChangeSheet($i);
-          
+
           $sheet_row_count = count($Reader);
           $columns_count = 0;
-         
+
          // print_r($Reader);
 
           foreach ($Reader as $Row){
@@ -68,72 +68,184 @@ for($index = 0;$index < $countfiles;$index++){
                     }
                   }
 
-                  if ($Row[0] <> "HOUSEHOLD_ID" || $Row[54] <> "LOWB" || $columns_count <> 54){
+                  if ($Row[0] <> "SWDI Transaction No." || $Row[3] <> "LOWB" || $columns_count <> 54){
                       die('**invalidswdifile**');
                   }
 
 
               }else{
+                  $transaction_id = ""; //mysqli_real_escape_string($con,$Row[0]);
+                  $household_id=mysqli_real_escape_string($con,$Row[1]);
+                  $swdi_score=mysqli_real_escape_string($con,$Row[2]);
+                  $lowb=mysqli_real_escape_string($con,$Row[3]);
+                  $lowb=str_replace("Level ","",$lowb);
 
-                  $household_id=mysqli_real_escape_string($con,$Row[0]);
-                  $lastname=mysqli_real_escape_string($con,$Row[1]);
-                  $firstname=mysqli_real_escape_string($con,$Row[2]);
-                  $middlename=mysqli_real_escape_string($con,$Row[3]);
-                  $ext=mysqli_real_escape_string($con,$Row[4]);
-                  $psgc_region=mysqli_real_escape_string($con,$Row[5]);
-                  $psgc_province=mysqli_real_escape_string($con,$Row[6]);
-                  $psgc_city=mysqli_real_escape_string($con,$Row[7]);
-                  $psgc_brgy=mysqli_real_escape_string($con,$Row[8]);
-                  $es1=mysqli_real_escape_string($con,$Row[9]);
-                  $es2=mysqli_real_escape_string($con,$Row[10]);
-                  $c1=mysqli_real_escape_string($con,$Row[11]);
-                  $c2=mysqli_real_escape_string($con,$Row[12]);
-                  $c3=mysqli_real_escape_string($con,$Row[13]);
-                  $c4=mysqli_real_escape_string($con,$Row[14]);
-                  $total income=mysqli_real_escape_string($con,$Row[15]);
-                  $family size=mysqli_real_escape_string($con,$Row[16]);
-                  $pc_inc=mysqli_real_escape_string($con,$Row[17]);
-                  $mpc_inc=mysqli_real_escape_string($con,$Row[18]);
-                  $mppc_pov_treshold=mysqli_real_escape_string($con,$Row[19]);
-                  $mppc_food_threshold=mysqli_real_escape_string($con,$Row[20]);
-                  $es3=mysqli_real_escape_string($con,$Row[21]);
-                  $es4=mysqli_real_escape_string($con,$Row[22]);
-                  $econsuff=mysqli_real_escape_string($con,$Row[23]);
-                  $hcs1=mysqli_real_escape_string($con,$Row[24]);
-                  $hcs2=mysqli_real_escape_string($con,$Row[25]);
-                  $hcs=mysqli_real_escape_string($con,$Row[26]);
-                  $nc1=mysqli_real_escape_string($con,$Row[27]);
-                  $nc2=mysqli_real_escape_string($con,$Row[28]);
-                  $nc=mysqli_real_escape_string($con,$Row[29]);
-                  $wcs1=mysqli_real_escape_string($con,$Row[30]);
-                  $wcs2=mysqli_real_escape_string($con,$Row[31]);
-                  $wcs3=mysqli_real_escape_string($con,$Row[32]);
-                  $wcs=mysqli_real_escape_string($con,$Row[33]);
-                  $sa1=mysqli_real_escape_string($con,$Row[34]);
-                  $hc1=mysqli_real_escape_string($con,$Row[35]);
-                  $hc2=mysqli_real_escape_string($con,$Row[36]);
-                  $hc3=mysqli_real_escape_string($con,$Row[37]);
-                  $hc4=mysqli_real_escape_string($con,$Row[38]);
-                  $sa2=mysqli_real_escape_string($con,$Row[39]);
-                  $ec1=mysqli_real_escape_string($con,$Row[40]);
-                  $ec2=mysqli_real_escape_string($con,$Row[41]);
-                  $sa3=mysqli_real_escape_string($con,$Row[42]);
-                  $rp1=mysqli_real_escape_string($con,$Row[43]);
-                  $rp2=mysqli_real_escape_string($con,$Row[44]);
-                  $rp3=mysqli_real_escape_string($con,$Row[45]);
-                  $sa4=mysqli_real_escape_string($con,$Row[46]);
-                  $fa1=mysqli_real_escape_string($con,$Row[47]);
-                  $fa2=mysqli_real_escape_string($con,$Row[48]);
-                  $fa3=mysqli_real_escape_string($con,$Row[49]);
-                  $sa5=mysqli_real_escape_string($con,$Row[50]);
-                  $socadeq=mysqli_real_escape_string($con,$Row[51]);
-                  $swdi_score=mysqli_real_escape_string($con,$Row[52]);
-                  $lowb=mysqli_real_escape_string($con,$Row[53]);
+                  $es1=mysqli_real_escape_string($con,$Row[4]);
+                  $es2=mysqli_real_escape_string($con,$Row[5]);
+                  $c1=mysqli_real_escape_string($con,$Row[6]);
+                  $c2=mysqli_real_escape_string($con,$Row[7]);
+                  $c3=mysqli_real_escape_string($con,$Row[8]);
+                  $c4=mysqli_real_escape_string($con,$Row[9]);
+                  $total_income=mysqli_real_escape_string($con,$Row[10]);
+                  $family_size=mysqli_real_escape_string($con,$Row[11]);
+                  $pc_inc=mysqli_real_escape_string($con,$Row[12]);
+                  $mpc_inc=mysqli_real_escape_string($con,$Row[13]);
+                  $mppc_pov_treshold=mysqli_real_escape_string($con,$Row[14]);
+                  $mppc_food_threshold=mysqli_real_escape_string($con,$Row[15]);
+                  $es3=mysqli_real_escape_string($con,$Row[16]);
+                  $es4=mysqli_real_escape_string($con,$Row[17]);
+                  $econsuff=mysqli_real_escape_string($con,$Row[18]);
+                  $hcs1=mysqli_real_escape_string($con,$Row[19]);
+                  $hcs2=mysqli_real_escape_string($con,$Row[20]);
+                  $hcs=mysqli_real_escape_string($con,$Row[21]);
+                  $nc1=mysqli_real_escape_string($con,$Row[22]);
+                  $nc2=mysqli_real_escape_string($con,$Row[23]);
+                  $nc=mysqli_real_escape_string($con,$Row[24]);
+                  $wcs1=mysqli_real_escape_string($con,$Row[25]);
+                  $wcs2=mysqli_real_escape_string($con,$Row[26]);
+                  $wcs3=mysqli_real_escape_string($con,$Row[27]);
+                  $wcs=mysqli_real_escape_string($con,$Row[28]);
+                  $sa1=mysqli_real_escape_string($con,$Row[29]);
+                  $hc1=mysqli_real_escape_string($con,$Row[30]);
+                  $hc2=mysqli_real_escape_string($con,$Row[31]);
+                  $hc3=mysqli_real_escape_string($con,$Row[32]);
+                  $hc4=mysqli_real_escape_string($con,$Row[33]);
+                  $sa2=mysqli_real_escape_string($con,$Row[34]);
+                  $ec1=mysqli_real_escape_string($con,$Row[35]);
+                  $ec2=mysqli_real_escape_string($con,$Row[36]);
+                  $sa3=mysqli_real_escape_string($con,$Row[37]);
+                  $rp1=mysqli_real_escape_string($con,$Row[38]);
+                  $rp2=mysqli_real_escape_string($con,$Row[39]);
+                  $rp3=mysqli_real_escape_string($con,$Row[40]);
+                  $sa4=mysqli_real_escape_string($con,$Row[41]);
+                  $fa1=mysqli_real_escape_string($con,$Row[42]);
+                  $fa2=mysqli_real_escape_string($con,$Row[43]);
+                  $fa3=mysqli_real_escape_string($con,$Row[44]);
+                  $sa5=mysqli_real_escape_string($con,$Row[45]);
+                  $socadeq=mysqli_real_escape_string($con,$Row[46]);
+                  $psgc_region=mysqli_real_escape_string($con,$Row[47]);
+                  $psgc_province=mysqli_real_escape_string($con,$Row[48]);
+                  $psgc_city=mysqli_real_escape_string($con,$Row[49]);
+                  $psgc_brgy=mysqli_real_escape_string($con,$Row[50]);
 
+                  $firstname=mysqli_real_escape_string($con,$Row[51]);
+                  $middlename=mysqli_real_escape_string($con,$Row[52]);
+                  $lastname=mysqli_real_escape_string($con,$Row[53]);
 
+                  $ext="";//mysqli_real_escape_string($con,$Row[4]);
 
+                 $sql = "INSERT INTO swdi (
+                   `HOUSEHOLD_ID`,
+                   `LASTNAME`,
+                   `FIRSTNAME`,
+                   `MIDDLENAME`,
+                   `EXT`,
+                   `psgc_region`,
+                   `psgc_province`,
+                   `psgc_city`,
+                   `psgc_brgy`,
+                   `ES1`,
+                   `ES2`,
+                   `C1`,
+                   `C2`,
+                   `C3`,
+                   `C4`,
+                   `Total Income`,
+                   `Family Size`,
+                   `pc_inc`,
+                   `mpc_inc`,
+                   `mppc_pov_treshold`,
+                   `mppc_food_threshold`,
+                   `ES3`,
+                   `ES4`,
+                   `EconSuff`,
+                   `HCS1`,
+                   `HCS2`,
+                   `HCS`,
+                   `NC1`,
+                   `NC2`,
+                   `NC`,
+                   `WCS1`,
+                   `WCS2`,
+                   `WCS3`,
+                   `WCS`,
+                   `SA1`,
+                   `HC1`,
+                   `HC2`,
+                   `HC3`,
+                   `HC4`,
+                   `SA2`,
+                   `EC1`,
+                   `EC2`,
+                   `SA3`,
+                   `RP1`,
+                   `RP2`,
+                   `RP3`,
+                   `SA4`,
+                   `FA1`,
+                   `FA2`,
+                   `FA3`,
+                   `SA5`,
+                   `SocAdeq`,
+                   `SWDI_SCORE`,
+                   `LOWB`
 
-                 $sql = "INSERT INTO swdi values ('$household_id','$lastname','$firstname','$middlename','$ext','$psgc_region','$psgc_province','$psgc_city','$psgc_brgy','$es1','$es2','$c1','$c2','$c3','$c4','$total income','$family size','$pc_inc','$mpc_inc','$mppc_pov_treshold','$mppc_food_threshold','$es3','$es4','$econsuff','$hcs1','$hcs2','$hcs','$nc1','$nc2','$nc','$wcs1','$wcs2','$wcs3','$wcs','$sa1','$hc1','$hc2','$hc3','$hc4','$sa2','$ec1','$ec2','$sa3','$rp1','$rp2','$rp3','$sa4','$fa1','$fa2','$fa3','$sa5','$socadeq','$swdi_score','$lowb');";
+                 ) values (
+                   '$household_id'
+                   ,'$lastname'
+                   ,'$firstname'
+                   ,'$middlename'
+                   ,'$ext'
+                   ,'$psgc_region'
+                   ,'$psgc_province'
+                   ,'$psgc_city'
+                   ,'$psgc_brgy'
+                   ,'$es1'
+                   ,'$es2'
+                   ,'$c1'
+                   ,'$c2'
+                   ,'$c3'
+                   ,'$c4'
+                   ,'$total_income'
+                   ,'$family_size'
+                   ,'$pc_inc'
+                   ,'$mpc_inc'
+                   ,'$mppc_pov_treshold'
+                   ,'$mppc_food_threshold'
+                   ,'$es3'
+                   ,'$es4'
+                   ,'$econsuff'
+                   ,'$hcs1'
+                   ,'$hcs2'
+                   ,'$hcs'
+                   ,'$nc1'
+                   ,'$nc2'
+                   ,'$nc'
+                   ,'$wcs1'
+                   ,'$wcs2'
+                   ,'$wcs3'
+                   ,'$wcs'
+                   ,'$sa1'
+                   ,'$hc1'
+                   ,'$hc2'
+                   ,'$hc3'
+                   ,'$hc4'
+                   ,'$sa2'
+                   ,'$ec1'
+                   ,'$ec2'
+                   ,'$sa3'
+                   ,'$rp1'
+                   ,'$rp2'
+                   ,'$rp3'
+                   ,'$sa4'
+                   ,'$fa1'
+                   ,'$fa2'
+                   ,'$fa3'
+                   ,'$sa5'
+                   ,'$socadeq'
+                   ,'$swdi_score'
+                   ,'$lowb'
+                 );";
 
                    $sql = str_replace("''", "null", $sql);
 
@@ -147,21 +259,18 @@ for($index = 0;$index < $countfiles;$index++){
                      echo "[$filename] Completed rows: $sheet_row_counter <br>";
                      //usleep(100 * 1000); //10 milliseconds
                      flush();
-                     ob_flush();                 
+                     ob_flush();
                     }
 
                  }else{
                      //echo "**no data @ Row $sheet_row_counter**<br>";
                      //flush();
-                     //ob_flush(); 
+                     //ob_flush();
                      break;
-                     //die("EOF");                
+                     //die("EOF");
                  }
 
               }
-
-
-
 
 
               // $household_id = "";
@@ -170,16 +279,16 @@ for($index = 0;$index < $countfiles;$index++){
               //     $household_id = mysqli_real_escape_string($con,$Row[6]);
               //     $with_value_count++;
               // }
-              
+
               // $entry_id = "";
               // if(isset($Row[7])) {
               //     $entry_id = mysqli_real_escape_string($con,$Row[7]);
               //     $with_value_count++;
               // }
-              
+
               // $query = "insert into tbl_info(name,description) values('".$name."','".$description."')";
               // $result = mysqli_query($con, $query);
-          
+
               // if (! empty($result)) {
               //     $type = "success";
               //     $message = "Excel Data Imported into the Database";
@@ -190,11 +299,11 @@ for($index = 0;$index < $countfiles;$index++){
 
 
 
-  
-  
-              
+
+
+
            }
-      
+
        }
 
 
@@ -205,7 +314,7 @@ for($index = 0;$index < $countfiles;$index++){
 
 
 }
-    echo "$log <h4><b>Finished!<b></h4>";      
+    echo "$log <h4><b>Finished!<b></h4>";
     include '../dbclose.php';
 
 function stdDate($date){
@@ -220,7 +329,7 @@ function stdDate($date){
       $year =  $arr[2];
       $day =  $arr[1];
       $month =  $arr[0];
-      return date('Y-m-d',strtotime("$year-$month-$day"));    
+      return date('Y-m-d',strtotime("$year-$month-$day"));
   }
 
 }

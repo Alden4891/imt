@@ -1,7 +1,9 @@
 <?php
 ini_set('mbstring.internal_encoding', 'windows-1251');
 ini_set('max_execution_time', '6000');
-ini_set('post_max_size', '5000M');
+ini_set('post_max_size', '500000M');
+ini_set('upload_max_filesize', '500000M');
+
 error_reporting(E_ERROR | E_PARSE);
 include '../dbconnect.php';
 require_once('../../vendors/excel-reader/php-excel-reader/excel_reader2.php');
@@ -37,8 +39,6 @@ for($index = 0;$index < $countfiles;$index++){
    $exists_count = 0;
 
    //CLEAR ROSTER
-   
-
    if(in_array($ext, $valid_ext)){
       $entry_count++;
 
@@ -47,18 +47,13 @@ for($index = 0;$index < $countfiles;$index++){
 
       //read the content of excel
       $Reader = new SpreadsheetReader($targetPath);
-
       $sheetCount = 1;// count($Reader->sheets());
       $sql = "";
       for($i=0;$i<$sheetCount;$i++){
           $sql = "";
           $Reader->ChangeSheet($i);
-          
           $sheet_row_count = count($Reader);
           $columns_count = 0;
-         
-         // print_r($Reader);
-
           foreach ($Reader as $Row){
               $sheet_row_counter++;
 
@@ -72,10 +67,9 @@ for($index = 0;$index < $countfiles;$index++){
                     }
                   }
 
-                  if ($Row[6] <> "HOUSEHOLD_ID" || $Row[7] <> "ENTRY_ID" || $columns_count <> 35){
+                  if ($Row[6] <> "HOUSEHOLD_ID" || $Row[7] <> "ENTRY_ID" || $columns_count <> 38){
                       die('**invalidrosterfile**');
                   }
-
 
               }else{
                 $region=mysqli_real_escape_string($con,$Row[0]);
@@ -90,6 +84,7 @@ for($index = 0;$index < $countfiles;$index++){
                 $first_name=mysqli_real_escape_string($con,$Row[9]);
                 $mid_name=mysqli_real_escape_string($con,$Row[10]);
                 $ext_name=mysqli_real_escape_string($con,$Row[11]);
+
                 $hh_grantee=mysqli_real_escape_string($con,$Row[12]);
                 $child_bene=mysqli_real_escape_string($con,$Row[13]);
                 $monitored_educ=mysqli_real_escape_string($con,$Row[14]);
@@ -99,46 +94,138 @@ for($index = 0;$index < $countfiles;$index++){
                 $sex=mysqli_real_escape_string($con,$Row[18]);
                 $pregnant_status=mysqli_real_escape_string($con,$Row[19]);
                 $disabled=mysqli_real_escape_string($con,$Row[20]);
-                $attend_school=mysqli_real_escape_string($con,$Row[21]);
-                $reason_for_not_attending=mysqli_real_escape_string($con,$Row[22]);
-                $date_reason=""; //mysqli_real_escape_string($con,stdDate($Row[23]));
-                $grade_level=mysqli_real_escape_string($con,$Row[24]);
-                $school_name=mysqli_real_escape_string($con,$Row[25]);
-                $dominant_school=mysqli_real_escape_string($con,$Row[26]);
-                $hc_name=mysqli_real_escape_string($con,$Row[27]);
-                $registered=mysqli_real_escape_string($con,$Row[28]);
-                $client_status=mysqli_real_escape_string($con,$Row[29]);
-                $member_status=mysqli_real_escape_string($con,$Row[30]);
-                $ip_affiliation=mysqli_real_escape_string($con,$Row[31]);
-                $mode_of_payment=mysqli_real_escape_string($con,$Row[32]);
-                $hh_set=mysqli_real_escape_string($con,$Row[33]);
-                $set_group=mysqli_real_escape_string($con,$Row[34]);
+
+                $solo_parent=mysqli_real_escape_string($con,$Row[21]);
+                $attend_school=mysqli_real_escape_string($con,$Row[22]);
+                $grade_level=mysqli_real_escape_string($con,$Row[23]);
+                $school_name=mysqli_real_escape_string($con,$Row[24]);
+                $dominant_school=mysqli_real_escape_string($con,$Row[25]);
+                $hc_name=mysqli_real_escape_string($con,$Row[26]);
+                $registered=mysqli_real_escape_string($con,$Row[27]);
+                $client_status=mysqli_real_escape_string($con,$Row[28]);
+                $member_status=mysqli_real_escape_string($con,$Row[29]);
+                $ip_affiliation=mysqli_real_escape_string($con,$Row[30]);
+                $mode_of_payment=mysqli_real_escape_string($con,$Row[31]);
+                $hh_set=mysqli_real_escape_string($con,$Row[32]);
+                $set_group=mysqli_real_escape_string($con,$Row[33]);
 
 
+                $reason_for_not_attending_school=mysqli_real_escape_string($con,$Row[34]);
+                $reason_for_not_attending_health=mysqli_real_escape_string($con,$Row[35]);
+                $date_reason_school=""; //mysqli_real_escape_string($con,stdDate($Row[36]));
+                $date_reason_health=""; //mysqli_real_escape_string($con,stdDate($Row[37]));
+                $tag=0;//mysqli_real_escape_string($con,stdDate($Row[38]));
 
-                 $sql = "INSERT INTO roster values ('$region','$province','$municipality','$barangay','$purok','$address','$household_id','$entry_id','$last_name','$first_name','$mid_name','$ext_name','$hh_grantee','$child_bene','$monitored_educ','$birthday','$age','$rel_hh','$sex','$pregnant_status','$disabled','$attend_school','$reason_for_not_attending','$date_reason','$grade_level','$school_name','$dominant_school','$hc_name','$registered','$client_status','$member_status','$ip_affiliation','$mode_of_payment','$hh_set','$set_group');";
+                 $sql = "INSERT INTO roster (
+
+                   `REGION`,
+                   `PROVINCE`,
+                   `MUNICIPALITY`,
+                   `BARANGAY`,
+                   `PUROK`,
+                   `ADDRESS`,
+                   `HOUSEHOLD_ID`,
+                   `ENTRY_ID`,
+                   `LAST_NAME`,
+                   `FIRST_NAME`,
+                   `MID_NAME`,
+                   `EXT_NAME`,
+
+                   `HH_GRANTEE`,
+                   `CHILD_BENE`,
+                   `MONITORED_EDUC`,
+                   `BIRTHDAY`,
+                   `AGE`,
+                   `REL_HH`,
+                   `SEX`,
+                   `PREGNANT_STATUS`,
+                   `DISABLED`,
+
+                   `SOLO_PARENT`,
+                   `ATTEND_SCHOOL`,
+                   `GRADE_LEVEL`,
+                   `SCHOOL_NAME`,
+                   `DOMINANT_SCHOOL`,
+                   `HC_NAME`,
+                   `REGISTERED`,
+
+                   `CLIENT_STATUS`,
+                   `MEMBER_STATUS`,
+                   `IP_AFFILIATION`,
+                   `MODE_OF_PAYMENT`,
+                   `HH_SET`,
+                   `SET_GROUP`,
+                   `REASON_FOR_NOT_ATTENDING_HEALTH`,
+                   `REASON_FOR_NOT_ATTENDING_SCHOOL`,
+                   `DATE_REASON_HEALTH`,
+                   `DATE_REASON_SCHOOL`,
+                   `TAG`
+
+                 ) values (
+                    '$region'
+                   ,'$province'
+                   ,'$municipality'
+                   ,'$barangay'
+                   ,'$purok'
+                   ,'$address'
+                   ,'$household_id'
+                   ,'$entry_id'
+                   ,'$last_name'
+                   ,'$first_name'
+                   ,'$mid_name'
+
+                   ,'$ext_name'
+                   ,'$hh_grantee'
+                   ,'$child_bene'
+                   ,'$monitored_educ'
+                   ,'$birthday'
+                   ,'$age'
+                   ,'$rel_hh'
+                   ,'$sex'
+                   ,'$pregnant_status'
+                   ,'$disabled'
+
+                   ,'$solo_parent'
+                   ,'$attend_school'
+                   ,'$grade_level'
+                   ,'$school_name'
+                   ,'$dominant_school'
+                   ,'$hc_name'
+                   ,'$registered'
+                   ,'$client_status'
+                   ,'$member_status'
+                   ,'$ip_affiliation'
+                   ,'$mode_of_payment'
+                   ,'$hh_set'
+                   ,'$set_group'
+                   ,'$reason_for_not_attending_school'
+                   ,'$reason_for_not_attending_health'
+                   ,'$date_reason_school'
+                   ,'$date_reason_health'
+                   ,'$tag'
+                 );";
 
                    $sql = str_replace("''", "null", $sql);
 
                  //die($sql);
 
                  if (!empty($household_id)){
+                   //echo "SQL:$sql<br><br>";
                     mysqli_query($con,$sql);
                    if ($sheet_row_counter%2345==0){
                      //$progress = round($sheet_row_counter/$sheet_row_count * 100,2);
-                     //echo "$sql<br><br>";
                      echo "[$filename] Completed rows: $sheet_row_counter <br>";
                      //usleep(100 * 1000); //10 milliseconds
                      flush();
-                     ob_flush();                 
+                     ob_flush();
                     }
 
                  }else{
                      //echo "**no data @ Row $sheet_row_counter**<br>";
                      //flush();
-                     //ob_flush(); 
+                     //ob_flush();
                      break;
-                     //die("EOF");                
+                     //die("EOF");
                  }
 
               }
@@ -153,16 +240,16 @@ for($index = 0;$index < $countfiles;$index++){
               //     $household_id = mysqli_real_escape_string($con,$Row[6]);
               //     $with_value_count++;
               // }
-              
+
               // $entry_id = "";
               // if(isset($Row[7])) {
               //     $entry_id = mysqli_real_escape_string($con,$Row[7]);
               //     $with_value_count++;
               // }
-              
+
               // $query = "insert into tbl_info(name,description) values('".$name."','".$description."')";
               // $result = mysqli_query($con, $query);
-          
+
               // if (! empty($result)) {
               //     $type = "success";
               //     $message = "Excel Data Imported into the Database";
@@ -173,11 +260,11 @@ for($index = 0;$index < $countfiles;$index++){
 
 
 
-  
-  
-              
+
+
+
            }
-      
+
        }
 
 
@@ -188,7 +275,7 @@ for($index = 0;$index < $countfiles;$index++){
 
 
 }
-    echo "$log <h4><b>Finished!<b></h4>";      
+    echo "$log <h4><b>Finished!<b></h4>";
     include '../dbclose.php';
 
 function stdDate($date){
@@ -203,7 +290,7 @@ function stdDate($date){
       $year =  $arr[2];
       $day =  $arr[1];
       $month =  $arr[0];
-      return date('Y-m-d',strtotime("$year-$month-$day"));    
+      return date('Y-m-d',strtotime("$year-$month-$day"));
   }
 
 }
