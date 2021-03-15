@@ -24,36 +24,33 @@ $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN); // load the OpenTBS plugin
 $sql = "
 
 SELECT
-  r.REGION,
-  r.PROVINCE,
-  r.MUNICIPALITY,
-  r.BARANGAY,
-  r.HOUSEHOLD_ID,
-  r.LAST_NAME,
-  r.FIRST_NAME,
-  r.MID_NAME,
-  r.EXT_NAME,
-  r.SEX,
-  i.yds_child_count AS 'YDS',
-  p.PROGRAM,
+    `swdi`.`psgc_region` AS `REGION`
+    , `swdi`.`psgc_province` AS `PROVINCE`
+    , `swdi`.`psgc_city` AS `MUNICIPALITY`
+    , `swdi`.`psgc_brgy` AS `BARANGAY`
+    , `swdi`.`HOUSEHOLD_ID`
+    , `swdi`.`LASTNAME` AS `LAST_NAME`
+    , `swdi`.`FIRSTNAME` AS `FIRST_NAME`
+    , `swdi`.`MIDDLENAME` AS `MID_NAME`
+    , `swdi`.`EXT` AS `EXT_NAME`
+    , `swdi`.`LOWB`
+    , SUM(`intervensions`.`yds_child_count`) AS `YDS`,
 
-  CASE WHEN (p.program_id=15) THEN COUNT(p.program_id) ELSE 0 END AS 'col1', -- 'Micro Enterprise Development
-  CASE WHEN (p.program_id=16) THEN COUNT(p.program_id) ELSE 0 END AS 'col2', -- 'Assistance to Individuals
+  CASE WHEN (`intervensions`.`program_id`=15) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col1',
+  CASE WHEN (`intervensions`.`program_id`=16) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col2'
+  , COUNT(`intervensions`.`interv_id`) AS `TOTAL`
+FROM
+    `db_imt`.`intervensions`
+    INNER JOIN `db_imt`.`swdi`
+        ON (`intervensions`.`HOUSEHOLD_ID` = `swdi`.`HOUSEHOLD_ID`)
+    INNER JOIN `db_imt`.`lib_programs`
+        ON (`lib_programs`.`program_id` = `intervensions`.`program_id`)
+    INNER JOIN `db_imt`.`lib_subcomp`
+        ON (`lib_subcomp`.`subcomp_id` = `lib_programs`.`subcomp_id`)
+WHERE (`lib_subcomp`.`comp_id` = 3 AND $filter)
+GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
 
-  COUNT(p.program_id) AS TOTAL
-FROM `db_imt`.`grantees` g
-  INNER JOIN `db_imt`.`roster` r
-    ON (g.`ENTRY_ID` = r.`ENTRY_ID`)
-  INNER JOIN `db_imt`.intervensions i
-    ON (i.HOUSEHOLD_ID = g.HOUSEHOLD_ID)
-  INNER JOIN `db_imt`.lib_programs p
-    ON (i.program_id = p.program_id)
-  INNER JOIN `db_imt`.lib_subcomp sc
-    ON (p.subcomp_id=sc.subcomp_id)
-WHERE $filter AND sc.comp_id = 3
-GROUP BY r.HOUSEHOLD_ID
-ORDER BY 1,2
-LIMIT 0, 1000;
+ORDER BY 1,2;
 
 ";
 
@@ -63,7 +60,7 @@ include '../dbconnect.php';
 // prepare data to display
 $res_data = mysqli_query($con,$sql) or die(mysqli_error());
 $data = mysqli_fetch_all($res_data, MYSQLI_ASSOC);
-    
+
 
 
 

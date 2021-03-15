@@ -24,45 +24,40 @@ $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN); // load the OpenTBS plugin
 $sql = "
 
 SELECT
-  r.REGION,
-  r.PROVINCE,
-  r.MUNICIPALITY,
-  r.BARANGAY,
-  r.HOUSEHOLD_ID,
-  r.LAST_NAME,
-  r.FIRST_NAME,
-  r.MID_NAME,
-  r.EXT_NAME,
-  r.SEX,
-  i.yds_child_count AS 'YDS',
-  p.PROGRAM,
+    `swdi`.`psgc_region` AS `REGION`
+    , `swdi`.`psgc_province` AS `PROVINCE`
+    , `swdi`.`psgc_city` AS `MUNICIPALITY`
+    , `swdi`.`psgc_brgy` AS `BARANGAY`
+    , `swdi`.`HOUSEHOLD_ID`
+    , `swdi`.`LASTNAME` AS `LAST_NAME`
+    , `swdi`.`FIRSTNAME` AS `FIRST_NAME`
+    , `swdi`.`MIDDLENAME` AS `MID_NAME`
+    , `swdi`.`EXT` AS `EXT_NAME`
+    , `swdi`.`LOWB`
+    , SUM(`intervensions`.`yds_child_count`) AS `YDS`,
 
-  CASE WHEN (p.program_id=1) THEN COUNT(p.program_id) ELSE 0 END AS 'col1', -- '[ES_A1]TESDA (Skills Training)',
-  CASE WHEN (p.program_id=2) THEN COUNT(p.program_id) ELSE 0 END AS 'col2', -- '[ES_A2]CHED (Scholarships)',
-  CASE WHEN (p.program_id=3) THEN COUNT(p.program_id) ELSE 0 END AS 'col3', -- '[ES_A3]ESGP_PA',
+  CASE WHEN (`intervensions`.`program_id`=1) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col1',
+  CASE WHEN (`intervensions`.`program_id`=2) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col2',
+  CASE WHEN (`intervensions`.`program_id`=3) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col3',
+  CASE WHEN (`intervensions`.`program_id`=4) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col4',
+  CASE WHEN (`intervensions`.`program_id`=5) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col5',
+  CASE WHEN (`intervensions`.`program_id`=6) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col6',
+  CASE WHEN (`intervensions`.`program_id`=7) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col7',
+  CASE WHEN (`intervensions`.`program_id`=8) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col8',
+  CASE WHEN (`intervensions`.`program_id`=9) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col9'
+  , COUNT(`intervensions`.`interv_id`) AS `TOTAL`
+FROM
+    `db_imt`.`intervensions`
+    INNER JOIN `db_imt`.`swdi`
+        ON (`intervensions`.`HOUSEHOLD_ID` = `swdi`.`HOUSEHOLD_ID`)
+    INNER JOIN `db_imt`.`lib_programs`
+        ON (`lib_programs`.`program_id` = `intervensions`.`program_id`)
+    INNER JOIN `db_imt`.`lib_subcomp`
+        ON (`lib_subcomp`.`subcomp_id` = `lib_programs`.`subcomp_id`)
+WHERE (`lib_subcomp`.`comp_id` = 1 AND $filter)
+GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
 
-  CASE WHEN (p.program_id=4) THEN COUNT(p.program_id) ELSE 0 END AS 'col4', -- '[ES_B1]DOLE (Employment)',
-  CASE WHEN (p.program_id=5) THEN COUNT(p.program_id) ELSE 0 END AS 'col5', -- '[ES_B2]KALAHI/NCDDP',
-  CASE WHEN (p.program_id=6) THEN COUNT(p.program_id) ELSE 0 END AS 'col6', -- '[ES_B3]Sustainable Livelihood Program',
-  CASE WHEN (p.program_id=7) THEN COUNT(p.program_id) ELSE 0 END AS 'col7', -- '[ES_B4]Cash for Work',
-
-  CASE WHEN (p.program_id=8) THEN COUNT(p.program_id) ELSE 0 END AS 'col8', -- '[ES_C1]Social Security System',
-  CASE WHEN (p.program_id=9) THEN COUNT(p.program_id) ELSE 0 END AS 'col9', -- '[ES_C2]Social Pension Program',
-
-  COUNT(p.program_id) AS TOTAL
-FROM `db_imt`.`grantees` g
-  INNER JOIN `db_imt`.`roster` r
-    ON (g.`ENTRY_ID` = r.`ENTRY_ID`)
-  INNER JOIN `db_imt`.intervensions i
-    ON (i.HOUSEHOLD_ID = g.HOUSEHOLD_ID)
-  INNER JOIN `db_imt`.lib_programs p
-    ON (i.program_id = p.program_id)
-  INNER JOIN `db_imt`.lib_subcomp sc
-    ON (p.subcomp_id=sc.subcomp_id)
-WHERE $filter AND sc.comp_id = 1
-GROUP BY r.HOUSEHOLD_ID
-ORDER BY 1,2
-LIMIT 0, 1000;
+ORDER BY 1,2;
 
 ";
 
@@ -72,7 +67,7 @@ include '../dbconnect.php';
 // prepare data to display
 $res_data = mysqli_query($con,$sql) or die(mysqli_error());
 $data = mysqli_fetch_all($res_data, MYSQLI_ASSOC);
-    
+
 
 
 

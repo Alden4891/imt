@@ -5,7 +5,7 @@
 
 
 <div class="row">
-              
+
 
               <div class="col-md-12 ">
                 <div class="x_panel">
@@ -67,7 +67,6 @@
                           <select class="select2_group form-control" id=optionReportType name="optionReportType">
                             <optgroup label="Econimic Sufficiency">
                               <option value="imt_es">Summary of Intervention Conducted for HH beneficiaries for economic soffiencies</option>
-                              <!-- <option value="imt_es_ml">Masterlist of Intervention Provided</option> -->
                             </optgroup>
                             <optgroup label="Social Adequacy">
                               <option value="imt_sa">Summary of Intervention Conducted for HH beneficiaries for social adequacy</option>
@@ -82,8 +81,12 @@
                               <!-- <option value="imt_external1_ml">Masterlist of Intervention Provided</option> -->
                             </optgroup>
                             <optgroup label="Other Intervensions (LGUs, CSOs/NGOs)">
-                              <option value="imt_external2">Summary of Intervention provided by LGUs, CSO/NGOs</option>
+                              <option value="imt_external2">Summary of Intervention provided by LGUs, CSO/NGOs, etc.</option>
                               <!-- <option value="imt_external2_ml">Masterlist of Intervention Provided</option> -->
+                            </optgroup>
+
+                            <optgroup label="Masterlist">
+                              <option value="imt_masterlist">Masterlist of Intervention Provided</option>
                             </optgroup>
 
                           </select>
@@ -92,7 +95,7 @@
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-9 col-sm-9  offset-md-3">
-                          <button type="submit" class="btn btn-success" disabled id="btnDownloadInterv">Download</button>
+                          <button type="submit" class="btn btn-info" disabled id="btnDownloadInterv">Download</button>
                         </div>
                       </div>
 
@@ -102,7 +105,7 @@
               </div>
 
 
-              
+
             </div>
 
 
@@ -111,7 +114,7 @@
 $(document).ready(function(e) {
     //load region filter
     //SELECT DISTINCT  region AS 'valuemember',region AS 'displaymember' FROM roster
- 
+
       $.ajax({
       type: 'GET',
       url: './proc/getComboData.php',
@@ -123,18 +126,27 @@ $(document).ready(function(e) {
           selected: -1,
       },
       success: function(response) {
-          console.log(response);
+          //console.log(response);
           $('#optionRegion').html(response);
       }
     });
-});    
+});
 
-    //on #optionRegion changed 
+    //on #optionRegion changed
     $(document).on('change', "#optionRegion", function(e) {
         e.preventDefault();
         var value = $(this).children("option:selected").val()
-        if (value !== -1) {
-            $('#btnDownloadInterv').removeAttr('disabled');
+
+        if (value != -1) {
+          $('#btnDownloadInterv').removeAttr('disabled');
+          $('#btnDownloadInterv').removeClass('btn-success');
+          $('#btnDownloadInterv').addClass('btn-info');
+
+
+        }else{
+            $('#btnDownloadInterv').attr('disabled',true);
+            $('#btnDownloadInterv').addClass('btn-success');
+            $('#btnDownloadInterv').removeClass('btn-info');
         }
         //get interv component values
         $.ajax({
@@ -147,13 +159,13 @@ $(document).ready(function(e) {
                 condition: "region = '" + value + "'",
             },
             success: function(response) {
-        
+
                 $('#optionProvince').html(response);
             }
         });
     });
 
-    //on #optionProvince changed 
+    //on #optionProvince changed
     $(document).on('change', "#optionProvince", function(e) {
         e.preventDefault();
         var value = $(this).children("option:selected").val()
@@ -169,13 +181,13 @@ $(document).ready(function(e) {
                 condition: "PROVINCE = '" + value + "'",
             },
             success: function(response) {
-              
+
                 $('#optionMunicipality').html(response);
             }
         });
     });
 
-    //on #optionMunicipality changed 
+    //on #optionMunicipality changed
     $(document).on('change', "#optionMunicipality", function(e) {
         e.preventDefault();
         var value = $(this).children("option:selected").val()
@@ -194,5 +206,5 @@ $(document).ready(function(e) {
                 $('#optionBarangay').html(response);
             }
         });
-    });    
+    });
 </script>

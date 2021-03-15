@@ -13,7 +13,6 @@
     $search_keyword  = "";
     $search_criteria  = "";
 
-
     if (isset($_REQUEST['apply_filter'])){
       $search_province = isset($_REQUEST['filter_province'])? $_REQUEST["filter_province"] :'';
       $search_municipality =  isset($_REQUEST['filter_municipality'])? $_REQUEST["filter_municipality"] :'';
@@ -520,10 +519,10 @@
 
         } else {
             //* LOAD DATA ENTRY FOR NEW INTERVENTION
-
             $('#interv_list_editor_modal_label').html('New intervention for HH#' + hhid);
 
-            $('#txtIntervDescription').val('test');
+            //RESET INTV INPUTS
+            $('#txtIntervDescription').val('');
 
 
             //get interv component values
@@ -540,6 +539,7 @@
                 success: function(response) {
 
                     $('#cmbComponents').html(response);
+                  //  console.log(response);
 
                     //reset
                     $('#cmbClassification').html('<option value="-1">Select</option>;');
@@ -586,6 +586,7 @@
             success: function(response) {
 
                 $('#cmbClassification').html(response);
+                $('#cmbProgram').html('<option value="-1">Select</option>;');
             }
         });
     });
@@ -594,7 +595,6 @@
     $(document).on('change', "#cmbClassification", function(e) {
         e.preventDefault();
         var value = $(this).children("option:selected").val()
-
         $.ajax({
             type: 'GET',
             url: './proc/getComboData.php',

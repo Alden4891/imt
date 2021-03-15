@@ -19,13 +19,10 @@ $TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN); // load the OpenTBS plugin
 // Prepare some data for the demo
 // ------------------------------
 
-
-
 include '../dbconnect.php';
 
-
 $res_columns = mysqli_query($con,"
-SELECT 
+SELECT
 p.program
 FROM lib_programs p
 INNER JOIN lib_subcomp sc
@@ -34,7 +31,6 @@ INNER JOIN lib_comp c
 ON sc.comp_id = c.comp_id
 WHERE c.comp_id = 5;
 ") or die(mysqli_error($con));
-
 
 $cnt = 0;
 $col1="";
@@ -52,19 +48,56 @@ while ($r=mysqli_fetch_array($res_columns,MYSQLI_ASSOC)) {
   if ($cnt == 4) $col4 = $r['program'];
   if ($cnt == 5) $col5 = $r['program'];
   if ($cnt == 6) $col6 = $r['program'];
-
 }
 
-
 // prepare data to display
-$filter = str_replace("'", "''", $filter);
-$res_data = mysqli_query($con,"CALL getOtherIntervPivt('$filter');") or die(mysqli_error());
+//$filter = str_replace("'", "''", $filter);
+
+$sql = "
+
+SELECT
+    `swdi`.`psgc_region` AS `REGION`
+    , `swdi`.`psgc_province` AS `PROVINCE`
+    , `swdi`.`psgc_city` AS `MUNICIPALITY`
+    , `swdi`.`psgc_brgy` AS `BARANGAY`
+    , `swdi`.`HOUSEHOLD_ID`
+    , `swdi`.`LASTNAME` AS `LAST_NAME`
+    , `swdi`.`FIRSTNAME` AS `FIRST_NAME`
+    , `swdi`.`MIDDLENAME` AS `MID_NAME`
+    , `swdi`.`EXT` AS `EXT_NAME`
+    , `swdi`.`LOWB`
+    , SUM(`intervensions`.`yds_child_count`) AS `YDS`,
+
+  CASE WHEN (`intervensions`.`program_id`=19) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col1',
+  CASE WHEN (`intervensions`.`program_id`=22) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col2',
+  CASE WHEN (`intervensions`.`program_id`=23) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col3',
+  CASE WHEN (`intervensions`.`program_id`=24) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col4',
+  CASE WHEN (`intervensions`.`program_id`=25) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col5'
+  , COUNT(`intervensions`.`interv_id`) AS `TOTAL`
+FROM
+    `db_imt`.`intervensions`
+    INNER JOIN `db_imt`.`swdi`
+        ON (`intervensions`.`HOUSEHOLD_ID` = `swdi`.`HOUSEHOLD_ID`)
+    INNER JOIN `db_imt`.`lib_programs`
+        ON (`lib_programs`.`program_id` = `intervensions`.`program_id`)
+    INNER JOIN `db_imt`.`lib_subcomp`
+        ON (`lib_subcomp`.`subcomp_id` = `lib_programs`.`subcomp_id`)
+WHERE (`lib_subcomp`.`comp_id` =5 AND $filter)
+GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
+
+ORDER BY 1,2;
+
+";
+
+
+
+
+
+$res_data = mysqli_query($con,$sql) or die(mysqli_error());
+
 $data = mysqli_fetch_all($res_data, MYSQLI_ASSOC);
 
-
-
 include '../dbclose.php';
-
 
 //exit();
 /*
@@ -74,7 +107,6 @@ $data[] = array('rank'=> 'A', 'firstname'=>'Sandra' , 'name'=>'Hill'      , 'num
 $data[] = array('rank'=> 'A', 'firstname'=>'Roger'  , 'name'=>'Smith'     , 'number'=>'1234f', 'score'=>800, 'visits'=>33, 'email_1'=>'rs@tbs.com',  'email_2'=>'robert@tbs.com',  'email_3'=>'r.smith@tbs.com' );
 $data[] = array('rank'=> 'B', 'firstname'=>'William', 'name'=>'Mac Dowell', 'number'=>'5491y', 'score'=>130, 'visits'=>16, 'email_1'=>'wmc@tbs.com', 'email_2'=>'william@tbs.com', 'email_3'=>'w.m.dowell@tbs.com' );
 */
-
 
 // -----------------
 // Load the template
@@ -95,20 +127,13 @@ if (isset($_POST['debug']) && ($_POST['debug']=='show'))    $TBS->Plugin(OPENTBS
 // --------------------------------------------
 
 $TBS->PlugIn(OPENTBS_SELECT_SHEET, "OTHER_INTERV");
-
 $TBS->MergeBlock('dc1,dc2', 'num', 3);
 $TBS->MergeBlock('b2', $data);
 
 // $TBS->PlugIn(OPENTBS_CHART_DELETE_CATEGORY, 'chart_members_by_category', '*'); // delete all categories used in the template => no need with Ms Office since categories with no data are hidden.
-
-
-
 // Merge pictures of the current sheet
 //$x_picture = 'pic_1523d.gif';
 $TBS->PlugIn(OPENTBS_MERGE_SPECIAL_ITEMS);
-
-
-
 
 // -----------------
 // Output the result
