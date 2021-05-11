@@ -20,25 +20,20 @@
 
         $user_fullname  = $_COOKIE['fullname'];
         $user_password = $_COOKIE['password'];
-
+      
     }
+
 
     $page = (isset($_REQUEST['page'])?$_REQUEST['page']:'');
     $cmd = (isset($_REQUEST['cmd'])?$_REQUEST['cmd']:'none');
-
-
     $SETTINGS_HIDER = "";
     if ($role_id==2){
       $SETTINGS_HIDER = "hidden";
     }
 
-
     include 'dbconnect.php';
 
-
-
 ?>
-
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -60,7 +55,7 @@
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-	
+
     <!-- bootstrap-progressbar -->
     <link href="../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
@@ -131,8 +126,8 @@
  -->
                    <li><a><i class="fa fa-exchange"></i> IMPORT/EXPORT <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="?page=importdata">IMPORT DATA</a></li>
-                      <li><a href="?page=exportdata">EXPORT DATA</a></li>
+                      <li><a href="?page=importdata" class="">IMPORT DATA</a></li>
+                      <li><a href="?page=exportdata" class="">EXPORT DATA</a></li>
                     </ul>
                   </li>
                    <li><a><i class="fa fa-database"></i> DATABASE <span class="fa fa-chevron-down"></span></a>
@@ -143,7 +138,7 @@
                   </li>
 
                   <li><a href="?page=reports"><i class="fa fa-area-chart"></i> REPORTS</span></a></li>
-                  <li><a href="?page=debug"><i class="fa fa-flash"></i> DEBUGGER</span></a></li>
+                  <li hidden><a href="?page=debug"><i class="fa fa-flash"></i> DEBUGGER</span></a></li>
 
 
 <!--                   <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
@@ -230,8 +225,8 @@
                         <li><a href="#level1_2">Level One</a>
                         </li>
                     </ul>
-                  </li>                  
-                  
+                  </li>
+
                 </ul-->
               </div>
 
@@ -267,18 +262,18 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="image.php?user_id=<?=$user_id?>" alt=""><?=$user_fullname?> 
+                    <img src="image.php?user_id=<?=$user_id?>" alt=""><?=$user_fullname?>
 
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item"  href="#" id="upload_photo"
                         data-toggle="modal"  data-target=".upload_photo_modal"> Change Photo</a>
 
-                    <a class="dropdown-item"  href="#"  
+                    <a class="dropdown-item"  href="#"
                         data-toggle="modal" data-target=".modal_change_password"> Change Password</a>
 
 
-                  
+
                     <a class="dropdown-item"  href="login.php?cmd=logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                   </div>
                 </li>
@@ -294,7 +289,7 @@
                         <span class="image">
                           <img src="image.php?user_id=<?=$user_id?>" alt="..." class="">
                         </span>
-                        
+
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -364,7 +359,7 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-         
+
             <?php
                 if ($page == 'interventions') {
                      include "interv_list.php";
@@ -373,13 +368,13 @@
                    include "reports.php";
                 }else if ($page=='' || $page == 'dashboard'){
                    include "dashboard.php";
-                }else if ($page == 'importdata'){
+                }else if ($page == 'importdata'  && $role_id==1){
                    include "importdata.php";
-                }else if ($page == 'importroster'){
+                }else if ($page == 'importroster' && $role_id==1){
                    include "importroster.php";
-                }else if ($page == 'importswdi'){
+                }else if ($page == 'importswdi'  && $role_id==1){
                    include "importswdi.php";
-                }else if ($page == 'exportdata'){
+                }else if ($page == 'exportdata'  && $role_id==1){
                    include "exportdata.php";
                 }else if ($page == 'debug'){
                    include "debug1.php";
@@ -389,17 +384,17 @@
                             <div class=\"alert alert-danger text-center\">
                                <h2>You are not allowed to access this module. </h2>
                             </div>
-                       
-                     ";   
-                               
-                }                
+
+                     ";
+
+                }
 
           include 'dbclose.php';
           ?>
-          
 
 
-          
+
+
         </div>
         <!-- /page content -->
 
@@ -421,9 +416,9 @@
 
 
 
- 
+
   <script>
-  
+
 
 $(document).ready(function (e) {
 
@@ -436,7 +431,7 @@ $('#imgfile').bind('change', function() {
     }else if ($('#imgfile').val().substr( ($('#imgfile').val().lastIndexOf('.') +1)) != 'jpg'){
         $("#imgfile").replaceWith($("#imgfile").val('').clone(true));
         alert("Invalid file type. Please select jpg file format!");
-        return;        
+        return;
     }
 });
 
@@ -445,14 +440,14 @@ $('#imgfile').bind('change', function() {
 
     //SAVE form
     $('#uploadfile2').on("submit",function (e) {
-        e.preventDefault();  
+        e.preventDefault();
 
-         $.ajax({  
-            contentType: false,       
-            cache: false,             
-            processData:false,        
+         $.ajax({
+            contentType: false,
+            cache: false,
+            processData:false,
             type: 'POST',
-            url: 'proc/upload_profile_photo_proc.php', 
+            url: 'proc/upload_profile_photo_proc.php',
             data: new FormData(this),
             success: function(response) {
                  //alert(response);
@@ -463,14 +458,14 @@ $('#imgfile').bind('change', function() {
                     alert("Upload failed: An error has occured while uploading data. Please contact your system developer. ");
                  }
             }
-        });       
+        });
 
 
     });
 });
 
 
- 
+
 
 
 
@@ -478,7 +473,7 @@ $('#imgfile').bind('change', function() {
   //CHANGE PASSOWRD
     $(document).on('click','#btn_change_password_submit',function(e){
         e.preventDefault();
-        
+
         var cur_password = "<?=$user_password?>";
         var user_inputed_cur_password = $('#current_password').val();
         var user_inputed_new_password = $('#new_passowrd').val();
@@ -490,29 +485,29 @@ $('#imgfile').bind('change', function() {
             $('#current_password').closest("div").addClass("has-error");
             $('#current_password').focus();
             alert('Current Password is required');
-            return;            
+            return;
         }else if (user_inputed_cur_password != cur_password){
             $('#current_password').closest("div").addClass("has-error");
             $('#current_password').focus();
             alert('Incorrect Current Password');
-            return;            
+            return;
         }else if (user_inputed_new_password == '') {
         //}else if (user_inputed_new_password.len) {
             $('#new_passowrd').closest("div").addClass("has-error");
             $('#new_passowrd').focus();
             alert('You forgot to enter your password');
-            return;            
+            return;
         }else if (user_inputed_new_password != user_inputed_ver_password) {
             $('#verify_password').closest("div").addClass("has-error");
             $('#verify_password').focus();
             alert('Password mismatch');
-            return;            
+            return;
         }
 
-           $.ajax({  
+           $.ajax({
               type: 'GET',
-              url: './proc/change_password_proc.php', 
-              data: { 
+              url: './proc/change_password_proc.php',
+              data: {
                   passowrd:user_inputed_new_password,
                   user_id:"<?=$user_id?>"
               },
@@ -521,15 +516,15 @@ $('#imgfile').bind('change', function() {
                       $('#current_password').val('');
                       $('#new_passowrd').val('');
                       $('#verify_password').val('');
-                      alert('Password changed! You have to logout to take effect.');          
+                      alert('Password changed! You have to logout to take effect.');
                    }else if (response.indexOf("**failed**") > -1){
                       alert("Change password failed!");
-                     
+
                    }
-                   
+
               }
-          }); 
-        
+          });
+
 
 
     });
@@ -648,7 +643,7 @@ $('#imgfile').bind('change', function() {
     <script src="../vendors/starrr/dist/starrr.js"></script>
     <!-- ***************************************************************************** -->
 
-	
+
   </body>
 </html>
 
@@ -679,7 +674,7 @@ $('#imgfile').bind('change', function() {
                     <input id="user_id" name="user_id" type="hidden" value="<?=$user_id?>"  />
                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                   </div>
-                </div>                 
+                </div>
 
                  <div class="form-group">
                   <div class="pull-right">
@@ -688,7 +683,7 @@ $('#imgfile').bind('change', function() {
                  </div>
                  </form>
                </div>
-              </div> 
+              </div>
       </div>
 
     </div>
@@ -728,7 +723,7 @@ $('#imgfile').bind('change', function() {
 
                  <div class="form-group ">
                   <label class="control-label " for="new_passowrd">
-                   New Passowrd 
+                   New Passowrd
                   </label> (<i>must be 8 character lenght</i>)
 
 
@@ -767,7 +762,7 @@ $('#imgfile').bind('change', function() {
                  </div>
                  </form>
                </div>
-              </div>  
+              </div>
 
 
       </div>
@@ -795,10 +790,9 @@ $('#imgfile').bind('change', function() {
                   <b>UX/UI Designer  :</b> Roxanne Eve G. Quinones  | <a href="mailto:roxy.guibone@gmail.com">roxy.guibone@gmail.com</a><br>
 
                </div>
-              </div>            
+              </div>
             </div>
-   
+
     </div>
   </div>
 </div>
-

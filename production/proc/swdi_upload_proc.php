@@ -69,7 +69,7 @@ for($index = 0;$index < $countfiles;$index++){
                   }
 
                   if ($Row[0] <> "SWDI Transaction No." || $Row[3] <> "LOWB" || $columns_count <> 54){
-                      die('**invalidswdifile**');
+                      die('Invalid SWDI File!');
                   }
 
 

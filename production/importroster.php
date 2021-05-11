@@ -27,9 +27,9 @@
                           </div>
                           <br><br><button disabled id="btn_merge_roster" class="btn btn-sm btn-success btn-block" type="button">Upload</button>
 
-                        </form>          
+                        </form>
 
-                    
+
                           <div class="mail_list" id="filelist">
                           </div>
 
@@ -42,7 +42,7 @@
                           <div class="mail_heading row">
                             <div class="col-md-8">
                               <div class="btn-group">
-                                
+
                                 <!-- <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Print"><i class="fa fa-print"></i></button> -->
                                 <button id="btn_refresh" class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Reset"><i class="fa fa-refresh"></i></button>
                               </div>
@@ -56,9 +56,9 @@
                           </div>
                           <div class="view-mail">
                               <div name="displayOutput" id="displayOutput" style="max-height: 300px;min-height: 300px;border: 1px #000 dashed; overflow-y: scroll; width: 100%;" src="">
-                                1. Browse and select the file to uplaod <br> 
-                                2. You can upload multiple files<br> 
-                                3. Files should be in Microsoft Excel Format (*.xlsx)<br> 
+                                1. Browse and select the file to uplaod <br>
+                                2. You can upload multiple files<br>
+                                3. Files should be in Microsoft Excel Format (*.xlsx)<br>
                                 4. Total file size should not exceed to 100BM Limit.
                               </div>
                           </div>
@@ -87,7 +87,7 @@ $(document).ready(function(){
 
    });
 
-   $('#files').on('change', function(e){ 
+   $('#files').on('change', function(e){
        var totalfiles = document.getElementById('files').files.length;
        $('#filelist').html('');
        for (var index = 0; index < totalfiles; index++) {
@@ -111,12 +111,12 @@ $(document).ready(function(){
 
 
        }
-             
+
        // AJAX request
        $('#displayOutput').html(' Commencing file upload. <br>Please wait while the system is busy uploading your files.');
-       
+
        $.ajax({
-         url: 'proc/roster_upload_proc.php', 
+         url: 'proc/roster_upload_proc.php',
          type: 'post',
          data: form_data,
 
@@ -140,7 +140,7 @@ $(document).ready(function(){
                   //}
           }},
          success: function (response) {
-         
+
           //console.log("response: " + response);
             $('#displayOutput').html(response);
 
@@ -148,14 +148,14 @@ $(document).ready(function(){
        });
 
        // $.ajax({
-       //   url: 'proc/roster_upload_proc.php', 
+       //   url: 'proc/roster_upload_proc.php',
        //   type: 'post',
        //   data: form_data,
        //   //dataType: 'json',
        //   //contentType: false,
        //   processData: false,
        //   success: function (response) {
-         
+
        //    //console.log("response: " + response);
        //      $('#displayOutput').html(response);
 
