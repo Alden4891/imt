@@ -37,7 +37,8 @@ SELECT
     , SUM(`intervensions`.`yds_child_count`) AS `YDS`,
 
   CASE WHEN (`intervensions`.`program_id`=17) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col1', -- 'Microcredit/ microfinance
-  CASE WHEN (`intervensions`.`program_id`=18) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col2'  -- 'Assistance to Pantawid farmer benefeciaries
+  CASE WHEN (`intervensions`.`program_id`=18) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col2',  -- 'Assistance to Pantawid farmer benefeciaries
+  CASE WHEN (`intervensions`.`program_id`=44) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col3'  -- 'others
 
   , COUNT(`intervensions`.`interv_id`) AS `TOTAL`
 FROM

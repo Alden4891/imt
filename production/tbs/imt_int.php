@@ -37,7 +37,8 @@ SELECT
     , SUM(`intervensions`.`yds_child_count`) AS `YDS`,
 
   CASE WHEN (`intervensions`.`program_id`=15) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col1',
-  CASE WHEN (`intervensions`.`program_id`=16) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col2'
+  CASE WHEN (`intervensions`.`program_id`=16) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col2',
+  CASE WHEN (`intervensions`.`program_id`=42) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col3'
   , COUNT(`intervensions`.`interv_id`) AS `TOTAL`
 FROM
     `db_imt`.`intervensions`

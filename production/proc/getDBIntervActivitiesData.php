@@ -4,10 +4,20 @@ include '../dbconnect.php';
 
 $return_arr = array();
 
+/*
+-- SELECT YEAR(date_conducted) AS P_YEAR, MONTH(date_conducted) AS P_MONTH, COUNT(interv_id) AS INTCOUNT FROM intervensions
+-- GROUP BY CONCAT(YEAR(date_conducted),'-', MONTH(date_conducted),'-01')
+-- ORDER BY 1,2;
+
+*/
+
 $query = "
+
 SELECT YEAR(date_conducted) AS P_YEAR, MONTH(date_conducted) AS P_MONTH, COUNT(interv_id) AS INTCOUNT FROM intervensions
+WHERE YEAR(date_conducted) BETWEEN YEAR(NOW())-1 AND YEAR(NOW())
 GROUP BY CONCAT(YEAR(date_conducted),'-', MONTH(date_conducted),'-01')
 ORDER BY 1,2;
+
 ;
 ";
 

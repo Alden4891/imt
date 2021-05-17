@@ -240,9 +240,9 @@
                 // $('#cmbClassification').closest('div').addClass('has-error');
                 // $('#cmbComponents').closest('div').addClass('has-error');
                 has_error = true;
-            } else if (numYDS <= 0) {
-                notification_show('YDS field is required!');
-                has_error = true;
+            // } else if (numYDS <= 0) {
+            //     notification_show('YDS field is required!');
+            //     has_error = true;
             } else if (txtTitle == "") {
                 notification_show('Title field is required!');
                 $('#txtTitle').closest('div').addClass('has-error');
@@ -387,6 +387,8 @@
 
     //delete intervention
     $(document).on('click', '#btn_delete_intervention', function(e) {
+        alert('Delete intervention is currently disabled! Please contact aaquinones.fo12@dswd.gov.ph for deletion requests.');
+        return ;
         e.preventDefault();
         if (confirm('You are about to delete this intervention. Do you want to continue?')) {
             var tr = $(this).closest('tr');
@@ -1020,7 +1022,7 @@ $( document ).ready(function() {
                                 <div class="input-group-addon">
                                     <i class="fa fa-users"></i>
                                 </div>
-                                <input id="numYDS" name="numYDS" type="number" class="form-control" required="required" value="1">
+                                <input id="numYDS" name="numYDS" type="number" class="form-control" value="0">
                             </div>
                         </div>
 

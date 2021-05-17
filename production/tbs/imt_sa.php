@@ -40,7 +40,8 @@ SELECT
   CASE WHEN (`intervensions`.`program_id`=11) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col2',
   CASE WHEN (`intervensions`.`program_id`=12) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col3',
   CASE WHEN (`intervensions`.`program_id`=13) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col4',
-  CASE WHEN (`intervensions`.`program_id`=14) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col5'
+  CASE WHEN (`intervensions`.`program_id`=14) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col5',
+  CASE WHEN (`intervensions`.`program_id`=41) THEN COUNT(`intervensions`.`program_id`) ELSE 0 END AS 'col6'
   , COUNT(`intervensions`.`interv_id`) AS `TOTAL`
 FROM
     `db_imt`.`intervensions`
