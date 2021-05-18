@@ -14,8 +14,8 @@
 
 	if ($interv_id==0){
 		//insert
-    	mysqli_query($con, "INSERT INTO intervensions (`subject`,`details`,`date_conducted`,`yds_child_count`,`program_id`,`HOUSEHOLD_ID`,`encoded_by`,`date_encoded`,`uid`) 
-    		                VALUES ('$subject','$details','$date_conducted','$yds_child_count','$program_id','$HOUSEHOLD_ID','$user_id',now(),uuid());");  		
+    	mysqli_query($con, "INSERT INTO intervensions (`subject`,`details`,`date_conducted`,`yds_child_count`,`program_id`,`HOUSEHOLD_ID`,`encoded_by`,`date_encoded`,`uid`)
+    		                VALUES ('$subject','$details','$date_conducted','$yds_child_count','$program_id','$HOUSEHOLD_ID','$user_id',now(),uuid());");
 	}else{
 		//update
     	mysqli_query($con, "
@@ -29,7 +29,7 @@
 			  modified_by = $user_id,
 			  date_modified = now()
 			WHERE interv_id = $interv_id;
-    	");  		
+    	");
 	}
 
 	if (mysqli_affected_rows($con)>0){
@@ -54,8 +54,15 @@
 		ORDER BY date_conducted DESC;
 	") OR die (MYSQLI_ERROR());
 
+	//identify scope of m;/cl coverage
+	$res2 = mysqli_query($con, "
+	UPDATE users u, swdi s
+		SET
+			u.scope = s.psgc_city
+		WHERE s.HOUSEHOLD_ID = '$HOUSEHOLD_ID' AND u.user_id =$user_id AND u.scope IS NULL;
+	") OR die (MYSQLI_ERROR());
 
-
+	//display result to the modal
 	while ($r = mysqli_fetch_array($res, MYSQLI_ASSOC)){
 		$interv_id = sprintf('%08d', $r['interv_id']);
 		$subject = $r['subject'];
