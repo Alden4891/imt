@@ -25,37 +25,37 @@
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
 
   </head>
-<?php
+<?php 
     if (isset($_REQUEST['cmd'])){
         if ($_REQUEST['cmd']=='logout'){
             $timeout = -1;
-            setcookie('user_id', '', time() + ($timeout), "/");
-            setcookie('fullname', '', time() + ($timeout), "/");
-            setcookie('username', '', time() + ($timeout), "/");
-            setcookie('password', '', time() + ($timeout), "/");
-            setcookie('role_id', '', time() + ($timeout), "/");
-            setcookie('role', '', time() + ($timeout), "/");
+            setcookie('user_id', '', time() + ($timeout), "/"); 
+            setcookie('fullname', '', time() + ($timeout), "/"); 
+            setcookie('username', '', time() + ($timeout), "/"); 
+            setcookie('password', '', time() + ($timeout), "/"); 
+            //setcookie('role_id', '', time() + ($timeout), "/"); 
+            setcookie('role', '', time() + ($timeout), "/"); 
 
-            // setcookie('branch_ids', '', time() + ($timeout), "/");
-            //
-            //
-            // setcookie('client_registration', '', time() + ($timeout), "/");
-            // setcookie('client_deletion', '', time() + ($timeout), "/");
-            // setcookie('payment_encoding', '', time() + ($timeout), "/");
-            // setcookie('mcpr_generation', '', time() + ($timeout), "/");
-            // setcookie('incentives_module', '', time() + ($timeout), "/");
-            // setcookie('audittrail', '', time() + ($timeout), "/");
-            // setcookie('settings_useraccounts', '', time() + ($timeout), "/");
-            // setcookie('settings_accessroles', '', time() + ($timeout), "/");
-            // setcookie('settings_dbbackup', '', time() + ($timeout), "/");
-            // setcookie('settings_dbrestore', '', time() + ($timeout), "/");
-            // setcookie('filemaintenance_agents', '', time() + ($timeout), "/");
-            // setcookie('filemaintenance_branches', '', time() + ($timeout), "/");
-            // setcookie('filemaintenance_plans', '', time() + ($timeout), "/");
-            // setcookie('reports_incentives', '', time() + ($timeout), "/");
-            // setcookie('reports_audittrails', '', time() + ($timeout), "/");
-            // setcookie('accounting', '', time() + ($timeout), "/");
-            // setcookie('burial', '', time() + ($timeout), "/");
+            setcookie('branch_ids', '', time() + ($timeout), "/"); 
+
+
+            setcookie('client_registration', '', time() + ($timeout), "/");
+            setcookie('client_deletion', '', time() + ($timeout), "/");
+            setcookie('payment_encoding', '', time() + ($timeout), "/");
+            setcookie('mcpr_generation', '', time() + ($timeout), "/");
+            setcookie('incentives_module', '', time() + ($timeout), "/");
+            setcookie('audittrail', '', time() + ($timeout), "/");
+            setcookie('settings_useraccounts', '', time() + ($timeout), "/");
+            setcookie('settings_accessroles', '', time() + ($timeout), "/");
+            setcookie('settings_dbbackup', '', time() + ($timeout), "/");
+            setcookie('settings_dbrestore', '', time() + ($timeout), "/");
+            setcookie('filemaintenance_agents', '', time() + ($timeout), "/");
+            setcookie('filemaintenance_branches', '', time() + ($timeout), "/");
+            setcookie('filemaintenance_plans', '', time() + ($timeout), "/");
+            setcookie('reports_incentives', '', time() + ($timeout), "/");
+            setcookie('reports_audittrails', '', time() + ($timeout), "/");
+            setcookie('accounting', '', time() + ($timeout), "/");
+            setcookie('burial', '', time() + ($timeout), "/");
 
 
             echo "<script>
@@ -127,7 +127,7 @@
             <form class="container" novalidate="" action="/echo" method="POST" id="myForm2">
               <h1>Create Account</h1>
                 <div class="control-group">
-
+                
                     <input type="text" id="rfullname" placeholder="Fullname" name="rfullname"  class="form-control" required>
                     <!-- <div class="invalid-feedback">Sorry, you missed this one.</div> -->
                 </div>
@@ -156,14 +156,14 @@
                     <input type="text" id="rusername" placeholder="Username" name="rusername"  class="form-control" required>
                   </div>
                 </div>
-
+            
                 <div class="control-group" >
                   <!-- Password-->
                   <div class="controls">
                     <input type="password" id="rpassword1" placeholder="Password"  name="rpassword1"  class="form-control" required>
                   </div>
                 </div>
-
+             
                 <div class="control-group" >
                   <!-- Password -->
                   <div class="controls">
@@ -198,7 +198,7 @@
   </body>
 </html>
 
-<!--
+<!-- 
 <form class="container" novalidate="" action="/echo" method="POST" id="myForm">
     <div class="form-group">
         <label class="form-control-label" for="inputSuccess1">Enter some input</label>
@@ -245,7 +245,7 @@ $("#btnSubmit").click(function(event) {
     }
       form.addClass('was-validated');
     // Perform ajax submit here...
-
+    
     if ($('#username').val().trim()=='') {
         $('#messagebox').hide();
         $('#messagebox').fadeIn('slow');
@@ -259,10 +259,10 @@ $("#btnSubmit").click(function(event) {
     if (error_count==0){
       //send POST here
 
-        $.ajax({
+        $.ajax({  
             type: 'GET',
-            url: './proc/login_proc.php',
-            data: {
+            url: './proc/login_proc.php', 
+            data: { 
                 username:$('#username').val(),
                 password:$('#password').val(),
                 mode:$('#mode').val()
@@ -271,7 +271,7 @@ $("#btnSubmit").click(function(event) {
                  //prompt(response,response);
                  if (response.indexOf("**success**") > -1){
                      window.location.href = 'index.php';
-
+                   
                  }else if (response.indexOf("**failed**") > -1){
                     $('#rmessagebox').hide();
                     $('#rmessagebox').fadeIn('slow');
@@ -293,7 +293,7 @@ $("#btnSubmit").click(function(event) {
                  } else {
                     $('#rmessagebox').hide();
                     $('#rmessagebox').fadeIn('slow');
-                    $('#rmessagebox').html('<br><div class="alert alert-danger">OPS. </div> <br>ERROR: '+response);
+                    $('#rmessagebox').html('<br><div class="alert alert-danger">OPS. </div> <br>ERROR: '+response);                   
                  }
 
 
@@ -406,12 +406,12 @@ $("#btnSubmit2").click(function(event) {
 
     if (error_count==0){
       //send POST here
+        
 
-
-        $.ajax({
+        $.ajax({  
             type: 'GET',
-            url: './proc/userregistration_proc.php',
-            data: {
+            url: './proc/userregistration_proc.php', 
+            data: { 
                 role_id:1,//$('#rrole').val(),
                 fullname:$('#rfullname').val(),
                 username:$('#rusername').val(),
@@ -419,11 +419,11 @@ $("#btnSubmit2").click(function(event) {
                 email :$('#remail').val(),
                 assignment :$('#rassignment').val(),
                 position :$('#rposition').val()
-
+               
             },
             success: function(response) {
                  //prompt(response,response);
-
+               
                  if (response.indexOf("**success**") > -1){
                     $('#rmessagebox').hide();
                     $('#rmessagebox').fadeIn('slow');
