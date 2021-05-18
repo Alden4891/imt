@@ -15,11 +15,13 @@
 			    , `users`.`fullname`
 			    , `users`.`username`
 			    , `users`.`password`
-			    , `users`.`role_id`
+          , `users`.`role_id`
+          , `users`.`SCOPE`
+          , `users`.`SCOPE_TAG`
 			    , `roles`.*
 			FROM
 			    `users`
-			    INNER JOIN `roles` 
+			    INNER JOIN `roles`
 			        ON (`roles`.`role_id` = `users`.`role_id`)
 			WHERE (`users`.`username` ='$username'
 			    AND `users`.`password` ='$password');
@@ -37,7 +39,9 @@
 		$username = $row['username'];
 		$password = $row['password'];
 		$role_id = $row['role_id'];
-		$role = $row['role'];
+    $role = $row['role'];
+    $SCOPE = $row['SCOPE'];
+    $SCOPE_TAG = $row['SCOPE_TAG'];
 
 
 
@@ -63,16 +67,18 @@
 		// $accounting = $row['accounting'];
 		// $burial = $row['burial'];
 
-	
+
 		$timeout = 86400; // 86400 = 1 day
 
 
-		setcookie('user_id', $user_id, time() + ($timeout), "/"); 
-		setcookie('fullname', $fullname, time() + ($timeout), "/"); 
-		setcookie('username', $username, time() + ($timeout), "/"); 
-		setcookie('password', $password, time() + ($timeout), "/"); 
-		setcookie('role_id', $role_id, time() + ($timeout), "/"); 
-		setcookie('role', $role, time() + ($timeout), "/"); 
+		setcookie('user_id', $user_id, time() + ($timeout), "/");
+		setcookie('fullname', $fullname, time() + ($timeout), "/");
+		setcookie('username', $username, time() + ($timeout), "/");
+		setcookie('password', $password, time() + ($timeout), "/");
+		setcookie('role_id', $role_id, time() + ($timeout), "/");
+    setcookie('role', $role, time() + ($timeout), "/");
+    setcookie('SCOPE', $SCOPE, time() + ($timeout), "/");
+    setcookie('SCOPE_TAG', $SCOPE_TAG, time() + ($timeout), "/");
 
 
 		// setcookie('client_registration', $client_registration, time() + ($timeout), "/");
@@ -96,7 +102,7 @@
 
 
         $activity = "User logged-in";
-        mysqli_query($con, "INSERT INTO tbl_audittrail (`ACTIVITIES`,`CATEGORY`,`USER_ID`,`DATE`) VALUES ('$activity','LOGIN',$user_id,NOW())");  		
+        mysqli_query($con, "INSERT INTO tbl_audittrail (`ACTIVITIES`,`CATEGORY`,`USER_ID`,`DATE`) VALUES ('$activity','LOGIN',$user_id,NOW())");
 
 		echo "**success**";
 	}

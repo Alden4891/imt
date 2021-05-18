@@ -59,7 +59,7 @@
 	UPDATE users u, swdi s
 		SET
 			u.scope = s.psgc_city
-		WHERE s.HOUSEHOLD_ID = '$HOUSEHOLD_ID' AND u.user_id =$user_id AND u.scope IS NULL;
+		WHERE s.HOUSEHOLD_ID = '$HOUSEHOLD_ID' AND u.user_id =$user_id AND u.scope = 'XII' AND u.scope_tag=0;
 	") OR die (MYSQLI_ERROR());
 
 	//display result to the modal

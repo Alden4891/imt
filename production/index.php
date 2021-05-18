@@ -8,6 +8,8 @@
     $role = "";
     $user_fullname = "";
     $user_password = "";
+    $SCOPE = "";
+    $SCOPE_TAG = "2";
 
     if(!isset($_COOKIE['user_id'])) {
         header("Location: login.php"); /* Redirect browser */
@@ -17,12 +19,14 @@
         $user_id = $_COOKIE['user_id'];
         $role = $_COOKIE['role'];
         $role_id = $_COOKIE['role_id'];
-
         $user_fullname  = $_COOKIE['fullname'];
         $user_password = $_COOKIE['password'];
-      
-    }
 
+        // echo is_null($_COOKIE['SCOPE']);
+        $SCOPE =$_COOKIE['SCOPE'];// addslashes($_COOKIE['SCOPE']);
+        $SCOPE_TAG = addslashes($_COOKIE['SCOPE_TAG']);
+
+    }
 
     $page = (isset($_REQUEST['page'])?$_REQUEST['page']:'');
     $cmd = (isset($_REQUEST['cmd'])?$_REQUEST['cmd']:'none');

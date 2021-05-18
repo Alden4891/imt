@@ -35,6 +35,8 @@
             setcookie('password', '', time() + ($timeout), "/");
             setcookie('role_id', '', time() + ($timeout), "/");
             setcookie('role', '', time() + ($timeout), "/");
+            setcookie('SCOPE', '', time() + ($timeout), "/");
+            setcookie('SCOPE_TAG', '', time() + ($timeout), "/");
 
             // setcookie('branch_ids', '', time() + ($timeout), "/");
             //
