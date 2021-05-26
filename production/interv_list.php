@@ -134,18 +134,24 @@
 
         <div class="x_content">
 
-
             <?php
             $scope_FILTER = "";
-            if ($SCOPE_TAG==0 AND $SCOPE <> '' AND addslashes($SCOPE) <> $search_municipality AND isset($_REQUEST['apply_filter'])) {
+            if ($SCOPE_TAG==0 AND addslashes($SCOPE) <> 'XII' AND addslashes($SCOPE) <> $search_municipality AND isset($_REQUEST['apply_filter'])) {
                 $scope_FILTER = " AND `swdi`.`psgc_city`='".addslashes($SCOPE)."'";
 
                 echo "
-                  $SCOPE_TAG $SCOPE $search_municipality
                 <div class=\"alert alert-danger\" role=\"alert\">
                       Ops! you are not allowed to access records of Municipalities other than $SCOPE
                 </div>
                 ";
+            }elseif ($SCOPE_TAG==1 AND addslashes($SCOPE) <> 'XII' AND addslashes($SCOPE) <> $search_province AND isset($_REQUEST['apply_filter'])) {
+
+              $scope_FILTER = " AND `swdi`.`psgc_province`='".addslashes($SCOPE)."'";
+              echo "
+              <div class=\"alert alert-danger\" role=\"alert\">
+                    Ops! you are not allowed to access records of Province other than $SCOPE
+              </div>
+              ";
 
             }else{
               echo "
@@ -156,9 +162,6 @@
             }
 
             ?>
-
-
-
 
             <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
                 <thead>

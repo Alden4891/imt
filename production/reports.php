@@ -1,9 +1,4 @@
 
-
-
-
-
-
 <div class="row">
 
 
@@ -32,7 +27,7 @@
                       <div class="form-group row">
                         <label class="control-label col-md-3 col-sm-3 ">REGION</label>
                         <div class="col-md-9 col-sm-9 ">
-                          <select class="select2_single form-control" tabindex="-1" id=optionRegion name="optionRegion" >
+                          <select class="select2_single form-control" tabindex="-1" id=optionRegion name="optionRegion">
                             <option value='-1'>Select</option>
                           </select>
                         </div>
@@ -95,7 +90,7 @@
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-9 col-sm-9  offset-md-3">
-                          <button type="submit" class="btn btn-info" disabled id="btnDownloadInterv">Download</button>
+                          <button type="submit" class="btn btn-secondary" disabled id="btnDownloadInterv">Download</button>
                         </div>
                       </div>
 
@@ -136,18 +131,20 @@ $(document).ready(function(e) {
     $(document).on('change', "#optionRegion", function(e) {
         e.preventDefault();
         var value = $(this).children("option:selected").val()
+        var scope_tag = "<?=$SCOPE_TAG?>";
 
-        if (value != -1) {
-          $('#btnDownloadInterv').removeAttr('disabled');
-          $('#btnDownloadInterv').removeClass('btn-success');
-          $('#btnDownloadInterv').addClass('btn-info');
+        // if (scope_tag == 2) {
+          if (value != -1 && scope_tag == 2) {
+            $('#btnDownloadInterv').removeAttr('disabled');
+            $('#btnDownloadInterv').removeClass('btn-success');
+            $('#btnDownloadInterv').addClass('btn-info');
+          }else{
+              $('#btnDownloadInterv').attr('disabled',true);
+              $('#btnDownloadInterv').addClass('btn-secondary');
+              $('#btnDownloadInterv').removeClass('btn-info');
+          }
+        // }
 
-
-        }else{
-            $('#btnDownloadInterv').attr('disabled',true);
-            $('#btnDownloadInterv').addClass('btn-success');
-            $('#btnDownloadInterv').removeClass('btn-info');
-        }
         //get interv component values
         $.ajax({
             type: 'GET',
@@ -169,6 +166,24 @@ $(document).ready(function(e) {
     $(document).on('change', "#optionProvince", function(e) {
         e.preventDefault();
         var value = $(this).children("option:selected").val()
+        var scope_tag = "<?=$SCOPE_TAG?>";
+        var scope = "<?=($SCOPE)?>".replace("'","\\'");
+
+        console.log(scope);
+        console.log(scope_tag);
+
+
+        if (scope_tag==1) {
+          if (value != -1 && scope==value) {
+            $('#btnDownloadInterv').removeAttr('disabled');
+            $('#btnDownloadInterv').removeClass('btn-success');
+            $('#btnDownloadInterv').addClass('btn-info');
+          }else{
+              $('#btnDownloadInterv').attr('disabled',true);
+              $('#btnDownloadInterv').addClass('btn-secondary');
+              $('#btnDownloadInterv').removeClass('btn-info');
+          }
+        }
 
         //get interv component values
         $.ajax({
@@ -178,7 +193,7 @@ $(document).ready(function(e) {
                 tableName: "lib_address",
                 valueMember: "DISTINCT MUNICIPALITY",
                 displayMember: "MUNICIPALITY",
-                condition: "PROVINCE = '" + value + "'",
+                condition: "PROVINCE = '" + value + "'  ",
             },
             success: function(response) {
 
@@ -191,6 +206,22 @@ $(document).ready(function(e) {
     $(document).on('change', "#optionMunicipality", function(e) {
         e.preventDefault();
         var value = $(this).children("option:selected").val()
+        var scope_tag = "<?=$SCOPE_TAG?>";
+        var scope = "<?=($SCOPE)?>".replace("'","\\'");
+
+
+        if (scope_tag == 0) {
+            if (value != -1 && scope == value) {
+              $('#btnDownloadInterv').removeAttr('disabled');
+              $('#btnDownloadInterv').removeClass('btn-success');
+              $('#btnDownloadInterv').addClass('btn-info');
+            }else{
+                $('#btnDownloadInterv').attr('disabled',true);
+                $('#btnDownloadInterv').addClass('btn-secondary');
+                $('#btnDownloadInterv').removeClass('btn-info');
+            }
+        }
+
 
         //get interv component values
         $.ajax({

@@ -1,0 +1,12 @@
+UPDATE SWDI 
+SET psgc_province = 'SARANGANI'
+WHERE PSGC_CITY = 'GENERAL SANTOS CITY (DADIANGAS)';
+
+UPDATE `db_imt`.`users` SET `SCOPE_TAG`='1' WHERE `user_id`='24';
+UPDATE `db_imt`.`users` SET `SCOPE_TAG`='1' WHERE `user_id`='25';
+UPDATE `db_imt`.`users` SET `SCOPE`='SOUTH COTABATO' WHERE `user_id`='24';
+UPDATE `db_imt`.`users` SET `SCOPE`='XII' WHERE `user_id`='24';
+UPDATE `db_imt`.`users` SET `SCOPE`='COTABATO (NORTH COTABATO)' WHERE `user_id`='25';
+UPDATE `db_imt`.`users` SET `SCOPE`='SARANGANI' WHERE `user_id`='24';
+
+UPDATE `db_imt`.`lib_address` SET `PROVINCE`='SARANGANI' WHERE `id`='30';
