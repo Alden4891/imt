@@ -41,7 +41,7 @@ SELECT
     , `lib_comp`.`comp_desc`
     , `lib_subcomp`.`subcomp`
     , `lib_programs`.`program`
-    , `users`.`fullname` AS `Encoded_by`
+    , `users`.`fullname` AS `casemanamer_name`
     , `intervensions`.`date_encoded`
     , `users_1`.`fullname` AS `Last_modified_by`
     , `intervensions`.`date_modified`
@@ -106,5 +106,5 @@ $TBS->PlugIn(OPENTBS_MERGE_SPECIAL_ITEMS);
 
 // Define the name of the output file
 //$save_as = (isset($_POST['save_as']) && (trim($_POST['save_as'])!=='') && ($_SERVER['SERVER_NAME']=='localhost')) ? trim($_POST['save_as']) : '';
-$output_file_name = 'IMT_ES_'.date('Y-m-d').'.xlsx';
+$output_file_name = 'IMT_MASTERLIST_'.date('Y-m-d').'.xlsx';
 $TBS->Show(OPENTBS_DOWNLOAD, $output_file_name);
