@@ -11,7 +11,7 @@
     $filter_lowb  = "";
     $search_lowb  = "";
     $search_keyword  = "";
-    $search_criteria  = "";
+    // $search_criteria  = "";
 
 
     if (isset($_REQUEST['apply_filter'])){
@@ -227,6 +227,7 @@
             var txtIntervDescription = $('#txtIntervDescription').val();
             //var txtIntervDescription = $('#editor-one').html();
 
+
             var has_error = false;
             if (cmbProgram < 0) {
                 notification_show('The following fields are required! <br> <ul><li>Compoents</li><li>Classification</li><li>Program/Service</li></ul>');
@@ -369,21 +370,19 @@
 
     //delete intervention
     $(document).on('click', '#btn_delete_intervention', function(e) {
-        alert('Delete intervention is currently disabled! Please contact aaquinones.fo12@dswd.gov.ph for deletion requests.');
-        return ;
         e.preventDefault();
         if (confirm('You are about to delete this intervention. Do you want to continue?')) {
             var tr = $(this).closest('tr');
             $.ajax({
                 type: 'POST',
-                url: 'proc/intervention_delete.php',
+                url: '<?=site_url('interventions/intervention_delete')?>',
                 data: {
-                    interv_id: $(this).attr('interv_id')
+                    interv_id: $(this).attr('interv_id'),
+                    user_id: '<?=$this->session->userdata('user_id')?>'
                 },
                 success: function(response) {
-
-                    if (response.indexOf("**success**") > -1) {
-
+                    var obj = JSON.parse(response);
+                    if (obj.result == 1) {
                         tr.fadeOut(500, function() {
                             parent.remove();
                         });
@@ -586,7 +585,7 @@
                 valueMember: "program_id",
                 displayMember: "program",
                 condition: "subcomp_id = " + value,
-                defaultValue: '',
+               // defaultValue: '',
             },
             success: function(response) {
 

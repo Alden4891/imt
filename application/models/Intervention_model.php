@@ -14,6 +14,7 @@ class Intervention_model extends CI_Model {
         $this->db->join('lib_subcomp s', 's.subcomp_id = p.subcomp_id');
         $this->db->join('lib_comp c', 'c.comp_id = s.comp_id');
         $this->db->where('i.HOUSEHOLD_ID', $household_id);
+        $this->db->where('i.is_deleted', 0);
         $this->db->order_by('i.date_conducted', 'DESC');
         $query = $this->db->get();
 
@@ -69,6 +70,16 @@ class Intervention_model extends CI_Model {
             // display result if success
             return $this->get_interventions($HOUSEHOLD_ID);
         }
+    }
+
+    public function delete_intervention($data) {
+        extract($data);
+        $this->db->where('INTERV_ID', $interv_id)
+        ->set('is_deleted', 1)
+        ->set('date_deleted', 'NOW()', FALSE)
+        ->set('deleted_by', $user_id)
+        ->update('interventions');
+        return array("result"=>1);
     }
 
 }

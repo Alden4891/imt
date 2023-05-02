@@ -67,7 +67,6 @@ class interventions extends CI_Controller {
 	    }
     }
 
-
     public function getInterventionDetails(){
     	$this->load->model('Intervention_model');
     	$interv_id = $this->input->post('interv_id');
@@ -112,5 +111,12 @@ class interventions extends CI_Controller {
 		}
 
     	print($inner_html);
+    }
+
+    public function intervention_delete(){
+    	$this->load->model('Intervention_model');
+    	$post_data = $this->input->post();    
+    	$result = $this->Intervention_model->delete_intervention($post_data);
+    	return print_r(json_encode($result));
     }
 }
