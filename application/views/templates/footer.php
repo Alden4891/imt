@@ -109,6 +109,7 @@ $('#imgfile').bind('change', function() {
             return;
         }
 
+
            $.ajax({
               type: 'GET',
               url: './proc/change_password_proc.php',
@@ -168,83 +169,83 @@ $('#imgfile').bind('change', function() {
 
     <!-- daashboard - scripts ----------------------------------------------------------->
     <!-- jQuery -->
-    <script src="<?=base_url()?>vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="<?=base_url()?>vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- FastClick -->
-    <script src="<?=base_url()?>vendors/fastclick/lib/fastclick.js"></script>
+    <script src="vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="<?=base_url()?>vendors/nprogress/nprogress.js"></script>
+    <script src="vendors/nprogress/nprogress.js"></script>
     <!-- Chart.js -->
-    <script src="<?=base_url()?>vendors/Chart.js/dist/Chart.min.js"></script>
+    <script src="vendors/Chart.js/dist/Chart.min.js"></script>
     <!-- gauge.js -->
-    <script src="<?=base_url()?>vendors/gauge.js/dist/gauge.min.js"></script>
+    <script src="vendors/gauge.js/dist/gauge.min.js"></script>
     <!-- bootstrap-progressbar -->
-    <script src="<?=base_url()?>vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <!-- iCheck -->
-    <script src="<?=base_url()?>vendors/iCheck/icheck.min.js"></script>
+    <script src="vendors/iCheck/icheck.min.js"></script>
     <!-- Skycons -->
-    <script src="<?=base_url()?>vendors/skycons/skycons.js"></script>
+    <script src="vendors/skycons/skycons.js"></script>
     <!-- Flot -->
-    <script src="<?=base_url()?>vendors/Flot/jquery.flot.js"></script>
-    <script src="<?=base_url()?>vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="<?=base_url()?>vendors/Flot/jquery.flot.time.js"></script>
-    <script src="<?=base_url()?>vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="<?=base_url()?>vendors/Flot/jquery.flot.resize.js"></script>
+    <script src="vendors/Flot/jquery.flot.js"></script>
+    <script src="vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="vendors/Flot/jquery.flot.time.js"></script>
+    <script src="vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="vendors/Flot/jquery.flot.resize.js"></script>
     <!-- Flot plugins -->
-    <script src="<?=base_url()?>vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="<?=base_url()?>vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="<?=base_url()?>vendors/flot.curvedlines/curvedLines.js"></script>
+    <script src="vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="vendors/flot.curvedlines/curvedLines.js"></script>
     <!-- DateJS -->
-    <script src="<?=base_url()?>vendors/DateJS/build/date.js"></script>
+    <script src="vendors/DateJS/build/date.js"></script>
     <!-- JQVMap -->
-    <script src="<?=base_url()?>vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="<?=base_url()?>vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="<?=base_url()?>vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <script src="vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
     <!-- bootstrap-daterangepicker -->
-    <script src="<?=base_url()?>vendors/moment/min/moment.min.js"></script>
-    <script src="<?=base_url()?>vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="vendors/moment/min/moment.min.js"></script>
+    <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="<?=base_url()?>build/js/custom.js"></script>
+    <script src="build/js/custom.js"></script>
     <!-- /daashboard - scripts ----------------------------------------------------------->
 
     <!-- Datatables -->
-    <script src="<?=base_url()?>vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="<?=base_url()?>vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="<?=base_url()?>vendors/jszip/dist/jszip.min.js"></script>
-    <script src="<?=base_url()?>vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="<?=base_url()?>vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="vendors/jszip/dist/jszip.min.js"></script>
+    <script src="vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="vendors/pdfmake/build/vfs_fonts.js"></script>
 
     <!-- ***************************************************************************** -->
     <!--* bootstrap-wysiwyg -->
-    <script src="<?=base_url()?>vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-    <script src="<?=base_url()?>vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-    <script src="<?=base_url()?>vendors/google-code-prettify/src/prettify.js"></script>
+    <script src="vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="vendors/google-code-prettify/src/prettify.js"></script>
     <!-- jQuery Tags Input -->
-    <script src="<?=base_url()?>vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <script src="vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
     <!-- Switchery -->
-    <script src="<?=base_url()?>vendors/switchery/dist/switchery.min.js"></script>
+    <script src="vendors/switchery/dist/switchery.min.js"></script>
     <!-- Select2 -->
-    <script src="<?=base_url()?>vendors/select2/dist/js/select2.full.min.js"></script>
+    <script src="vendors/select2/dist/js/select2.full.min.js"></script>
     <!-- Parsley -->
-    <script src="<?=base_url()?>vendors/parsleyjs/dist/parsley.min.js"></script>
+    <script src="vendors/parsleyjs/dist/parsley.min.js"></script>
     <!-- Autosize -->
-    <script src="<?=base_url()?>vendors/autosize/dist/autosize.min.js"></script>
+    <script src="vendors/autosize/dist/autosize.min.js"></script>
     <!-- jQuery autocomplete -->
-    <script src="<?=base_url()?>vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <script src="vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
     <!-- starrr -->
-    <script src="<?=base_url()?>vendors/starrr/dist/starrr.js"></script>
+    <script src="vendors/starrr/dist/starrr.js"></script>
     <!-- ***************************************************************************** -->
 
 
@@ -276,7 +277,7 @@ $('#imgfile').bind('change', function() {
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="imgfile" name="imgfile" aria-describedby="inputGroupFileAddon01">
                     <input id="user_id" name="user_id" type="hidden" value="<?=$user_id?>"  />
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    <label class="custom-file-label" for="imgfile">Choose file</label>
                   </div>
                 </div>
 
@@ -388,7 +389,7 @@ $('#imgfile').bind('change', function() {
             <div class="modal-body">
               <div class="row">
                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <b>App Name:</b> DSWD Biometric System <br>
+                  <b>App Name:</b> DSWD  <br>
                   <b>Version :</b> 2.0 <br><hr>
                   <b>System Developer :</b> Alden A. Quinones | <a href="mailto:alden.roxy@gmail.com">alden.roxy@gmail.com</a><br>
                   <b>UX/UI Designer  :</b> Roxanne Eve G. Quinones  | <a href="mailto:roxy.guibone@gmail.com">roxy.guibone@gmail.com</a><br>

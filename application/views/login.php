@@ -10,19 +10,19 @@
     <title>DSWD XII | <?=APP_TITLE;?> </title>
 
     <!-- Bootstrap -->
-    <link href="<?=base_url('vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet">
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="<?=base_url('vendors/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet">
+    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="<?=base_url('vendors/nprogress/nprogress.css')?>" rel="stylesheet">
+    <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="<?=base_url('vendors/animate.css/animate.min.css')?>" rel="stylesheet">
+    <link href="vendors/animate.css/animate.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="<?=base_url('build/css/custom.min.css')?>" rel="stylesheet">
+    <link href="build/css/custom.min.css" rel="stylesheet">
 
     <!-- jQuery -->
-    <script src="<?=base_url('vendors/jquery/dist/jquery.min.js')?>"></script>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
 
   </head>
 
@@ -66,7 +66,7 @@
                 <br />
 
                 <div>
-                  <h1><img src="<?=base_url('images/pantawid.svg')?>" style="width: 40px;fill:#ffffff;"> DSWD XII | <?=APP_TITLE?></h1>
+                  <h1><img src="images/pantawid.svg" style="width: 40px;fill:#ffffff;"> DSWD XII | <?=APP_TITLE?></h1>
                   <p>DSWD XII © 2020 All Rights Reserved.</p>
                 </div>
                               <div id=rmessagebox></div>
@@ -215,7 +215,7 @@ $("#btn_login").click(function(event) {
 
         $.ajax({
             type: 'POST',
-            url: "<?=site_url('user/login')?>",
+            url: "user/login",
             data: {
                 username:$('#username').val(),
                 password:$('#password').val(),

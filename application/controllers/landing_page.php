@@ -14,11 +14,11 @@ class landing_page extends CI_Controller {
 			$this->load->view('login');
 		}else{
 
-			// $data['user_id'] = $this->session->userdata('user_id');
-			// $data['user_fullname'] = $this->session->userdata('user_fullname');
+			$data['user_id'] = $this->session->userdata('user_id');
+			$data['user_fullname'] = $this->session->userdata('user_fullname');
 
 			$this->load->view('templates/header');
-			$this->load->view('dashboard');
+			$this->load->view('dashboard',$data);
 			$this->load->view('templates/footer');
 		}
 

@@ -11,46 +11,49 @@
 
     <title>DSWD XII | <?=APP_TITLE;?></title>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    
+
 
     <!-- Bootstrap -->
-    <link href="<?=base_url('vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet">
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="<?=base_url('vendors/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet">
+    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- NProgress -->
-    <link href="<?=base_url('')?>vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
-    <link href="<?=base_url('')?>vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <link href="vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
     <!-- bootstrap-progressbar -->
-    <link href="<?=base_url('')?>vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
-    <link href="<?=base_url('')?>vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <link href="vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
-    <link href="<?=base_url('')?>vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
     <!-- Datatables -->
-    <link href="<?=base_url('')?>vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="<?=base_url('')?>vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="<?=base_url('')?>vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="<?=base_url('')?>vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="<?=base_url('')?>vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
     <!-- ***************************************************************************** -->
     <!-- bootstrap-wysiwyg -->
-    <link href="<?=base_url('')?>vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+    <link href="vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
     <!-- Select2 -->
-    <link href="<?=base_url('')?>vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <link href="vendors/select2/dist/css/select2.min.css" rel="stylesheet">
     <!-- Switchery -->
-    <link href="<?=base_url('')?>vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <link href="vendors/switchery/dist/switchery.min.css" rel="stylesheet">
     <!-- starrr -->
-    <link href="<?=base_url('')?>vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <link href="vendors/starrr/dist/starrr.css" rel="stylesheet">
     <!-- ***************************************************************************** -->
 
 
     <!-- Custom Theme Style -->
-    <link href="<?=base_url('')?>build/css/custom.min.css" rel="stylesheet">
+    <link href="build/css/custom.min.css" rel="stylesheet">
 
 
 
@@ -72,7 +75,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="<?=base_url('user/get_picture/'.$this->session->userdata('user_id'))?>" alt="..." class="img-circle profile_img">
+                <img src="user/get_picture/<?=$this->session->userdata('user_id')?>" alt="..." class="img-circle profile_img">
               </div>
 
               <div class="profile_info">
@@ -90,11 +93,11 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a href="<?=site_url()?>"><i class="fa fa-dashboard"></i> DASHBAORD</span></a></li>
-                  <li><a href="<?=site_url('interventions')?>"><i class="fa fa-child"></i> ENCODE</span></a></li>
+                  <li><a href="<?=site_url('interventions')?>"><i class="fa fa-child"></i> INTERVENTIONS</span></a></li>
 <!--                   <li><a href="?page=importdata"><i class="fa fa-upload"></i> IMPORT DATA</span></a></li>
                   <li><a href="?page=exportdata"><i class="fa fa-download"></i> EXPORT DATA</span></a></li>
  -->
-                   <li><a><i class="fa fa-exchange"></i> IMPORT/EXPORT <span class="fa fa-chevron-down"></span></a>
+<!--                    <li><a><i class="fa fa-exchange"></i> IMPORT/EXPORT <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="?page=importdata" class="">IMPORT DATA</a></li>
                       <li><a href="?page=exportdata" class="">EXPORT DATA</a></li>
@@ -105,9 +108,9 @@
                       <li><a href="?page=importroster">HOUSEHOLD ROSTER</a></li>
                       <li><a href="?page=importswdi">SWDI SCORES</a></li>
                     </ul>
-                  </li>
+                  </li> -->
 
-                  <li><a href="?page=reports"><i class="fa fa-area-chart"></i> REPORTS</span></a></li>
+                  <li><a href="X"><i class="fa fa-area-chart"></i> REPORTS</span></a></li>
                   <li hidden><a href="?page=debug"><i class="fa fa-flash"></i> DEBUGGER</span></a></li>
                 </ul>
               </div>
@@ -147,7 +150,7 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="<?=base_url('user/get_picture/'.$this->session->userdata('user_id'))?>" alt="">
+                    <img src="user/get_picture/<?=$this->session->userdata('user_id')?>" alt="">
                     <?=$this->session->userdata('user_fullname')?>
 
                   </a>

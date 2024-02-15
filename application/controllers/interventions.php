@@ -4,9 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class interventions extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        
-        
-        
     }
     
 	public function index()
@@ -18,8 +15,13 @@ class interventions extends CI_Controller {
 		    $data['interventions'] = $this->Grantee_model->get_grantee_listings($filter_data);
 		}
 
+		$data['user_id'] = $this->session->userdata('user_id');
+		$data['user_fullname'] = $this->session->userdata('user_fullname');
+
 		$this->load->view('templates/header');
 		$this->load->view('interventions',$data);
+		$this->load->view('interv_list_modal');
+		$this->load->view('interv_list_editor_modal');
 		$this->load->view('templates/footer');
 	}
 
