@@ -10,19 +10,19 @@
     <title>DSWD XII | <?=APP_TITLE;?> </title>
 
     <!-- Bootstrap -->
-    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?=site_url()?>vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?=site_url()?>vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="<?=site_url()?>vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="vendors/animate.css/animate.min.css" rel="stylesheet">
+    <link href="<?=site_url()?>vendors/animate.css/animate.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="build/css/custom.min.css" rel="stylesheet">
+    <link href="<?=site_url()?>build/css/custom.min.css" rel="stylesheet">
 
     <!-- jQuery -->
-    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="<?=site_url()?>vendors/jquery/dist/jquery.min.js"></script>
 
   </head>
 
@@ -41,12 +41,12 @@
 
                 <div class="control-group">
                   <div class="controls">
-                    <input type="text" id="username" placeholder="username" name="username" value="admin" class="form-control" required>
+                    <input type="text" id="username" placeholder="username" name="username" value="aaquinones" class="form-control" required>
                   </div>
                 </div>
                 <div class="control-group">
                   <div class="controls">
-                    <input type="password" id="password" placeholder="password" name="password" value="zzzzzzzz" class="form-control" required>
+                    <input type="password" id="password" placeholder="password" name="password" value="protectme@4891021408271209" class="form-control" required>
                   </div>
                 </div>
 
@@ -66,7 +66,7 @@
                 <br />
 
                 <div>
-                  <h1><img src="images/pantawid.svg" style="width: 40px;fill:#ffffff;"> DSWD XII | <?=APP_TITLE?></h1>
+                  <h1><img src="<?=site_url()?>images/pantawid.svg" style="width: 40px;fill:#ffffff;"> DSWD XII | <?=APP_TITLE?></h1>
                   <p>DSWD XII © 2020 All Rights Reserved.</p>
                 </div>
                               <div id=rmessagebox></div>
@@ -215,22 +215,22 @@ $("#btn_login").click(function(event) {
 
         $.ajax({
             type: 'POST',
-            url: "user/login",
+            url: "authenticate",
             data: {
                 username:$('#username').val(),
                 password:$('#password').val(),
                 mode:$('#mode').val()
             },
             success: function(response) {
-                 console.log(response);
                  var responseObject = JSON.parse(response);    
-                 if (responseObject.result == false) {
+                 
+                 if (responseObject.status == false) {
                     $('#rmessagebox').hide();
                     $('#rmessagebox').fadeIn('slow');
                     $('#rmessagebox').html('<br><div class="alert alert-danger">'+responseObject.message+'</div>')                    
                  }else{
-                     window.location.href = "<?=site_url()?>";
-
+                    window.location.href = "<?=site_url()?>";
+                    // console.log('<?=site_url()?>');
                  }
 
             }
@@ -253,147 +253,143 @@ $("#rpassword1").keyup(function() {
     }
 });
 
-$("#btn_register").click(function(event) {
-    event.preventDefault();
-    // Fetch form to apply custom Bootstrap validation
-    var form = $("#myForm2")
-    if (form[0].checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-      form.addClass('was-validated');
-    var error_count = 0;
+// $("#btn_register").click(function(event) {
+    // event.preventDefault();
+    // // Fetch form to apply custom Bootstrap validation
+    // var form = $("#myForm2")
+    // if (form[0].checkValidity() === false) {
+    //   event.preventDefault()
+    //   event.stopPropagation()
+    // }
+    //   form.addClass('was-validated');
+    // var error_count = 0;
 
-    if ($('#rfullname').val().trim()=='') {
-        $('#rmessagebox2').hide();
-        $('#rmessagebox2').fadeIn('slow');
-        $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter fullname!.</div>')
-        $('#rfullname').focus();
-        error_count+=1;
-        return;
-    }
+    // if ($('#rfullname').val().trim()=='') {
+    //     $('#rmessagebox2').hide();
+    //     $('#rmessagebox2').fadeIn('slow');
+    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter fullname!.</div>')
+    //     $('#rfullname').focus();
+    //     error_count+=1;
+    //     return;
+    // }
 
-    if ($('#remail').val().trim()=='') {
-        $('#rmessagebox2').hide();
-        $('#rmessagebox2').fadeIn('slow');
-        $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter email address!.</div>')
-        $('#remail').focus();
-        error_count+=1;
-        return;
-    }
+    // if ($('#remail').val().trim()=='') {
+    //     $('#rmessagebox2').hide();
+    //     $('#rmessagebox2').fadeIn('slow');
+    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter email address!.</div>')
+    //     $('#remail').focus();
+    //     error_count+=1;
+    //     return;
+    // }
 
-    if ($('#rposition').val().trim()=='') {
-        $('#rmessagebox2').hide();
-        $('#rmessagebox2').fadeIn('slow');
-        $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter your position/designation!.</div>')
-        $('#rposition').focus();
-        error_count+=1;
-        return;
-    }
+    // if ($('#rposition').val().trim()=='') {
+    //     $('#rmessagebox2').hide();
+    //     $('#rmessagebox2').fadeIn('slow');
+    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter your position/designation!.</div>')
+    //     $('#rposition').focus();
+    //     error_count+=1;
+    //     return;
+    // }
 
-    if ($('#rassignment').val().trim()=='') {
-        $('#rmessagebox2').hide();
-        $('#rmessagebox2').fadeIn('slow');
-        $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter area of assignment!.</div>')
-        $('#rassignment').focus();
-        error_count+=1;
-        return;
-    }
-
-
-    if ($('#rrole').val()=='0'){
-        $('#rmessagebox2').hide();
-        $('#rmessagebox2').fadeIn('slow');
-        $('#rmessagebox2').html('<br><div class="alert alert-danger">Please select user role</div>')
-        $('#rrole').focus();
-        error_count+=1;
-        return;
-    }
-
-    if ($('#rusername').val().trim()=='') {
-        $('#rmessagebox2').hide();
-        $('#rmessagebox2').fadeIn('slow');
-        $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter username!.</div>')
-        $('#rusername').focus();
-        error_count+=1;
-        return;
-    }
-
-    if ($('#rpassword1').val().trim()=='') {
-        $('#rmessagebox2').hide();
-        $('#rmessagebox2').fadeIn('slow');
-        $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter password!.</div>')
-        $('#rpassword1').focus();
-        error_count+=1;
-        return;
-    }
-
-    if ($('#rpassword1').val().trim()!=$('#rpassword2').val().trim()) {
-        $('#rmessagebox2').hide();
-        $('#rmessagebox2').fadeIn('slow');
-        $('#rmessagebox2').html('<br><div class="alert alert-danger">Password missmatch!.</div>')
-        $('#rpassword2').focus();
-        error_count+=1;
-        return;
-    }
+    // if ($('#rassignment').val().trim()=='') {
+    //     $('#rmessagebox2').hide();
+    //     $('#rmessagebox2').fadeIn('slow');
+    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter area of assignment!.</div>')
+    //     $('#rassignment').focus();
+    //     error_count+=1;
+    //     return;
+    // }
 
 
+    // if ($('#rrole').val()=='0'){
+    //     $('#rmessagebox2').hide();
+    //     $('#rmessagebox2').fadeIn('slow');
+    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Please select user role</div>')
+    //     $('#rrole').focus();
+    //     error_count+=1;
+    //     return;
+    // }
 
-    if (error_count==0){
-      //send POST here
+    // if ($('#rusername').val().trim()=='') {
+    //     $('#rmessagebox2').hide();
+    //     $('#rmessagebox2').fadeIn('slow');
+    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter username!.</div>')
+    //     $('#rusername').focus();
+    //     error_count+=1;
+    //     return;
+    // }
+
+    // if ($('#rpassword1').val().trim()=='') {
+    //     $('#rmessagebox2').hide();
+    //     $('#rmessagebox2').fadeIn('slow');
+    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter password!.</div>')
+    //     $('#rpassword1').focus();
+    //     error_count+=1;
+    //     return;
+    // }
+
+    // if ($('#rpassword1').val().trim()!=$('#rpassword2').val().trim()) {
+    //     $('#rmessagebox2').hide();
+    //     $('#rmessagebox2').fadeIn('slow');
+    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Password missmatch!.</div>')
+    //     $('#rpassword2').focus();
+    //     error_count+=1;
+    //     return;
+    // }
+
+    // if (error_count==0){
+    //   //send POST here
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: "<?=site_url('user/register')?>",
+    //         data: {
+    //             role_id:1,//$('#rrole').val(),
+    //             fullname:$('#rfullname').val(),
+    //             username:$('#rusername').val(),
+    //             password :$('#rpassword1').val(),
+    //             email :$('#remail').val(),
+    //             assignment :$('#rassignment').val(),
+    //             position :$('#rposition').val()
+
+    //         },
+    //         success: function(response) {
+    //              console.log(response);
+    //              var responseObject = JSON.parse(response);
+
+    //              if (responseObject.status === 'success') {
+    //                 $('#rmessagebox2').hide();
+    //                 $('#rmessagebox2').fadeIn('slow');
+    //                 $('#rmessagebox2').html('<br><div class="alert alert-success">Registration Successful. You can now LOGIN</div>')
+    //              }else if (responseObject.status === 'exists') {
+    //                 $('#rmessagebox2').hide();
+    //                 $('#rmessagebox2').fadeIn('slow');
+    //                 $('#rmessagebox2').html('<br><div class="alert alert-danger">Username already exists!.</div>')
+    //              }
+
+    //              // if (response.indexOf("**success**") > -1){
+    //              //    $('#rmessagebox').hide();
+    //              //    $('#rmessagebox').fadeIn('slow');
+    //              //    $('#rmessagebox').html('<br><div class="alert alert-success">Registration Successful. You can now LOGIN</div>')
+    //              //    //$('#registrationModal').modal('hide')
+    //              //    window.location="login.php";
+    //              // }else if (response.indexOf("**failed**") > -1){
+    //              //    $('#rmessagebox').hide();
+    //              //    $('#rmessagebox').fadeIn('slow');
+    //              //    $('#rmessagebox').html('<br><div class="alert alert-danger">Registration Failed!.</div>')
+    //              // }else if (response.indexOf("**exists**") > -1){
+    //              //    $('#rmessagebox').hide();
+    //              //    $('#rmessagebox').fadeIn('slow');
+    //              //    $('#rmessagebox').html('<br><div class="alert alert-danger">Username already exists!.</div>')
+    //              // }
 
 
-        $.ajax({
-            type: 'POST',
-            url: "<?=site_url('user/register')?>",
-            data: {
-                role_id:1,//$('#rrole').val(),
-                fullname:$('#rfullname').val(),
-                username:$('#rusername').val(),
-                password :$('#rpassword1').val(),
-                email :$('#remail').val(),
-                assignment :$('#rassignment').val(),
-                position :$('#rposition').val()
-
-            },
-            success: function(response) {
-                 console.log(response);
-                 var responseObject = JSON.parse(response);
-
-                 if (responseObject.status === 'success') {
-                    $('#rmessagebox2').hide();
-                    $('#rmessagebox2').fadeIn('slow');
-                    $('#rmessagebox2').html('<br><div class="alert alert-success">Registration Successful. You can now LOGIN</div>')
-                 }else if (responseObject.status === 'exists') {
-                    $('#rmessagebox2').hide();
-                    $('#rmessagebox2').fadeIn('slow');
-                    $('#rmessagebox2').html('<br><div class="alert alert-danger">Username already exists!.</div>')
-                 }
-
-                 // if (response.indexOf("**success**") > -1){
-                 //    $('#rmessagebox').hide();
-                 //    $('#rmessagebox').fadeIn('slow');
-                 //    $('#rmessagebox').html('<br><div class="alert alert-success">Registration Successful. You can now LOGIN</div>')
-                 //    //$('#registrationModal').modal('hide')
-                 //    window.location="login.php";
-                 // }else if (response.indexOf("**failed**") > -1){
-                 //    $('#rmessagebox').hide();
-                 //    $('#rmessagebox').fadeIn('slow');
-                 //    $('#rmessagebox').html('<br><div class="alert alert-danger">Registration Failed!.</div>')
-                 // }else if (response.indexOf("**exists**") > -1){
-                 //    $('#rmessagebox').hide();
-                 //    $('#rmessagebox').fadeIn('slow');
-                 //    $('#rmessagebox').html('<br><div class="alert alert-danger">Username already exists!.</div>')
-                 // }
+    //         }
+    //     });
 
 
-            }
-        });
+    // } //if error ==0
 
-
-    } //if error ==0
-
-});
+// });
 
 
 </script>

@@ -152,18 +152,11 @@
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                     <img src="user/get_picture/<?=$this->session->userdata('user_id')?>" alt="">
                     <?=$this->session->userdata('user_fullname')?>
-
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="#" id="upload_photo"
-                        data-toggle="modal"  data-target=".upload_photo_modal"> Change Photo</a>
-
-                    <a class="dropdown-item"  href="#"
-                        data-toggle="modal" data-target=".modal_change_password"> Change Password</a>
-
-
-
-                    <a class="dropdown-item"  href="login.php?cmd=logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    <a class="dropdown-item"  href="#" id="upload_photo" data-toggle="modal"  data-target=".upload_photo_modal"> Change Photo</a>
+                    <a class="dropdown-item"  href="#" data-toggle="modal" data-target=".modal_change_password"> Change Password</a>
+                    <a class="dropdown-item"  href="user/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                   </div>
                 </li>
 
@@ -248,3 +241,18 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
+
+
+<!-- 
+<script>
+  
+   $('#int_table').DataTable({
+            data: <?php echo $json_data; ?>,
+            columns: [
+                { data: 'id' },
+                { data: 'interv' },
+              
+            ]
+        });
+
+</script> -->

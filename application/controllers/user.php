@@ -1,61 +1,77 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
 class user extends CI_Controller {
-    public function __construct() {
-        parent::__construct();
-        $this->load->model('User_model');
 
+  public function __construct() {
+      parent::__construct();
+      // $this->load->library('form_validation');
+      $this->load->model('User_auth_model');
+
+  }
+
+  public function logout(){
+      // Destroy the entire session
+      $this->session->sess_destroy();
+      // print('logout');
+      redirect(site_url('user/login'));
+  }
+
+  public function login(){
+      $this->load->view('login');
+  }
+
+  public function authenticate() {
+    // Load the LDAP authentication model
+    $login_data = $this->input->post();
+    //verify login
+    if ($this->User_auth_model->ldap_auth($login_data['username'],$login_data['password'])) {
+        $data['success'] = true;
+        print(json_encode($data));
+    }else{
+        $data['success'] = false;
+        print(json_encode($data));
     }
-    
-	public function login()
-	{
-	    $username = $this->input->post('username');
-	    $password = $this->input->post('password');
-		if ($this->User_model->verify_user($username,$password)) {
-			return print_r(json_encode(array('result'=>true,'message'=>'success')));
-		}else{
-			return print_r(json_encode(array('result'=>false,'message'=>'Access denied! username and password missmatch')));
-		}
 
-	}
+    // //try direct authentication
+    // else{
 
-	public function register(){
-		$data = $this->input->post();
-		$result = $this->User_model->user_save_info($data);
-		return print_r($result);
-	}
+    //   if ($this->User_auth_model->db_auth($login_data['username'],$login_data['password'])) {
+    //     // redirect(site_url(),'refresh');
+    //     print('login success');
+    //   }else{
+    //     $data['username'] = $login_data['username'];
+    //     $data['password'] = '';
+    //     $data['status'] = "login_failed";
+    //     $data['alert'] = $this->session->flashdata('login_failed');
+    //     // $this->load->view('user/login',$data);
+    //     // redirect(site_url(),'refresh'); 
+    //     print_r($data);       
+    //   }
 
-	public function logout(){
-		$this->User_model->logout();
-		redirect(site_url());
-	}
-
-	public function get_picture($user_id) {
-	   	    $query = $this->db->select('picture, IFNULL(picture, 1) AS nopic')
-	        ->from('users')
-	        ->where('user_id', $user_id)
-	        ->get();
-	    $row = $query->row_array();
-
-	    if ($row['nopic'] == 0) {
-	        header("Content-Type: image/jpeg");
-	        echo $row["picture"];
-	    } else {
-	        $query2 = $this->db->select('image')
-	            ->from('images')
-	            ->where('id', 1)
-	            ->get();
-	        $row2 = $query2->row_array();
-
-	        header("Content-Type: image/jpeg");
-	        echo $row2["image"];
-	    }
-	}
+    // }
+  }
 
 
+  public function get_picture($user_id) {
+          $query = $this->db->select('picture, IFNULL(picture, 1) AS nopic')
+          ->from('users')
+          ->where('user_id', $user_id)
+          ->get();
+      $row = $query->row_array();
 
+      if ($row['nopic'] == 0) {
+          header("Content-Type: image/jpeg");
+          echo $row["picture"];
+      } else {
+          $query2 = $this->db->select('image')
+              ->from('images')
+              ->where('id', 1)
+              ->get();
+          $row2 = $query2->row_array();
 
+          header("Content-Type: image/jpeg");
+          echo $row2["image"];
+      }
+  }
 
 
 }
