@@ -110,7 +110,7 @@
                     </ul>
                   </li> -->
 
-                  <li><a href="X"><i class="fa fa-area-chart"></i> REPORTS</span></a></li>
+                  <li><a href="<?=site_url('reports')?>"><i class="fa fa-area-chart"></i> REPORTS</span></a></li>
                   <li hidden><a href="?page=debug"><i class="fa fa-flash"></i> DEBUGGER</span></a></li>
                 </ul>
               </div>
