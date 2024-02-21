@@ -77,17 +77,17 @@ class reports extends CI_Controller {
 		$a_coverage = "";
 
 		if ($optionBarangay != -1) {
-			$filter = "`swdi`.`psgc_city`='$optionMunicipality' and `swdi`.`psgc_brgy`='$optionBarangay'";
+			$filter = "`tbl_swdi`.`CITY_NAME`='$optionMunicipality' and `tbl_swdi`.`BRGY_NAME`='$optionBarangay'";
 			$a_coverage = "Brgy. $optionBarangay, $optionMunicipality, $optionProvince";
 		}elseif ($optionMunicipality != -1){
-			$filter = "`swdi`.`psgc_city`='$optionMunicipality'";
+			$filter = "`tbl_swdi`.`CITY_NAME`='$optionMunicipality'";
 			$a_coverage = "$optionMunicipality, $optionProvince";
 		}elseif ($optionProvince != -1){
-			$filter = "`swdi`.`psgc_province`='$optionProvince'";
+			$filter = "`tbl_swdi`.`PROV_NAME`='$optionProvince'";
 			$a_coverage = "$optionProvince";
 		}else{
 			//load entire records of the selected region
-			$filter = "`swdi`.`psgc_region`='$optionRegion'";
+			$filter = "`tbl_swdi`.`REGION_NICK`='$optionRegion'";
 			$a_coverage = "Region $optionRegion";
 		}
 		$template = "";

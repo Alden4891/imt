@@ -10,16 +10,16 @@ class Report_model extends CI_Model {
         $sql = "
 
         SELECT
-            `swdi`.`psgc_region` AS `REGION`
-            , `swdi`.`psgc_province` AS `PROVINCE`
-            , `swdi`.`psgc_city` AS `MUNICIPALITY`
-            , `swdi`.`psgc_brgy` AS `BARANGAY`
-            , `swdi`.`HOUSEHOLD_ID`
-            , `swdi`.`LASTNAME` AS `LAST_NAME`
-            , `swdi`.`FIRSTNAME` AS `FIRST_NAME`
-            , `swdi`.`MIDDLENAME` AS `MID_NAME`
-            , `swdi`.`EXT` AS `EXT_NAME`
-            , `swdi`.`LOWB`
+            `tbl_swdi`.`REGION_NICK` AS `REGION`
+            , `tbl_swdi`.`PROV_NAME` AS `PROVINCE`
+            , `tbl_swdi`.`CITY_NAME` AS `MUNICIPALITY`
+            , `tbl_swdi`.`BRGY_NAME` AS `BARANGAY`
+            , `tbl_swdi`.`HOUSEHOLD_ID`
+            , `tbl_swdi`.`LASTNAME` AS `LAST_NAME`
+            , `tbl_swdi`.`FIRSTNAME` AS `FIRST_NAME`
+            , `tbl_swdi`.`MIDDLENAME` AS `MID_NAME`
+            , '' AS `EXT_NAME`
+            , `tbl_swdi`.`LOWB`
             , SUM(`interventions`.`yds_child_count`) AS `YDS`,
 
           CASE WHEN (`interventions`.`program_id`=1) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col1',
@@ -36,35 +36,34 @@ class Report_model extends CI_Model {
           , COUNT(`interventions`.`interv_id`) AS `TOTAL`
         FROM
             `db_imt`.`interventions`
-            INNER JOIN `db_imt`.`swdi`
-                ON (`interventions`.`HOUSEHOLD_ID` = `swdi`.`HOUSEHOLD_ID`)
+            INNER JOIN `db_imt`.`tbl_swdi`
+                ON (`interventions`.`HOUSEHOLD_ID` = `tbl_swdi`.`HOUSEHOLD_ID`)
             INNER JOIN `db_imt`.`lib_programs`
                 ON (`lib_programs`.`program_id` = `interventions`.`program_id`)
             INNER JOIN `db_imt`.`lib_subcomp`
                 ON (`lib_subcomp`.`subcomp_id` = `lib_programs`.`subcomp_id`)
         WHERE (`lib_subcomp`.`comp_id` = 1 AND $filter)
-        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
+        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `tbl_swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
 
         ORDER BY 1,2;
 
         ";
-        
         return $this->db->query($sql)->result_array();
     }
 
     private function get_imt_sa_data($filter){
         $sql = "
         SELECT
-            `swdi`.`psgc_region` AS `REGION`
-            , `swdi`.`psgc_province` AS `PROVINCE`
-            , `swdi`.`psgc_city` AS `MUNICIPALITY`
-            , `swdi`.`psgc_brgy` AS `BARANGAY`
-            , `swdi`.`HOUSEHOLD_ID`
-            , `swdi`.`LASTNAME` AS `LAST_NAME`
-            , `swdi`.`FIRSTNAME` AS `FIRST_NAME`
-            , `swdi`.`MIDDLENAME` AS `MID_NAME`
-            , `swdi`.`EXT` AS `EXT_NAME`
-            , `swdi`.`LOWB`
+            `tbl_swdi`.`REGION_NICK` AS `REGION`
+            , `tbl_swdi`.`PROV_NAME` AS `PROVINCE`
+            , `tbl_swdi`.`CITY_NAME` AS `MUNICIPALITY`
+            , `tbl_swdi`.`BRGY_NAME` AS `BARANGAY`
+            , `tbl_swdi`.`HOUSEHOLD_ID`
+            , `tbl_swdi`.`LASTNAME` AS `LAST_NAME`
+            , `tbl_swdi`.`FIRSTNAME` AS `FIRST_NAME`
+            , `tbl_swdi`.`MIDDLENAME` AS `MID_NAME`
+            , '' AS `EXT_NAME`
+            , `tbl_swdi`.`LOWB`
             , SUM(`interventions`.`yds_child_count`) AS `YDS`,
 
           CASE WHEN (`interventions`.`program_id`=10) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col1',
@@ -76,14 +75,14 @@ class Report_model extends CI_Model {
           , COUNT(`interventions`.`interv_id`) AS `TOTAL`
         FROM
             `db_imt`.`interventions`
-            INNER JOIN `db_imt`.`swdi`
-                ON (`interventions`.`HOUSEHOLD_ID` = `swdi`.`HOUSEHOLD_ID`)
+            INNER JOIN `db_imt`.`tbl_swdi`
+                ON (`interventions`.`HOUSEHOLD_ID` = `tbl_swdi`.`HOUSEHOLD_ID`)
             INNER JOIN `db_imt`.`lib_programs`
                 ON (`lib_programs`.`program_id` = `interventions`.`program_id`)
             INNER JOIN `db_imt`.`lib_subcomp`
                 ON (`lib_subcomp`.`subcomp_id` = `lib_programs`.`subcomp_id`)
         WHERE (`lib_subcomp`.`comp_id` = 2 AND $filter)
-        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
+        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `tbl_swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
 
         ORDER BY 1,2;
         ";
@@ -94,16 +93,16 @@ class Report_model extends CI_Model {
     private function get_imt_int_data($filter){
         $sql = "
         SELECT
-            `swdi`.`psgc_region` AS `REGION`
-            , `swdi`.`psgc_province` AS `PROVINCE`
-            , `swdi`.`psgc_city` AS `MUNICIPALITY`
-            , `swdi`.`psgc_brgy` AS `BARANGAY`
-            , `swdi`.`HOUSEHOLD_ID`
-            , `swdi`.`LASTNAME` AS `LAST_NAME`
-            , `swdi`.`FIRSTNAME` AS `FIRST_NAME`
-            , `swdi`.`MIDDLENAME` AS `MID_NAME`
-            , `swdi`.`EXT` AS `EXT_NAME`
-            , `swdi`.`LOWB`
+            `tbl_swdi`.`REGION_NICK` AS `REGION`
+            , `tbl_swdi`.`PROV_NAME` AS `PROVINCE`
+            , `tbl_swdi`.`CITY_NAME` AS `MUNICIPALITY`
+            , `tbl_swdi`.`BRGY_NAME` AS `BARANGAY`
+            , `tbl_swdi`.`HOUSEHOLD_ID`
+            , `tbl_swdi`.`LASTNAME` AS `LAST_NAME`
+            , `tbl_swdi`.`FIRSTNAME` AS `FIRST_NAME`
+            , `tbl_swdi`.`MIDDLENAME` AS `MID_NAME`
+            , '' AS `EXT_NAME`
+            , `tbl_swdi`.`LOWB`
             , SUM(`interventions`.`yds_child_count`) AS `YDS`,
 
           CASE WHEN (`interventions`.`program_id`=15) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col1',
@@ -112,14 +111,14 @@ class Report_model extends CI_Model {
           , COUNT(`interventions`.`interv_id`) AS `TOTAL`
         FROM
             `db_imt`.`interventions`
-            INNER JOIN `db_imt`.`swdi`
-                ON (`interventions`.`HOUSEHOLD_ID` = `swdi`.`HOUSEHOLD_ID`)
+            INNER JOIN `db_imt`.`tbl_swdi`
+                ON (`interventions`.`HOUSEHOLD_ID` = `tbl_swdi`.`HOUSEHOLD_ID`)
             INNER JOIN `db_imt`.`lib_programs`
                 ON (`lib_programs`.`program_id` = `interventions`.`program_id`)
             INNER JOIN `db_imt`.`lib_subcomp`
                 ON (`lib_subcomp`.`subcomp_id` = `lib_programs`.`subcomp_id`)
         WHERE (`lib_subcomp`.`comp_id` = 3 AND $filter)
-        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
+        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `tbl_swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
 
         ORDER BY 1,2;
 
@@ -132,16 +131,16 @@ class Report_model extends CI_Model {
         $sql = "
 
         SELECT
-            `swdi`.`psgc_region` AS `REGION`
-            , `swdi`.`psgc_province` AS `PROVINCE`
-            , `swdi`.`psgc_city` AS `MUNICIPALITY`
-            , `swdi`.`psgc_brgy` AS `BARANGAY`
-            , `swdi`.`HOUSEHOLD_ID`
-            , `swdi`.`LASTNAME` AS `LAST_NAME`
-            , `swdi`.`FIRSTNAME` AS `FIRST_NAME`
-            , `swdi`.`MIDDLENAME` AS `MID_NAME`
-            , `swdi`.`EXT` AS `EXT_NAME`
-            , `swdi`.`LOWB`
+            `tbl_swdi`.`REGION_NICK` AS `REGION`
+            , `tbl_swdi`.`PROV_NAME` AS `PROVINCE`
+            , `tbl_swdi`.`CITY_NAME` AS `MUNICIPALITY`
+            , `tbl_swdi`.`BRGY_NAME` AS `BARANGAY`
+            , `tbl_swdi`.`HOUSEHOLD_ID`
+            , `tbl_swdi`.`LASTNAME` AS `LAST_NAME`
+            , `tbl_swdi`.`FIRSTNAME` AS `FIRST_NAME`
+            , `tbl_swdi`.`MIDDLENAME` AS `MID_NAME`
+            , '' AS `EXT_NAME`
+            , `tbl_swdi`.`LOWB`
             , SUM(`interventions`.`yds_child_count`) AS `YDS`,
 
           CASE WHEN (`interventions`.`program_id`=17) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col1', -- 'Microcredit/ microfinance
@@ -151,14 +150,14 @@ class Report_model extends CI_Model {
           , COUNT(`interventions`.`interv_id`) AS `TOTAL`
         FROM
             `db_imt`.`interventions`
-            INNER JOIN `db_imt`.`swdi`
-                ON (`interventions`.`HOUSEHOLD_ID` = `swdi`.`HOUSEHOLD_ID`)
+            INNER JOIN `db_imt`.`tbl_swdi`
+                ON (`interventions`.`HOUSEHOLD_ID` = `tbl_swdi`.`HOUSEHOLD_ID`)
             INNER JOIN `db_imt`.`lib_programs`
                 ON (`lib_programs`.`program_id` = `interventions`.`program_id`)
             INNER JOIN `db_imt`.`lib_subcomp`
                 ON (`lib_subcomp`.`subcomp_id` = `lib_programs`.`subcomp_id`)
         WHERE (`lib_subcomp`.`comp_id` = 4 AND $filter)
-        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
+        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `tbl_swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
         ORDER BY 1,2;
 
         ";
@@ -170,16 +169,16 @@ class Report_model extends CI_Model {
     private function get_imt_ext_data2($filter){
         $sql = "
         SELECT
-            `swdi`.`psgc_region` AS `REGION`
-            , `swdi`.`psgc_province` AS `PROVINCE`
-            , `swdi`.`psgc_city` AS `MUNICIPALITY`
-            , `swdi`.`psgc_brgy` AS `BARANGAY`
-            , `swdi`.`HOUSEHOLD_ID`
-            , `swdi`.`LASTNAME` AS `LAST_NAME`
-            , `swdi`.`FIRSTNAME` AS `FIRST_NAME`
-            , `swdi`.`MIDDLENAME` AS `MID_NAME`
-            , `swdi`.`EXT` AS `EXT_NAME`
-            , `swdi`.`LOWB`
+            `tbl_swdi`.`REGION_NICK` AS `REGION`
+            , `tbl_swdi`.`PROV_NAME` AS `PROVINCE`
+            , `tbl_swdi`.`CITY_NAME` AS `MUNICIPALITY`
+            , `tbl_swdi`.`BRGY_NAME` AS `BARANGAY`
+            , `tbl_swdi`.`HOUSEHOLD_ID`
+            , `tbl_swdi`.`LASTNAME` AS `LAST_NAME`
+            , `tbl_swdi`.`FIRSTNAME` AS `FIRST_NAME`
+            , `tbl_swdi`.`MIDDLENAME` AS `MID_NAME`
+            , '' AS `EXT_NAME`
+            , `tbl_swdi`.`LOWB`
             , SUM(`interventions`.`yds_child_count`) AS `YDS`,
 
           CASE WHEN (`interventions`.`program_id`=19) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col1',
@@ -190,14 +189,14 @@ class Report_model extends CI_Model {
           , COUNT(`interventions`.`interv_id`) AS `TOTAL`
         FROM
             `db_imt`.`interventions`
-            INNER JOIN `db_imt`.`swdi`
-                ON (`interventions`.`HOUSEHOLD_ID` = `swdi`.`HOUSEHOLD_ID`)
+            INNER JOIN `db_imt`.`tbl_swdi`
+                ON (`interventions`.`HOUSEHOLD_ID` = `tbl_swdi`.`HOUSEHOLD_ID`)
             INNER JOIN `db_imt`.`lib_programs`
                 ON (`lib_programs`.`program_id` = `interventions`.`program_id`)
             INNER JOIN `db_imt`.`lib_subcomp`
                 ON (`lib_subcomp`.`subcomp_id` = `lib_programs`.`subcomp_id`)
         WHERE (`lib_subcomp`.`comp_id` =5 AND $filter)
-        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
+        GROUP BY `REGION`, `PROVINCE`, `MUNICIPALITY`, `BARANGAY`, `tbl_swdi`.`HOUSEHOLD_ID`, `LAST_NAME`, `FIRST_NAME`, `MID_NAME`, `EXT_NAME`
 
         ORDER BY 1,2;
 
@@ -209,17 +208,17 @@ class Report_model extends CI_Model {
         $sql = "
         SELECT
             `interventions`.`interv_id`
-            , `swdi`.`HOUSEHOLD_ID`
-            , `swdi`.`LASTNAME` AS LAST_NAME
-            , `swdi`.`FIRSTNAME` AS FIRST_NAME
-            , `swdi`.`MIDDLENAME` AS MID_NAME
-            , `swdi`.`EXT` AS EXT_NAME
-            , `swdi`.`psgc_region`
-            , `swdi`.`psgc_province` AS PROVINCE
-            , `swdi`.`psgc_city` AS MUNICIPALITY
-            , `swdi`.`psgc_brgy` AS BARANGAY
-            , `swdi`.`LOWB`
-            , `swdi`.`SWDI_SCORE`
+            , `tbl_swdi`.`HOUSEHOLD_ID`
+            , `tbl_swdi`.`LASTNAME` AS LAST_NAME
+            , `tbl_swdi`.`FIRSTNAME` AS FIRST_NAME
+            , `tbl_swdi`.`MIDDLENAME` AS MID_NAME
+            , '' AS EXT_NAME
+            , `tbl_swdi`.`REGION_NICK` as psgc_region
+            , `tbl_swdi`.`PROV_NAME` AS PROVINCE
+            , `tbl_swdi`.`CITY_NAME` AS MUNICIPALITY
+            , `tbl_swdi`.`BRGY_NAME` AS BARANGAY
+            , `tbl_swdi`.`LOWB`
+            , `tbl_swdi`.`SWDI_SCORE`
             , `interventions`.`subject`
             , `interventions`.`details`
             , `interventions`.`date_conducted`
@@ -234,8 +233,8 @@ class Report_model extends CI_Model {
             , `interventions`.`yds_child_count` as YDS
         FROM
             `db_imt`.`interventions`
-            INNER JOIN `db_imt`.`swdi`
-                ON (`interventions`.`HOUSEHOLD_ID` = `swdi`.`HOUSEHOLD_ID`)
+            INNER JOIN `db_imt`.`tbl_swdi`
+                ON (`interventions`.`HOUSEHOLD_ID` = `tbl_swdi`.`HOUSEHOLD_ID`)
             INNER JOIN `db_imt`.`lib_programs`
                 ON (`lib_programs`.`program_id` = `interventions`.`program_id`)
             INNER JOIN `db_imt`.`lib_subcomp`
@@ -403,6 +402,8 @@ class Report_model extends CI_Model {
         //$save_as = (isset($_POST['save_as']) && (trim($_POST['save_as'])!=='') && ($_SERVER['SERVER_NAME']=='localhost')) ? trim($_POST['save_as']) : '';
         $output_file_name = strtoupper($template).'_'.date('Y-m-d').'.xlsx';
         $TBS->Show(OPENTBS_DOWNLOAD, $output_file_name);
+
+
         /*
         if ($save_as==='') {
             // Output the result as a downloadable file (only streaming, no data saved in the server)

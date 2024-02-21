@@ -21,36 +21,36 @@ class SWDI_model extends CI_Model {
             , pppp_grantee.CLIENT_STATUS
             , pppp_grantee.IP_AFFILIATION
             , CONCAT(pppp_grantee.HH_SET, pppp_grantee.SET_GROUP) AS `SET`
-            , swdi_data.ES1
-            , swdi_data.ES2
-            , swdi_data.ES3
-            , swdi_data.ES4
-            , swdi_data.HCS1
-            , swdi_data.HCS2
-            , swdi_data.NC1
-            , swdi_data.NC2
-            , swdi_data.WCS1
-            , swdi_data.WCS2
-            , swdi_data.WCS3
-            , swdi_data.HC1
-            , swdi_data.HC2
-            , swdi_data.HC3
-            , swdi_data.HC4
-            , swdi_data.EC1
-            , swdi_data.EC2
-            , swdi_data.RP1
-            , swdi_data.RP2
-            , swdi_data.RP3
-            , swdi_data.FA1
-            , swdi_data.FA2
-            , swdi_data.FA3
-            , swdi_data.SocAdeq
-            , swdi_data.EconSuff
-            , swdi_data.SWDI_Score
-            , swdi_data.LOWB'
+            , tbl_swdi.ES1
+            , tbl_swdi.ES2
+            , tbl_swdi.ES3
+            , tbl_swdi.ES4
+            , tbl_swdi.HCS1
+            , tbl_swdi.HCS2
+            , tbl_swdi.NC1
+            , tbl_swdi.NC2
+            , tbl_swdi.WCS1
+            , tbl_swdi.WCS2
+            , tbl_swdi.WCS3
+            , tbl_swdi.HC1
+            , tbl_swdi.HC2
+            , tbl_swdi.HC3
+            , tbl_swdi.HC4
+            , tbl_swdi.EC1
+            , tbl_swdi.EC2
+            , tbl_swdi.RP1
+            , tbl_swdi.RP2
+            , tbl_swdi.RP3
+            , tbl_swdi.FA1
+            , tbl_swdi.FA2
+            , tbl_swdi.FA3
+            , tbl_swdi.SocAdeq
+            , tbl_swdi.EconSuff
+            , tbl_swdi.SWDI_Score
+            , tbl_swdi.LOWB'
         );
         $this->db->from('pppp_grantee');
-        $this->db->join('swdi_data', 'pppp_grantee.HOUSEHOLD_ID = swdi_data.Household_ID', 'left');
+        $this->db->join('tbl_swdi', 'pppp_grantee.HOUSEHOLD_ID = tbl_swdi.Household_ID', 'left');
         $this->db->where('pppp_grantee.HOUSEHOLD_ID', $household_id);
         $query = $this->db->get();
         return $query->result();
