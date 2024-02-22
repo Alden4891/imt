@@ -143,11 +143,37 @@ class Report_model extends CI_Model {
             , `tbl_swdi`.`LOWB`
             , SUM(`interventions`.`yds_child_count`) AS `YDS`,
 
-          CASE WHEN (`interventions`.`program_id`=17) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col1', -- 'Microcredit/ microfinance
-          CASE WHEN (`interventions`.`program_id`=18) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col2',  -- 'Assistance to Pantawid farmer benefeciaries
-          CASE WHEN (`interventions`.`program_id`=44) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col3'  -- 'others
+      -- da
+          CASE WHEN (`interventions`.`program_id`=18) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da1', 
+          CASE WHEN (`interventions`.`program_id`=45) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da2', 
+          CASE WHEN (`interventions`.`program_id`=46) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da3', 
+          CASE WHEN (`interventions`.`program_id`=47) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da4', 
+          CASE WHEN (`interventions`.`program_id`=48) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da5', 
+          CASE WHEN (`interventions`.`program_id`=49) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da6', 
 
-          , COUNT(`interventions`.`interv_id`) AS `TOTAL`
+      -- dole
+          CASE WHEN (`interventions`.`program_id`=58) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dole1', 
+          CASE WHEN (`interventions`.`program_id`=59) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dole2', 
+          CASE WHEN (`interventions`.`program_id`=60) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dole3', 
+          CASE WHEN (`interventions`.`program_id`=61) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dole4', 
+
+      -- dti
+          CASE WHEN (`interventions`.`program_id`=54) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti1', 
+          CASE WHEN (`interventions`.`program_id`=52) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti2', 
+          CASE WHEN (`interventions`.`program_id`=51) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti3', 
+          CASE WHEN (`interventions`.`program_id`=50) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti4', 
+          CASE WHEN (`interventions`.`program_id`=53) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti5', 
+          CASE WHEN (`interventions`.`program_id`=17) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti6', 
+          
+          -- neda
+          CASE WHEN (`interventions`.`program_id`=56) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'neda1',  
+          CASE WHEN (`interventions`.`program_id`=55) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'neda2',  
+          CASE WHEN (`interventions`.`program_id`=57) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'neda3',  
+
+      -- others
+          CASE WHEN (`interventions`.`program_id`=1044) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'other',  -- 'others
+
+          COUNT(`interventions`.`interv_id`) AS `TOTAL`
         FROM
             `db_imt`.`interventions`
             INNER JOIN `db_imt`.`tbl_swdi`

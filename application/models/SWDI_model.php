@@ -9,18 +9,18 @@ class SWDI_model extends CI_Model {
     //loads swdi and interventions to modal
     public function get_swdi_data($household_id) {
         $this->db->select('
-              pppp_grantee.HOUSEHOLD_ID
-            , CONCAT(pppp_grantee.FIRST_NAME," ", pppp_grantee.MID_NAME, " ", pppp_grantee.LAST_NAME, " ", pppp_grantee.EXT_NAME) AS GRANTEE
-            , pppp_grantee.SEX
-            , pppp_grantee.AGE
-            , pppp_grantee.REGION
-            , pppp_grantee.PROVINCE
-            , pppp_grantee.MUNICIPALITY
-            , pppp_grantee.BIRTHDAY
-            , pppp_grantee.BARANGAY
-            , pppp_grantee.CLIENT_STATUS
-            , pppp_grantee.IP_AFFILIATION
-            , CONCAT(pppp_grantee.HH_SET, pppp_grantee.SET_GROUP) AS `SET`
+              tbl_pppp.hh_id as HOUSEHOLD_ID
+            , CONCAT(tbl_pppp.FIRST_NAME," ", tbl_pppp.MIDdle_NAME, " ", tbl_pppp.LAST_NAME, " ", tbl_pppp.EXT_NAME) AS GRANTEE
+            , tbl_pppp.SEX
+            , tbl_pppp.AGE
+            , tbl_pppp.REGION
+            , tbl_pppp.PROVINCE
+            , tbl_pppp.MUNICIPALITY
+            , tbl_pppp.BIRTHDAY
+            , tbl_pppp.BARANGAY
+            , tbl_pppp.CLIENT_STATUS
+            , tbl_pppp.IP_GROUP as IP_AFFILIATION
+            , tbl_pppp.HH_SET AS `SET`
             , tbl_swdi.ES1
             , tbl_swdi.ES2
             , tbl_swdi.ES3
@@ -49,9 +49,9 @@ class SWDI_model extends CI_Model {
             , tbl_swdi.SWDI_Score
             , tbl_swdi.LOWB'
         );
-        $this->db->from('pppp_grantee');
-        $this->db->join('tbl_swdi', 'pppp_grantee.HOUSEHOLD_ID = tbl_swdi.Household_ID', 'left');
-        $this->db->where('pppp_grantee.HOUSEHOLD_ID', $household_id);
+        $this->db->from('tbl_pppp');
+        $this->db->join('tbl_swdi', 'tbl_pppp.hh_id = tbl_swdi.Household_ID', 'left');
+        $this->db->where('tbl_pppp.hh_id', $household_id);
         $query = $this->db->get();
         return $query->result();
     }
