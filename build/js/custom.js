@@ -1583,13 +1583,19 @@ if (typeof NProgress != 'undefined') {
 			  $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 			};
 
+			const currentDate = new Date();
+			const currentYear = currentDate.getFullYear();
+
+			
+
+
 			var optionSet1 = {
 			  startDate: moment().subtract(29, 'days'),
 			  endDate: moment(),
-			  minDate: '01/01/2012',
-			  maxDate: '12/31/2015',
+			  minDate: '01/01/2019',
+			  maxDate: '12/31/' & currentYear,
 			  dateLimit: {
-				days: 60
+				days: 365*5	//date selection range  
 			  },
 			  showDropdowns: true,
 			  showWeekNumbers: true,
@@ -1621,7 +1627,8 @@ if (typeof NProgress != 'undefined') {
 				firstDay: 1
 			  }
 			};
-			
+
+			// ??? not working
 			$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 			$('#reportrange').daterangepicker(optionSet1, cb);
 			$('#reportrange').on('show.daterangepicker', function() {
@@ -1630,9 +1637,12 @@ if (typeof NProgress != 'undefined') {
 			$('#reportrange').on('hide.daterangepicker', function() {
 			  console.log("hide event fired");
 			});
-			$('#reportrange').on('apply.daterangepicker', function(ev, picker) {
-			  console.log("Apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
-			});
+
+			// ** moved to dashboard.php (view)
+			// $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+			//   console.log("[2] Apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+			// });
+
 			$('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
 			  console.log("cancel event fired");
 			});
@@ -1697,6 +1707,7 @@ if (typeof NProgress != 'undefined') {
 				  }
 				};
 
+				//not working
 				$('#reportrange_right span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
 				$('#reportrange_right').daterangepicker(optionSet1, cb);
@@ -1708,7 +1719,7 @@ if (typeof NProgress != 'undefined') {
 				  console.log("hide event fired");
 				});
 				$('#reportrange_right').on('apply.daterangepicker', function(ev, picker) {
-				  console.log("Apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+				  console.log("[1] Apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
 				});
 				$('#reportrange_right').on('cancel.daterangepicker', function(ev, picker) {
 				  console.log("cancel event fired");

@@ -195,8 +195,42 @@
     init_db_componentprogress();
     init_recentInterventions();
 
+
+    $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+      console.log("[3] Apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+
+      console.log();
+      init_flot_chart(picker.startDate,picker.endDate); 
+    });
   });
-  
+
+
+
+function formatDate(date) {
+  return new Date(date).toISOString().split('T')[0];
+}
+
+function processDates(start_date, end_date) {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
+  let startDateFormatted = '';
+  let endDateFormatted = '';
+
+  if (!start_date) {
+    startDateFormatted = formatDate(`${currentYear}-01-01`);
+  } else {
+    startDateFormatted = formatDate(start_date);
+  }
+
+  if (!end_date) {
+    endDateFormatted = formatDate(`${currentYear}-12-31`);
+  } else {
+    endDateFormatted = formatDate(end_date);
+  }
+
+  return [startDateFormatted, endDateFormatted];
+}  
 
   function init_recentInterventions() {
     // getDBRecentIntrvData.php
@@ -204,10 +238,10 @@
         type: 'get',
         url: 'dashboard/getDBRecentIntrvData',
         dataType: 'JSON',
-        data: {
-            startdate: '2020-01-01',
-            enddate: '2020-12-31',
-        },
+        // data: {
+        //     startdate: '2024-01-01',
+        //     enddate: '2024-12-31',
+        // },
         success: function(response) {
             var arr_data1 = [];
             var jsondata = JSON.parse(JSON.stringify(response));
@@ -256,7 +290,7 @@
               str += "          <span>"+duration+"</span> by <a>"+fullname+"</a>";
               str += "       </div>";
               str += "      <p class=\"excerpt\">"+details.substring(0, 500);+"";
-              str += "    ...<a href=#>Read&nbsp;More</a></p></div>";
+              str += "    ...<a href=#>read&nbsp;more</a></p></div>";
               str += "  </div>";
               str += "</li>";                
 
@@ -275,8 +309,8 @@
         url: 'dashboard/getDBComponentDataProgressBar',
         dataType: 'JSON',
         data: {
-            startdate: '2020-01-01',
-            enddate: '2020-12-31',
+            startdate: '2024-01-01',
+            enddate: '2024-12-31',
         },
         success: function(response) {
             var arr_data1 = [];
@@ -308,8 +342,8 @@
         url: 'dashboard/getDBWidgetData',
         dataType: 'JSON',
         data: {
-            startdate: '2020-01-01',
-            enddate: '2020-12-31',
+            startdate: '2024-01-01',
+            enddate: '2024-12-31',
         },
         success: function(response) {
             var arr_data1 = [];
@@ -343,10 +377,21 @@
         }
     });
   }
-  function init_flot_chart(){
+  function init_flot_chart(start_date, end_date){
+
+    //-------------------------------------------------------------------------------------------
     
+    date_coverage = processDates(start_date,end_date);
+
+    console.log(date_coverage[0]);
+    console.log(date_coverage[1]);
+
+    start_date = date_coverage[0];
+    end_date = date_coverage[1];
+
+    //-------------------------------------------------------------------------------------------
+
     if( typeof ($.plot) === 'undefined'){ return; }
-    
     console.log('init_flot_chart');
     var chart_plot_01_settings = {
           series: {
@@ -393,15 +438,14 @@
           tooltip: false
         }
 
-
     var markers;
     $.ajax({
-        type: 'get',
+        type: 'post',
         url: 'dashboard/getDBIntervActivitiesData',
         dataType: 'JSON',
         data: {
-            startdate: '2020-01-01',
-            enddate: '2020-12-31',
+            startdate: start_date,
+            enddate: end_date,
         },
         success: function(response) {
           console.log(response);

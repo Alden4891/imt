@@ -41,7 +41,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2>Interventions <small>...</small></h2>
+            <h2>Interventions <small>...</small></h2> 
             <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -60,7 +60,7 @@
 
         <div class="x_title">
             <form class="" action="<?=site_url('interventions')?>" method="post" novalidate="" id="filter_form" name="filter_form">
-                  <span class="section">Filter</span>
+                  <span class="section">Filter <input type="button" class="btn btn-success btn-sm pull-right" value="New Intervention" id="new_interv"> </span> 
                   <div class="field item form-group">
                       <label class="col-form-label col-md-3 col-sm-3  label-align">Region</label>
                       <div class="col-md-6 col-sm-6">
@@ -211,6 +211,76 @@
 </div>
 
 <script>
+
+    $(document).on('click','#new_interv',function(e){
+        e.preventDefault();
+
+        Swal.fire({
+          title: "Household ID",
+          input: "text",
+          inputAttributes: {
+            autocapitalize: "off"
+          },
+          showCancelButton: true,
+          confirmButtonText: "Look up",
+          showLoaderOnConfirm: true,
+          // preConfirm: async (login) => {
+          //   try {
+          //     const githubUrl = `
+          //       https://api.github.com/users/${login}
+          //     `;
+          //     const response = await fetch(githubUrl);
+          //     if (!response.ok) {
+          //       return Swal.showValidationMessage(`
+          //         ${JSON.stringify(await response.json())}
+          //       `);
+          //     }
+          //     return response.json();
+          //   } catch (error) {
+          //     Swal.showValidationMessage(`
+          //       Request failed: ${error}
+          //     `);
+          //   }
+          // },
+          allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+          if (result.isConfirmed) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: "pantawid/is_exists",
+                    data: {
+                        hhid: `${result.value}`,
+                    },
+                    success: function(response) {
+                        var jsonObj = JSON.parse(response);
+                        if (jsonObj.is_exists) {
+                            // alert(jsonObj.is_exists);
+                            $('#interv_list_modal').modal('show');
+                            show_interventions(jsonObj.get_current_hhid);
+                        }else{
+                            Swal.fire({
+                              icon: "error",
+                              title: "Oops...",
+                              text: "Household does not exists!",
+                            });                        }
+                    }
+                });
+
+
+
+
+            // Swal.fire({
+            //   title: `weeeeeeeee`,
+            //   imageUrl: './'
+            // });
+          }
+        });
+
+
+
+
+    });
     //submit interv editor
     $(document).on('click', "#btnSubmitIntv", function(e) {
         e.preventDefault();
@@ -274,11 +344,8 @@
 
     });
 
-    //show modal on btnIntervlistShowModal clicked
-    $(document).on('click', "#btnIntervlistShowModal", function(e) {
-        e.preventDefault();
-        var hhid = $(this).attr('hhid');
-        
+    function show_interventions(hhid) {
+
         //load modal list;
         $('#household_id1').html(hhid);
         $('#btn_interv_list_editor_open').attr('hhid', hhid);
@@ -364,6 +431,16 @@
 
             }
         });
+
+    }
+
+    //show modal on btnIntervlistShowModal clicked
+    $(document).on('click', "#btnIntervlistShowModal", function(e) {
+        e.preventDefault();
+
+        var hhid = $(this).attr('hhid');
+        show_interventions(hhid);
+
     });
 
     //delete intervention

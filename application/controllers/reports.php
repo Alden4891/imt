@@ -91,6 +91,7 @@ class reports extends CI_Controller {
 			$a_coverage = "Region $optionRegion";
 		}
 		$template = "";
+
 		switch ($optionReportType) {
 		    case "imt_es":
 		        $template = "imt_es";

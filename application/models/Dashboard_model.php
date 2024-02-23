@@ -95,19 +95,39 @@ class Dashboard_model extends CI_Model {
 
 
     //getDBIntervActivitiesData
-    public function get_intervention_counts_by_month() {
+    public function get_intervention_counts_by_month($filter) {
         $return_arr = array();
         
-        $query = $this->db->query("
-            SELECT 
-                YEAR(date_conducted) AS P_YEAR, 
-                MONTH(date_conducted) AS P_MONTH, 
-                COUNT(interv_id) AS INTCOUNT 
-            FROM interventions
-            WHERE YEAR(date_conducted) BETWEEN YEAR(NOW())-5 AND YEAR(NOW())
-            GROUP BY CONCAT(YEAR(date_conducted),'-', MONTH(date_conducted),'-01')
-            ORDER BY 1,2;
-        ");
+        // $query = $this->db->query("
+        //     -- SELECT 
+        //     --     YEAR(date_conducted) AS P_YEAR, 
+        //     --     MONTH(date_conducted) AS P_MONTH, 
+        //     --     COUNT(interv_id) AS INTCOUNT 
+        //     -- FROM interventions
+        //     -- WHERE YEAR(date_conducted) BETWEEN YEAR(NOW())-5 AND YEAR(NOW())
+        //     -- GROUP BY CONCAT(YEAR(date_conducted),'-', MONTH(date_conducted),'-01')
+        //     -- ORDER BY 1,2;
+
+        //     SELECT 
+        //         YEAR(date_conducted) AS P_YEAR, 
+        //         MONTH(date_conducted) AS P_MONTH, 
+        //         COUNT(interv_id) AS INTCOUNT 
+        //     FROM interventions
+        //     WHERE date_conducted BETWEEN '2023-01-01' AND '2024-02-23'
+        //     GROUP BY CONCAT(YEAR(date_conducted),'-', MONTH(date_conducted),'-01')
+        //     ORDER BY 1,2;
+
+
+        // ");
+
+
+
+        $query = $this->db->select('YEAR(date_conducted) AS P_YEAR,MONTH(date_conducted) AS P_MONTH,COUNT(interv_id) AS INTCOUNT')
+            ->where('date_conducted >=', $filter['startdate'])
+            ->where('date_conducted <=', $filter['enddate'])
+            ->group_by('CONCAT(YEAR(date_conducted),\'-\',MONTH(date_conducted),\'-01\')')
+            ->order_by('1 ASC, 2 ASC')
+            ->get('interventions');
 
         foreach ($query->result_array() as $row) {
             $P_YEAR = $row['P_YEAR'];

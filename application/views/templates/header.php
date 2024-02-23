@@ -14,6 +14,9 @@
     <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script> -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
     
+    <!-- Include sweetalert JavaScript and CSS files -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
 
 
     <!-- Bootstrap -->
@@ -53,7 +56,8 @@
 
 
     <!-- Custom Theme Style -->
-    <link href="build/css/custom.min.css" rel="stylesheet">
+    <!-- <link href="build/css/custom.min.css" rel="stylesheet"> -->
+    <link href="build/css/custom.css" rel="stylesheet">
 
 
 

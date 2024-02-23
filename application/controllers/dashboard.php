@@ -9,7 +9,8 @@ class dashboard extends CI_Controller {
 
 	//[["2018","8","1"],["2019","10","1"],["2019","11","1"]]
 	public function getDBIntervActivitiesData(){
-		$result = $this->Dashboard_model->get_intervention_counts_by_month();
+		$filter = $this->input->post();
+		$result = $this->Dashboard_model->get_intervention_counts_by_month($filter);
 		print($result);
 	}   
 
@@ -19,11 +20,13 @@ class dashboard extends CI_Controller {
 	}
 
 	public function getDBComponentDataProgressBar(){
+		$filter = $this->input->post();
 		$result = $this->Dashboard_model->get_interventions_by_component();
 		print($result);		
 	}
 
 	public function getDBWidgetData(){
+		$filter = $this->input->post();
 		$result = $this->Dashboard_model->get_interventions_by_subcomponent();
 		print($result);
 

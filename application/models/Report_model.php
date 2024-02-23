@@ -105,10 +105,21 @@ class Report_model extends CI_Model {
             , `tbl_swdi`.`LOWB`
             , SUM(`interventions`.`yds_child_count`) AS `YDS`,
 
-          CASE WHEN (`interventions`.`program_id`=15) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col1',
-          CASE WHEN (`interventions`.`program_id`=16) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col2',
-          CASE WHEN (`interventions`.`program_id`=42) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col3'
-          , COUNT(`interventions`.`interv_id`) AS `TOTAL`
+
+          CASE WHEN (`interventions`.`program_id`=62) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col1',
+          CASE WHEN (`interventions`.`program_id`=63) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col2',
+          CASE WHEN (`interventions`.`program_id`=64) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col3',
+          CASE WHEN (`interventions`.`program_id`=65) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col4',
+          CASE WHEN (`interventions`.`program_id`=66) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col5',
+          CASE WHEN (`interventions`.`program_id`=67) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col6',
+          CASE WHEN (`interventions`.`program_id`=68) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col7',
+          CASE WHEN (`interventions`.`program_id`=69) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col8',
+          CASE WHEN (`interventions`.`program_id`=70) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col9',
+          CASE WHEN (`interventions`.`program_id`=71) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col10',
+          CASE WHEN (`interventions`.`program_id`=1042) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'col11', 
+          COUNT(`interventions`.`interv_id`) AS `other`
+
+
         FROM
             `db_imt`.`interventions`
             INNER JOIN `db_imt`.`tbl_swdi`
@@ -124,6 +135,7 @@ class Report_model extends CI_Model {
 
         ";
         
+
         return $this->db->query($sql)->result_array();        
     }
 
@@ -143,7 +155,7 @@ class Report_model extends CI_Model {
             , `tbl_swdi`.`LOWB`
             , SUM(`interventions`.`yds_child_count`) AS `YDS`,
 
-      -- da
+            -- da
           CASE WHEN (`interventions`.`program_id`=18) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da1', 
           CASE WHEN (`interventions`.`program_id`=45) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da2', 
           CASE WHEN (`interventions`.`program_id`=46) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da3', 
@@ -151,13 +163,13 @@ class Report_model extends CI_Model {
           CASE WHEN (`interventions`.`program_id`=48) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da5', 
           CASE WHEN (`interventions`.`program_id`=49) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'da6', 
 
-      -- dole
+            -- dole
           CASE WHEN (`interventions`.`program_id`=58) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dole1', 
           CASE WHEN (`interventions`.`program_id`=59) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dole2', 
           CASE WHEN (`interventions`.`program_id`=60) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dole3', 
           CASE WHEN (`interventions`.`program_id`=61) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dole4', 
 
-      -- dti
+            -- dti
           CASE WHEN (`interventions`.`program_id`=54) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti1', 
           CASE WHEN (`interventions`.`program_id`=52) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti2', 
           CASE WHEN (`interventions`.`program_id`=51) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti3', 
@@ -165,12 +177,12 @@ class Report_model extends CI_Model {
           CASE WHEN (`interventions`.`program_id`=53) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti5', 
           CASE WHEN (`interventions`.`program_id`=17) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'dti6', 
           
-          -- neda
+            -- neda
           CASE WHEN (`interventions`.`program_id`=56) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'neda1',  
           CASE WHEN (`interventions`.`program_id`=55) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'neda2',  
           CASE WHEN (`interventions`.`program_id`=57) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'neda3',  
 
-      -- others
+            -- others
           CASE WHEN (`interventions`.`program_id`=1044) THEN COUNT(`interventions`.`program_id`) ELSE 0 END AS 'other',  -- 'others
 
           COUNT(`interventions`.`interv_id`) AS `TOTAL`
@@ -314,7 +326,7 @@ class Report_model extends CI_Model {
                 $template = "imt_sa";
                 $data = $this->get_imt_sa_data($filter);
                 break;
-            case "imt_internal":
+            case "imt_int":
                 $template = "imt_int";
                 $data = $this->get_imt_int_data($filter);
                 break;
