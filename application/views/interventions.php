@@ -276,15 +276,30 @@
             // });
           }
         });
+    });
 
-
-
-
+    $(document).on('change','#cmbProgram',function(e){
+        e.preventDefault();
+        if ($(this).val() == 1046) { //YDS
+            $('.yds-from-group').stop().slideDown();
+        } else {
+            $('.yds-from-group').stop().slideUp();
+        }
     });
     //submit interv editor
     $(document).on('click', "#btnSubmitIntv", function(e) {
         e.preventDefault();
-        if (confirm('You are about to save the changes you made. Do you want to continue?')) {
+
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You are about to save the changes you made. Do you want to continue?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes"
+        }).then((result) => {
+          if (result.isConfirmed) {
 
             var hidden_interv_id = $('#hidden_interv_id').val();
             var hidden_hhid = $('#hidden_hhid').val().replace(/[\s\r\n]+$/, '');
@@ -298,7 +313,7 @@
 
             var has_error = false;
             if (cmbProgram < 0) {
-                notification_show('The following fields are required! <br> <ul><li>Compoents</li><li>Classification</li><li>Program/Service</li></ul>');
+                Swal.fire({icon: "info",title: "The following field(s) are required!",html: '<div style="text-align: left;"> <ul><li>Compoents</li><li>Classification</li><li>Program/Service</li></ul></div>'});
                 // $('#cmbProgram').closest('div').addClass('has-error');
                 // $('#cmbClassification').closest('div').addClass('has-error');
                 // $('#cmbComponents').closest('div').addClass('has-error');
@@ -332,6 +347,13 @@
                     success: function(response) {
                         // alert(response);
                         console.log(response);
+            
+                        Swal.fire({
+                          title: "Saved!",
+                          text: "Saved successfully?",
+                          icon: "success"
+                        });
+
                         $('#intev_tablebody_container').html(response);
                         $('#interv_list_editor_modal').modal('hide');
 
@@ -340,7 +362,16 @@
 
             }
 
-        }
+
+          }
+        });
+
+
+        if (confirm('You are about to save the changes you made. Do you want to continue?')) {
+
+
+
+        } //CONFIM
 
     });
 
@@ -470,8 +501,12 @@
     });
 
     function  notification_show(msg){
-        $('#editors-notification').removeAttr('hidden');
-        $('#editors-notification-container').html(msg);
+        // $('#editors-notification').removeAttr('hidden');
+        // $('#editors-notification-container').html(msg);
+
+        Swal.fire({icon: "info",title: "Incomplete input!",text: msg});
+
+
     }
 
     //open intervention editor

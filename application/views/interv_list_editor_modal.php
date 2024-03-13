@@ -44,7 +44,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group yds-from-group" style="display: none;">
                             <label for="numYDS" class="control-label">YOUTH DEVELOPMENT SESSION (No. of children attended)</label>
                             <div class="input-group">
                                 <div class="input-group-addon">
