@@ -1,40 +1,40 @@
 <?php
 
-    $list_filter = " and 1=2 ";  //prevent roster from loading automatically
-    $search_province = "";
-    $search_municipality  = "";
-    $search_barangay  = "";
-    $search_lowb  = "";
-    $filter_municipality = "";
-    $filter_province  = "";
-    $filter_barangay  = "";
-    $filter_lowb  = "";
-    $search_lowb  = "";
-    $search_keyword  = "";
-    // $search_criteria  = "";
+  //   $list_filter = " and 1=2 ";  //prevent roster from loading automatically
+  //   $search_province = "";
+  //   $search_municipality  = "";
+  //   $search_barangay  = "";
+  //   $search_lowb  = "";
+  //   $filter_municipality = "";
+  //   $filter_province  = "";
+  //   $filter_barangay  = "";
+  //   $filter_lowb  = "";
+  //   $search_lowb  = "";
+  //   $search_keyword  = "";
+  //   // $search_criteria  = "";
 
 
-    if (isset($_REQUEST['apply_filter'])){
+  //   if (isset($_REQUEST['apply_filter'])){
 
-      $search_province = isset($_REQUEST['filter_province'])? $_REQUEST["filter_province"] :'';
-      $search_municipality =  isset($_REQUEST['filter_municipality'])? $_REQUEST["filter_municipality"] :'';
-      $search_barangay =  isset($_REQUEST['filter_barangay'])? $_REQUEST["filter_barangay"] :'';
-      $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
+  //     $search_province = isset($_REQUEST['filter_province'])? $_REQUEST["filter_province"] :'';
+  //     $search_municipality =  isset($_REQUEST['filter_municipality'])? $_REQUEST["filter_municipality"] :'';
+  //     $search_barangay =  isset($_REQUEST['filter_barangay'])? $_REQUEST["filter_barangay"] :'';
+  //     $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
 
-      // $search_municipality = addslashes($search_municipality);
+  //     // $search_municipality = addslashes($search_municipality);
 
-      $filter_province = $search_province == ''?'':" AND `swdi`.`psgc_province` = '$search_province'";
-      $filter_municipality = $search_municipality == ''?'':" AND `swdi`.`psgc_city` = '$search_municipality'";
-      $filter_barangay = $search_barangay == ''?'':" AND `swdi`.`psgc_brgy` = '$search_barangay'";
-      $filter_lowb = $search_lowb == ''?'':" AND `swdi`.`LOWB` = '$search_lowb'";
+  //     $filter_province = $search_province == ''?'':" AND `swdi`.`psgc_province` = '$search_province'";
+  //     $filter_municipality = $search_municipality == ''?'':" AND `swdi`.`psgc_city` = '$search_municipality'";
+  //     $filter_barangay = $search_barangay == ''?'':" AND `swdi`.`psgc_brgy` = '$search_barangay'";
+  //     $filter_lowb = $search_lowb == ''?'':" AND `swdi`.`LOWB` = '$search_lowb'";
 
-      $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
-      $search_keyword = isset($_REQUEST['filter_criteria'])? $_REQUEST["filter_criteria"] :'';
+  //     $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
+  //     $search_keyword = isset($_REQUEST['filter_criteria'])? $_REQUEST["filter_criteria"] :'';
 
-      //AND (TRIM(UPPER(CONCAT(r.FIRST_NAME,' ', r.MID_NAME, ' ', r.LAST_NAME, ' ', r.EXT_NAME))) LIKE '%ba%' OR r.HOUSEHOLD_ID = 'ba')
-      $search_criteria =  isset($_REQUEST['filter_criteria'])? " AND (TRIM(UPPER(CONCAT(swdi.FIRSTNAME,' ', swdi.MIDDLENAME, ' ', swdi.LASTNAME))) LIKE '%".$_REQUEST['filter_criteria']."%' OR swdi.HOUSEHOLD_ID = '".$_REQUEST['filter_criteria']."') " :'';
-      $list_filter = "$filter_province $filter_municipality $filter_barangay $filter_lowb $search_criteria";
-  }
+  //     //AND (TRIM(UPPER(CONCAT(r.FIRST_NAME,' ', r.MID_NAME, ' ', r.LAST_NAME, ' ', r.EXT_NAME))) LIKE '%ba%' OR r.HOUSEHOLD_ID = 'ba')
+  //     $search_criteria =  isset($_REQUEST['filter_criteria'])? " AND (TRIM(UPPER(CONCAT(swdi.FIRSTNAME,' ', swdi.MIDDLENAME, ' ', swdi.LASTNAME))) LIKE '%".$_REQUEST['filter_criteria']."%' OR swdi.HOUSEHOLD_ID = '".$_REQUEST['filter_criteria']."') " :'';
+  //     $list_filter = "$filter_province $filter_municipality $filter_barangay $filter_lowb $search_criteria";
+  // }
 
 ?>
 
@@ -75,21 +75,14 @@
                       <label class="col-form-label col-md-3 col-sm-3  label-align">Province</label>
                       <div class="col-md-6 col-sm-6">
                         <select class="form-control" id="filter_province" name="filter_province">
-
-                            <?php
-                                // if ($search_province == "COTABATO (NORTH COTABATO)") echo "<option value=\"COTABATO (NORTH COTABATO)\" selected>COTABATO (NORTH COTABATO)</option>"; else echo "<option value=\"COTABATO (NORTH COTABATO)\">COTABATO (NORTH COTABATO)</option>";
-                                // if ($search_province == "COTABATO CITY") echo "<option value=\"COTABATO CITY\" selected>COTABATO CITY</option>"; else echo "<option value=\"COTABATO CITY\">COTABATO CITY</option>";
-                                // if ($search_province == "SARANGANI") echo "<option value=\"SARANGANI\" selected>SARANGANI</option>"; else echo "<option value=\"SARANGANI\">SARANGANI</option>";
-                                // if ($search_province == "SOUTH COTABATO") echo "<option value=\"SOUTH COTABATO\" selected>SOUTH COTABATO</option>"; else echo "<option value=\"SOUTH COTABATO\">SOUTH COTABATO</option>";
-                                // if ($search_province == "SULTAN KUDARAT") echo "<option value=\"SULTAN KUDARAT\" selected>SULTAN KUDARAT</option>"; else echo "<option value=\"SULTAN KUDARAT\">SULTAN KUDARAT</option>";
-                             ?>
-
+                            <?=(isset($filtered_province_option_data)?$filtered_province_option_data:"")?>
                         </select></div>
                   </div>
                   <div class="field item form-group">
                       <label class="col-form-label col-md-3 col-sm-3  label-align">Municipality</label>
                       <div class="col-md-6 col-sm-6">
                         <select class="form-control" id="filter_municipality" name="filter_municipality" required>
+                            <?=(isset($filtered_municipality_option_data)?$filtered_municipality_option_data:"")?>
 
                         </select></div>
                   </div>
@@ -97,6 +90,7 @@
                       <label class="col-form-label col-md-3 col-sm-3  label-align">Barangay</label>
                       <div class="col-md-6 col-sm-6">
                         <select class="form-control" id="filter_barangay" name="filter_barangay">
+                            <?=(isset($filtered_barangay_option_data)?$filtered_barangay_option_data:"")?>
 
                         </select></div>
                   </div>
@@ -108,7 +102,6 @@
                           <option value="1" >Survival (Level 1)</option>
                           <option value="2" >Subsistence (Level 2)</option>
                           <option value="3" >Self-Sufficient (Level 3)</option>
-
                         </select></div>
                   </div>
 
@@ -212,7 +205,8 @@
 
 <script>
 
-    $(document).on('click','#new_interv',function(e){
+$( document ).ready(function() {
+        $(document).on('click','#new_interv',function(e){
         e.preventDefault();
 
         Swal.fire({
@@ -223,25 +217,7 @@
           },
           showCancelButton: true,
           confirmButtonText: "Look up",
-          showLoaderOnConfirm: true,
-          // preConfirm: async (login) => {
-          //   try {
-          //     const githubUrl = `
-          //       https://api.github.com/users/${login}
-          //     `;
-          //     const response = await fetch(githubUrl);
-          //     if (!response.ok) {
-          //       return Swal.showValidationMessage(`
-          //         ${JSON.stringify(await response.json())}
-          //       `);
-          //     }
-          //     return response.json();
-          //   } catch (error) {
-          //     Swal.showValidationMessage(`
-          //       Request failed: ${error}
-          //     `);
-          //   }
-          // },
+          // showLoaderOnConfirm: true,
           allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
           if (result.isConfirmed) {
@@ -346,7 +322,7 @@
                     },
                     success: function(response) {
                         // alert(response);
-                        console.log(response);
+                        // console.log(response);
             
                         Swal.fire({
                           title: "Saved!",
@@ -356,6 +332,8 @@
 
                         $('#intev_tablebody_container').html(response);
                         $('#interv_list_editor_modal').modal('hide');
+                        $('#interv_list_modal').focus();
+
 
                     }
                 });
@@ -367,13 +345,27 @@
         });
 
 
-        if (confirm('You are about to save the changes you made. Do you want to continue?')) {
-
-
-
-        } //CONFIM
+        // if (confirm('You are about to save the changes you made. Do you want to continue?')) {
+        // } //CONFIM
 
     });
+
+    function set_inv_list_swdi_values(key,value){
+        
+        if (key == "#swdi_NC2" && value == 0) {
+             $(key).html('N/A');
+            return;
+        }
+
+        if (value <= 1.82 && value > 0) {
+            $(key).parent().addClass('survival');
+        }else if (value >= 2.83) {
+            $(key).parent().addClass('self-sufficient');
+        }else if (value >= 1.83) {
+            $(key).parent().addClass('subsistence');
+        }
+        $(key).html(value);
+    }
 
     function show_interventions(hhid) {
 
@@ -390,7 +382,7 @@
             },
             success: function(response) {
               var obj = JSON.parse(response);
-              //console.log(obj);
+              // console.log(obj);
 
                 $('#ih_grantee').html(obj.GRANTEE);
                 $('#ih_sex').html(obj.SEX);
@@ -405,45 +397,47 @@
                 $('#ih_setgroup').html(obj.SET);
 
                 //economic Sufficiency
-                $('#swdi_ES1').html(obj.ES1);
-                $('#swdi_ES2').html(obj.ES2);
-                $('#swdi_ES3').html(obj.ES3);
-                $('#swdi_ES4').html(obj.ES4);
+                set_inv_list_swdi_values('#swdi_ES1',obj.ES1);
+                set_inv_list_swdi_values('#swdi_ES2',obj.ES2);
+                set_inv_list_swdi_values('#swdi_ES3',obj.ES3);
+                set_inv_list_swdi_values('#swdi_ES4',obj.ES4);
 
                 //health
-                $('#swdi_HCS1').html(obj.HCS1);
-                $('#swdi_HCS2').html(obj.HCS2);
-                $('#swdi_NC1').html(obj.NC1);
-                $('#swdi_NC2').html(obj.NC2);
-                $('#swdi_WSC1').html(obj.WSC1);
-                $('#swdi_WSC2').html(obj.WSC2);
-                $('#swdi_WSC3').html(obj.WSC3);
+                set_inv_list_swdi_values('#swdi_HCS1',obj.HCS1);
+                set_inv_list_swdi_values('#swdi_HCS2',obj.HCS2);
+                set_inv_list_swdi_values('#swdi_NC1',obj.NC1);
+                set_inv_list_swdi_values('#swdi_NC2',obj.NC2);
+
+                set_inv_list_swdi_values('#swdi_WSC1',obj.WCS1);
+                set_inv_list_swdi_values('#swdi_WSC2',obj.WCS2);
+                set_inv_list_swdi_values('#swdi_WSC3',obj.WCS3);
 
                 //housing
-                $('#swdi_HC1').html(obj.HC1);
-                $('#swdi_HC2').html(obj.HC2);
-                $('#swdi_HC3').html(obj.HC3);
-                $('#swdi_HC4').html(obj.HC4);
+                set_inv_list_swdi_values('#swdi_HC1',obj.HC1);
+                set_inv_list_swdi_values('#swdi_HC2',obj.HC2);
+                set_inv_list_swdi_values('#swdi_HC3',obj.HC3);
+                set_inv_list_swdi_values('#swdi_HC4',obj.HC4);
 
                 //EDUC
-                $('#swdi_EC1').html(obj.EC1);
-                $('#swdi_EC2').html(obj.EC2);
+                set_inv_list_swdi_values('#swdi_EC1',obj.EC1);
+                set_inv_list_swdi_values('#swdi_EC2',obj.EC2);
 
-                //ROLE
-                $('#swdi_RP1').html(obj.RP1);
-                $('#swdi_RP2').html(obj.RP2);
-                $('#swdi_RP3').html(obj.RP3);
+                //ROLE Performance Component
+                set_inv_list_swdi_values('#swdi_RP1',obj.RP1);
+                set_inv_list_swdi_values('#swdi_RP2',obj.RP2);
+                set_inv_list_swdi_values('#swdi_RP3',obj.RP3);
 
                 //FAM AWARENESS
-                $('#swdi_FA1').html(obj.FA1);
-                $('#swdi_FA2').html(obj.FA2);
-                $('#swdi_FA3').html(obj.FA3);
+                set_inv_list_swdi_values('#swdi_FA1',obj.FA1);
+                set_inv_list_swdi_values('#swdi_FA2',obj.FA2);
+                set_inv_list_swdi_values('#swdi_FA3',obj.FA3);
 
                 //SWDI RESULTS
-                $('#swdi_SocAdeq').html(obj.SocAdeq);
-                $('#swdi_EconSuff').html(obj.EconSuff);
-                $('#swdi_SWDI_SCORE').html(obj.SWDI_Score);
-                $('#swdi_LOWB').html(obj.LOWB);
+                set_inv_list_swdi_values('#swdi_SocAdeq',obj.SocAdeq);
+                set_inv_list_swdi_values('#swdi_EconSuff',obj.EconSuff);
+                set_inv_list_swdi_values('#swdi_SWDI_SCORE',obj.SWDI_Score);
+                set_inv_list_swdi_values('#swdi_LOWB',obj.LOWB);
+
                 $('#swdi_LOWB_DESC').html('');
             }
 
@@ -468,7 +462,6 @@
     //show modal on btnIntervlistShowModal clicked
     $(document).on('click', "#btnIntervlistShowModal", function(e) {
         e.preventDefault();
-
         var hhid = $(this).attr('hhid');
         show_interventions(hhid);
 
@@ -477,8 +470,18 @@
     //delete intervention
     $(document).on('click', '#btn_delete_intervention', function(e) {
         e.preventDefault();
-        if (confirm('You are about to delete this intervention. Do you want to continue?')) {
-            var tr = $(this).closest('tr');
+        var tr = $(this).closest('tr');
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+
             $.ajax({
                 type: 'POST',
                 url: '<?=site_url('interventions/intervention_delete')?>',
@@ -497,7 +500,16 @@
                 }
             });
 
-        }
+
+            // Swal.fire({
+            //   title: "Deleted!",
+            //   text: "Your file has been deleted.",
+            //   icon: "success"
+            // });
+          }
+        });
+
+
     });
 
     function  notification_show(msg){
@@ -704,81 +716,8 @@
         });
     });
 
-
-
-
-$( document ).ready(function() {
     //ON LOAD FILTERS
-    $('#filter_lowb option[value="<?=$search_lowb?>"]').prop('selected', true);
-    $('#filter_criteria').val("<?=$search_keyword ?>");
     $('#filter_region option[value="XII"]').prop('selected', true);
-
-    $.ajax({
-        type: 'POST',
-        url: '<?=site_url('metadata/get_dropdown_options')?>',
-        data: {
-            tableName: "lib_address",
-            valueMember: "DISTINCT PROVINCE",
-            displayMember: "PROVINCE",
-            condition: "REGION = 'XII'",
-            defaultValue: '',
-            selected: "<?=$search_province?>"
-        },
-        success: function(response) {
-            // console.log(response);
-            // prompt(response,response);
-
-            $('#filter_province').html(response);
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: '<?=site_url('metadata/get_dropdown_options')?>',
-        data: {
-            tableName: "lib_address",
-            valueMember: "DISTINCT MUNICIPALITY",
-            displayMember: "MUNICIPALITY",
-            condition: "PROVINCE = '<?=$search_province?>'",
-            defaultValue: '',
-            selected: "<?=$search_municipality?>"
-        },
-        success: function(response) {
-
-            $('#filter_municipality').html(response);
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: '<?=site_url('metadata/get_dropdown_options')?>',
-        data: {
-            tableName: "lib_address",
-            valueMember: "DISTINCT BARANGAY",
-            displayMember: "BARANGAY",
-            condition: "MUNICIPALITY = '<?=$search_municipality?>'",
-            defaultValue: '',
-            selected: "<?=$search_barangay?>"
-        },
-        success: function(response) {
-
-            $('#filter_barangay').html(response);
-        }
-    });
-
-
-});
-
-    //on filter submit
-    $(document).on('submit','#filter_form',function(){
-        var mun = $('#filter_municipality').val();
-        var brgy = $('#filter_barangay').val();
-
-        if  (!$.trim(brgy)){
-            alert("Municipality and barangay are required!");
-            return false;
-        }
-    });
 
     //on reset filter
     $(document).on('click','#reset_filter',function(e){
@@ -792,45 +731,44 @@ $( document ).ready(function() {
 
     });
 
-    //on change #filter_region
-    $(document).on('change', "#filter_region", function(e) {
-        e.preventDefault();
-        var value = $(this).children("option:selected").val()
+    function filter_load_provinces(value = ''){
 
         $.ajax({
             type: 'POST',
-            url: '<?=site_url('metadata/get_dropdown_options')?>',
-            data: {
-                tableName: "lib_address",
-                valueMember: "DISTINCT PROVINCE",
-                displayMember: "PROVINCE",
-                condition: "REGION = '"+value+"'",
-                defaultValue: '',
-            },
+            url: '<?=site_url('metadata/get_options_provinces/')?>'+value,
             success: function(response) {
-
                 $('#filter_province').html(response);
                 $('#filter_municipality').html('');
                 $('#filter_barangay').html('');
             }
         });
+    }
+    if ("<?=$filtered?>" == "0") {
+        filter_load_provinces();
+    }
+
+    //on change #filter_region
+    $(document).on('change', "#filter_region", function(e) {
+        e.preventDefault();
+        var value = $(this).children("option:selected").val()
+        filter_load_provinces(value);
+
     });
+
+    function customEncodeURIComponent(str) {
+        return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+            return '%' + c.charCodeAt(0).toString(16);
+        });
+    }
 
     //on change #filter_province
     $(document).on('change', "#filter_province", function(e) {
         e.preventDefault();
-        var value = $(this).children("option:selected").val()
+        var value = customEncodeURIComponent($(this).children("option:selected").val());
 
         $.ajax({
             type: 'POST',
-            url: 'metadata/get_dropdown_options',
-            data: {
-                tableName: "lib_address",
-                valueMember: "DISTINCT MUNICIPALITY",
-                displayMember: "MUNICIPALITY",
-                condition: "PROVINCE = '"+value+"'",
-                defaultValue: '',
-            },
+            url: 'metadata/get_options_municipalities/'+value+'/',
             success: function(response) {
 
                 $('#filter_municipality').html(response);
@@ -846,20 +784,36 @@ $( document ).ready(function() {
         //value = value.replace("'","\\'")
         $.ajax({
             type: 'POST',
-            url: 'metadata/get_dropdown_options',
-            data: {
-                tableName: "lib_address",
-                valueMember: "BARANGAY",
-                displayMember: "BARANGAY",
-                condition: "MUNICIPALITY = '"+value+"'",
-                defaultValue: '',
-            },
+            url: 'metadata/get_options_barangay/'+value,
             success: function(response) {
-
                 $('#filter_barangay').html(response);
             }
         });
     });
+
+
+    //--------------------------------------------------------------------------------
+    // Prevent scrolling on the main page when the first modal is open
+    $('#interv_list_modal').on('show.bs.modal', function (e) {
+        $('body').css('overflow', 'hidden');
+        // Disable scrolling on the modal itself
+        $('#interv_list_modal').css('overflow-y', 'auto');
+    });
+
+    // Re-enable scrolling on the main page when the first modal is closed
+    $('#interv_list_modal').on('hidden.bs.modal', function (e) {
+        $('body').css('overflow', 'auto');
+    });
+
+    // Re-enable scrolling on the #interv_list_modal when the second modal is closed
+    $('#interv_list_editor_modal').on('hidden.bs.modal', function (e) {
+        // $('#interv_list_modal').css('overflow-y', 'auto');
+        $('#interv_list_modal').focus();
+    });
+    //---------------------------------------------------------------------------
+
+}); //on document ready
+
 
 
 </script>

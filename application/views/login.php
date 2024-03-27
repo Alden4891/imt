@@ -230,7 +230,7 @@ $("#btn_login").click(function(event) {
                     $('#rmessagebox').html('<br><div class="alert alert-danger">'+responseObject.message+'</div>')                    
                  }else{
                     window.location.href = "<?=site_url()?>";
-                    // console.log('<?=site_url()?>');
+                    // console.log(responseObject);
                  }
 
             }

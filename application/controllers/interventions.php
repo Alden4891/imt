@@ -10,19 +10,56 @@ class interventions extends CI_Controller {
 	{
 		$this->load->model('Grantee_model');
 		$data['interventions']=array();
+
+		//loads filter data
+		$filter_data = $this->input->post();
+	    $data['interventions'] = $this->Grantee_model->get_grantee_listings($filter_data);
+	    $data['filtered'] = 0;
+	    //if filter applies load the previous filter
 		if ($this->input->post('apply_filter') !== null) {
-			$filter_data = $this->input->post();
-		    $data['interventions'] = $this->Grantee_model->get_grantee_listings($filter_data);
+			$this->load->model('metadata_model');
+
+			$data['filtered'] = 1;
+			if (isset($filter_data['filter_province'])) {
+				if ($filter_data['filter_province']!=='') {
+					$data['filtered_province_option_data'] = $this->metadata_model->get_options_provinces($filter_data['filter_province']);
+				}
+			}
+
+			if (isset($filter_data['filter_municipality'])) {
+				if ($filter_data['filter_municipality']!=='') {
+					$data['filtered_municipality_option_data'] = $this->metadata_model->get_options_municipalities($filter_data['filter_province'],$filter_data['filter_municipality']);
+				}
+			}
+
+			if (isset($filter_data['filter_barangay'])) {
+				if ($filter_data['filter_barangay']!=='') {
+					$data['filtered_barangay_option_data'] = $this->metadata_model->get_options_barangay($filter_data['filter_municipality'],$filter_data['filter_barangay']);
+				}
+			}
+
+			if (isset($filter_data['filter_barangay'])) {
+				if ($filter_data['filter_barangay']!=='') {
+					$data['filtered_barangay_option_data'] = $this->metadata_model->get_options_barangay($filter_data['filter_municipality'],$filter_data['filter_barangay']);
+				}
+			}
+			
+
 		}
+
+		// print("<pre>");
+		// print_r($data);
+		// print("</pre>");
+
 
 		$data['user_id'] = $this->session->userdata('user_id');
 		$data['user_fullname'] = $this->session->userdata('user_fullname');
-
 		$this->load->view('templates/header');
 		$this->load->view('interventions',$data);
 		$this->load->view('interv_list_modal');
 		$this->load->view('interv_list_editor_modal');
 		$this->load->view('templates/footer');
+
 	}
 
     public function getHouseholdInfo(){
@@ -54,10 +91,10 @@ class interventions extends CI_Controller {
 			          <td>$r->subject</td>
 			          <td>$r->date_conducted</td>
 			          <td>
-						<button type=\"button\" class=\"btn btn-info btn-xs\" aria-label=\"Left Align\" data-toggle=\"modal\" data-target=\"#interv_list_editor_modal\" hhid=\"$hhid\" interv_id=\"$interv_id\" id=btn_interv_list_editor_open ctrlno=$r->ctrlno>
+						<button type=\"button\" class=\"btn btn-info btn-sm\" aria-label=\"Left Align\" data-toggle=\"modal\" data-target=\"#interv_list_editor_modal\" hhid=\"$hhid\" interv_id=\"$interv_id\" id=btn_interv_list_editor_open ctrlno=$r->ctrlno>
 						  <span class=\"fa fa-folder-open-o\" aria-hidden=\"true\"></span>
 						</button>
-						<button type=\"button\" class=\"btn btn-danger btn-xs\" aria-label=\"Left Align\"  id=\"btn_delete_intervention\" interv_id=\"$interv_id\" >
+						<button type=\"button\" class=\"btn btn-danger btn-sm\" aria-label=\"Left Align\"  id=\"btn_delete_intervention\" interv_id=\"$interv_id\" >
 						  <span class=\"fa fa-trash-o\" aria-hidden=\"true\"></span>
 						</button>
 
@@ -94,7 +131,7 @@ class interventions extends CI_Controller {
 				<td>".$intervention->date_conducted."</td>
 				<td>
 					<button type=\"button\" 
-							class=\"btn btn-default btn-xs\" 
+							class=\"btn btn-info btn-sm\" 
 							aria-label=\"Left Align\" 
 							data-toggle=\"modal\" data-target=\"#interv_list_editor_modal\" 
 							hhid=\"$HOUSEHOLD_ID\" 
@@ -103,9 +140,10 @@ class interventions extends CI_Controller {
 							ctrlno=\"".$intervention->ctrlno."\">
 					  <span class=\"glyphicon glyphicon-folder-open\" aria-hidden=\"true\"></span>
 					</button>
-					<button type=\"button\" class=\"btn btn-danger btn-xs\" aria-label=\"Left Align\" id=\"btn_delete_intervention\" interv_id=\"$formatted_interv_id\" disabled>
+					<button type=\"button\" class=\"btn btn-danger btn-sm\" aria-label=\"Left Align\" id=\"btn_delete_intervention\" interv_id=\"$formatted_interv_id\">
 					  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span>
 					</button>
+
 				</td>
 			</tr>
 			";

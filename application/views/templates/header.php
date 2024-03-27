@@ -59,7 +59,29 @@
     <!-- <link href="build/css/custom.min.css" rel="stylesheet"> -->
     <link href="build/css/custom.css" rel="stylesheet">
 
+    <style>
+      .survival {
+/*        animation: blink-animation 1s steps(5, start) infinite;*/
+        color: red;
+        font-weight: bold;
+      }
+      @keyframes blink-animation {
+        to {
+          visibility: hidden;
+        }
+      }
 
+      .self-sufficient {
+        color: green;
+        font-weight: bold;        
+      }
+
+      .subsistence {
+        color: blue;
+        font-weight: bold;        
+      }
+
+    </style>
 
   </head>
 

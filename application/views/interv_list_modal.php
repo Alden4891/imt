@@ -72,10 +72,10 @@
                                             <br>
                                             <hr>
                                             <b>Level of Well-being:</b>
-                                            <br>Economic Sufficiency: <span id="swdi_EconSuff"></span>
-                                            <br>Social Adequacy: <span id="swdi_SocAdeq"></span>
-                                            <br>Total Score: <span id="swdi_SWDI_SCORE"></span>
-                                            <br>LOWB: <span id="swdi_LOWB"></span>
+                                            <span><br>Economic Sufficiency: <span id="swdi_EconSuff"></span></span>
+                                            <span><br>Social Adequacy: <span id="swdi_SocAdeq"></span></span>
+                                            <span><br>Total Score: <span id="swdi_SWDI_SCORE"></span></span>
+                                            <span><br>LOWB: <span id="swdi_LOWB"></span></span>
                                             <br>Description: <span id="swdi_LOWB_DESC"></span>
 
                                         </div>
@@ -92,10 +92,10 @@
                                             <hr>
                                             <address>
                                                   <strong>Economic Sufficiency (ES) </strong>
-                                                  <br>Employable Skills (ES1): <span id="swdi_ES1"></span>
-                                                  <br>Employment (ES2): <span id="swdi_ES2"></span>
-                                                  <br>Income (ES3): <span id="swdi_ES3"></span>
-                                                  <br>Social Security (ES4): <span id="swdi_ES4"></span>
+                                                  <span><br>Employable Skills (ES1): <span id="swdi_ES1"></span></span>
+                                                  <span><br>Employment (ES2): <span id="swdi_ES2"></span></span>
+                                                  <span><br>Income (ES3): <span id="swdi_ES3"></span></span>
+                                                  <span><br>Social Security (ES4): <span id="swdi_ES4"></span></span>
 
                                             </address>
                                         </div>
@@ -105,13 +105,13 @@
                                             <hr>
                                             <address>
                                               <strong>HEALTH (SA1):</strong>
-                                              <br>Health Services (HCS1): <span id="swdi_HCS1"></span>
-                                              <br>Health Condition (HCS2): <span id="swdi_HCS2"></span>
-                                              <br>Meals (NC1): <span id="swdi_NC1"></span>
-                                              <br>Nutritional Status (NC2): <span id="swdi_NC2"></span>
-                                              <br>Drinking Water (WS1): <span id="swdi_WSC1"></span>
-                                              <br>Toilet (WS2): <span id="swdi_WSC2"></span>
-                                              <br>Garbage (WS3): <span id="swdi_WSC3"></span>
+                                              <span><br>Health Services (HCS1): <span id="swdi_HCS1"></span></span>
+                                              <span><br>Health Condition (HCS2): <span id="swdi_HCS2"></span></span>
+                                              <span><br>Meals (NC1): <span id="swdi_NC1"></span></span>
+                                              <span><br>Nutritional Status (NC2): <span id="swdi_NC2"></span></span>
+                                              <span><br>Drinking Water (WSC1): <span id="swdi_WSC1"></span></span>
+                                              <span><br>Toilet (WSC2): <span id="swdi_WSC2"></span></span>
+                                              <span><br>Garbage (WSC3): <span id="swdi_WSC3"></span></span>
                                               </address>
                                         </div>
                                         <!-- /.col -->
@@ -120,14 +120,14 @@
                                           <hr>
                                           <address>
                                             <strong>HOUSING (SA2):</strong>
-                                            <br>Roof (HC1):<span id="swdi_HC1"></span>
-                                            <br>Outer Walls (HC2):<span id="swdi_HC2"></span>
-                                            <br>Tenure Status (HC3):<span id="swdi_HC3"></span>
-                                            <br>Lightning (HC4):<span id="swdi_HC4"></span>
+                                            <span><br>Roof (HC1):<span id="swdi_HC1"></span></span>
+                                            <span><br>Outer Walls (HC2):<span id="swdi_HC2"></span></span>
+                                            <span><br>Tenure Status (HC3):<span id="swdi_HC3"></span></span>
+                                            <span><br>Lightning (HC4):<span id="swdi_HC4"></span></span>
                                             <br><br>
                                             <strong>EDUCATION (SA3):</strong>
-                                            <br>Literacy (EC1):<span id="swdi_EC1"></span>
-                                            <br>Enrolment (EC2):<span id="swdi_EC2"></span>
+                                            <span><br>Literacy (EC1):<span id="swdi_EC1"></span></span>
+                                            <span><br>Enrolment (EC2):<span id="swdi_EC2"></span></span>
                                             </address>
                                         </div>
                                         <!-- /.col -->
@@ -136,16 +136,16 @@
                                           <hr>
                                           <address>
                                             <strong>ROLE PERFORMANCE (SA4):</strong>
-                                            <br>Family Activities (RP1) :<span id="swdi_RP1"></span>
-                                            <br>Problems (RP2):<span id="swdi_RP2"></span>
-                                            <br>Organizations (RP3):<span id="swdi_RP3"></span>
+                                            <span><br>Family Activities (RP1) :<span id="swdi_RP1"></span></span>
+                                            <span><br>Problems (RP2):<span id="swdi_RP2"></span></span>
+                                            <span><br>Organizations (RP3):<span id="swdi_RP3"></span></span>
 
                                             <br><br>
 
                                             <strong>FAMILY AWARENESS (SA5)</strong>
-                                            <br>Children (FA1):<span id="swdi_FA1"></span>
-                                            <br>Gender (FA2):<span id="swdi_FA2"></span>
-                                            <br>Disaster (FA3):<span id="swdi_FA3"></span>
+                                            <span><br>Children (FA1):<span id="swdi_FA1"></span></span>
+                                            <span><br>Gender (FA2):<span id="swdi_FA2"></span></span>
+                                            <span><br>Disaster (FA3):<span id="swdi_FA3"></span></span>
 
                                           </address>
                                         </div>
@@ -160,12 +160,12 @@
                                     <!-- Table row -->
                                     <div class="row">
                                         <div class="  table">
-                                            <table class="table table-striped">
+                                            <table class="table table-striped table-sm">
                                                 <thead>
                                                     <tr>
                                                         <th>CTRL No.</th>
                                                         <th>Program</th>
-                                                        <th>Componet</th>
+                                                        <th>Component</th>
                                                         <th style="width: 39%">Description</th>
                                                         <th>Date Conducted</th>
                                                         <th style="width: 150px">Options</th>

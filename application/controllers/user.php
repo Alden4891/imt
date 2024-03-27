@@ -27,27 +27,32 @@ class user extends CI_Controller {
         $data['success'] = true;
         print(json_encode($data));
     }else{
-        $data['success'] = false;
-        print(json_encode($data));
+
+      //try direct authentication
+        if ($this->User_auth_model->db_auth($login_data['username'],$login_data['password'])) {
+          // redirect(site_url(),'refresh');
+          $data['success'] = true;
+          print(json_encode($data));
+        }else{
+          
+          $data['success'] = false;
+          print(json_encode($data));
+
+          // $data['username'] = $login_data['username'];
+          // $data['password'] = '';
+          // $data['status'] = "login_failed";
+          // $data['alert'] = $this->session->flashdata('login_failed');
+          // // $this->load->view('user/login',$data);
+          // // redirect(site_url(),'refresh'); 
+          // print_r($data);       
+        }
+
+
+
     }
 
-    // //try direct authentication
-    // else{
 
-    //   if ($this->User_auth_model->db_auth($login_data['username'],$login_data['password'])) {
-    //     // redirect(site_url(),'refresh');
-    //     print('login success');
-    //   }else{
-    //     $data['username'] = $login_data['username'];
-    //     $data['password'] = '';
-    //     $data['status'] = "login_failed";
-    //     $data['alert'] = $this->session->flashdata('login_failed');
-    //     // $this->load->view('user/login',$data);
-    //     // redirect(site_url(),'refresh'); 
-    //     print_r($data);       
-    //   }
-
-    // }
+    
   }
 
 

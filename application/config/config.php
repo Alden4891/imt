@@ -533,4 +533,9 @@ $config['proxy_ips'] = '';
 
 
 date_default_timezone_set('Asia/Manila');
-$config['ldap_server'] = '172.16.10.10';
+// $config['ldap_server'] = '172.16.10.10';
+// $config['ldap_server'] = '10.10.10.100';
+// $config['ldap_server'] = '172.26.134.15';
+// $config['ldap_server'] = '172.16.10.11';
+
+$config['ldap_server'] = 'ENTDSWD.LOCAL';
