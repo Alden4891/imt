@@ -8,6 +8,14 @@ class user extends CI_Controller {
 
   }
 
+  // public function index(){
+  //   print('<pre>');
+  //   // print_r($this->session->userdata());
+  //    print($this->uri->uri_string());
+  //   print('</pre>');
+
+  // }
+
   public function logout(){
       // Destroy the entire session
       $this->session->sess_destroy();
@@ -37,24 +45,10 @@ class user extends CI_Controller {
           
           $data['success'] = false;
           print(json_encode($data));
-
-          // $data['username'] = $login_data['username'];
-          // $data['password'] = '';
-          // $data['status'] = "login_failed";
-          // $data['alert'] = $this->session->flashdata('login_failed');
-          // // $this->load->view('user/login',$data);
-          // // redirect(site_url(),'refresh'); 
-          // print_r($data);       
+     
         }
-
-
-
     }
-
-
-    
   }
-
 
   public function get_picture($user_id) {
           $query = $this->db->select('picture, IFNULL(picture, 1) AS nopic')

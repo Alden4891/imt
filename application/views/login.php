@@ -41,37 +41,52 @@
 
                 <div class="control-group">
                   <div class="controls">
-                    <input type="text" id="username" placeholder="username" name="username" value="aaquinones" class="form-control" required>
+                    <input type="text" id="username" placeholder="Your Global Protect Account" name="username" value="" class="form-control" required>
                   </div>
                 </div>
                 <div class="control-group">
                   <div class="controls">
-                    <input type="password" id="password" placeholder="password" name="password" value="protectme@4891021408271209" class="form-control" required>
+                    <input type="password" id="password" placeholder="Password" name="password" value="" class="form-control" required>
                   </div>
                 </div>
 
               <div>
                 <button type="submit" class="btn btn-default submit" id="btn_login" href="index.html" >Log in</button>
-                <a class="reset_pass" href="#">Lost your password?</a>
+                <!-- <a class="reset_pass" href="#">Lost your password?</a> -->
               </div>
 
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">New to site?
-                  <a href="#signup" class="to_register"> Create Account </a>
-                </p>
+
+
+
+                <div>
+                  <h1><img src="<?=site_url()?>images/pantawid.svg" style="width: 40px;fill:#ffffff;"> DSWD XII | <?=APP_TITLE?></h1>
+                 
+                </div>
+                             
+
+              </div>
+
+              <div class="separator">
+                <p class="change_link">This application accepts <strong>Global Protect accounts</strong> for login</p>     
+                <p class="change_link">Facing any issues? Please feel free to reach out to the developer Alden Quinones at  <a href="mailto:aaquinones.fo12@dswd.gov.ph" class=""> <u> aaquinones.fo12@dswd.gov.ph </u></a>. Your feedback is valuable! Let's work together to make your experience better.</p>     
+
+
+
 
                 <div class="clearfix"></div>
                 <br />
 
                 <div>
-                  <h1><img src="<?=site_url()?>images/pantawid.svg" style="width: 40px;fill:#ffffff;"> DSWD XII | <?=APP_TITLE?></h1>
-                  <p>DSWD XII © 2020 All Rights Reserved.</p>
+                 
+                  <p>DSWD XII © 2024 All Rights Reserved.</p>
                 </div>
                               <div id=rmessagebox></div>
 
               </div>
+
             </form>
           </section>
         </div>

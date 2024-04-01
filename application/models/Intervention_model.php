@@ -21,6 +21,33 @@ class Intervention_model extends CI_Model {
         return $query->result();
     }
 
+    public function get_deleted_interventions() {
+       
+        $this->db->select('
+            `i`.`interv_id`,
+            LPAD(i.interv_id,5,0) AS ctrlno,
+            `i`.`subject`,`i`.`HOUSEHOLD_ID`,
+            `u1`.`fullname` AS `encoded_by`,
+            `i`.`date_encoded`,
+            date(`i`.`date_deleted`) as date_deleted,
+            `u2`.`fullname` AS `deleted_by`'
+        )
+        ->from('`db_imt`.`users` AS `u1`')
+        ->join('`db_imt`.`interventions` AS `i`', '(`u1`.`user_id` = `i`.`encoded_by`)', 'LEFT')
+        ->join('`db_imt`.`users` AS `u2`', '(`i`.`deleted_by` = `u2`.`user_id`)', 'RIGHT')
+        ->join('`db_imt`.`lib_programs` AS `p`', '(`i`.`program_id` = `p`.`program_id`)')
+        ->join('`db_imt`.`lib_subcomp` AS `s`', '(`s`.`subcomp_id` = `p`.`subcomp_id`)')
+        ->join('`db_imt`.`lib_comp` AS `c`', '(`c`.`comp_id` = `s`.`comp_id`)')
+        ->group_start()
+        ->where('`i`.`is_deleted`', 1)
+        ->group_end()
+        ->order_by('`i`.`date_deleted` DESC');        
+
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
     public function get_intervention_detail($interv_id) {
         $this->db->select('subject, details, date_conducted, yds_child_count, program_id, HOUSEHOLD_ID');
         $this->db->from('interventions');
@@ -81,6 +108,18 @@ class Intervention_model extends CI_Model {
         ->update('interventions');
         return array("result"=>1);
     }
+
+    public function restore_intervention($data) {
+        extract($data);
+        $this->db->where('INTERV_ID', $interv_id)
+        ->set('is_deleted', 0)
+        ->set('date_deleted', null)
+        ->set('deleted_by', null)
+        ->update('interventions');
+        return array("result"=>1);
+    }
+    
+
 
 }
 

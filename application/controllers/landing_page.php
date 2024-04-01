@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class landing_page extends CI_Controller {
+class landing_page extends MY_Controller {
     public function __construct() {
         parent::__construct();
         // $this->load->model('User_model');

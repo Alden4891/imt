@@ -1,42 +1,3 @@
-<?php
-
-  //   $list_filter = " and 1=2 ";  //prevent roster from loading automatically
-  //   $search_province = "";
-  //   $search_municipality  = "";
-  //   $search_barangay  = "";
-  //   $search_lowb  = "";
-  //   $filter_municipality = "";
-  //   $filter_province  = "";
-  //   $filter_barangay  = "";
-  //   $filter_lowb  = "";
-  //   $search_lowb  = "";
-  //   $search_keyword  = "";
-  //   // $search_criteria  = "";
-
-
-  //   if (isset($_REQUEST['apply_filter'])){
-
-  //     $search_province = isset($_REQUEST['filter_province'])? $_REQUEST["filter_province"] :'';
-  //     $search_municipality =  isset($_REQUEST['filter_municipality'])? $_REQUEST["filter_municipality"] :'';
-  //     $search_barangay =  isset($_REQUEST['filter_barangay'])? $_REQUEST["filter_barangay"] :'';
-  //     $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
-
-  //     // $search_municipality = addslashes($search_municipality);
-
-  //     $filter_province = $search_province == ''?'':" AND `swdi`.`psgc_province` = '$search_province'";
-  //     $filter_municipality = $search_municipality == ''?'':" AND `swdi`.`psgc_city` = '$search_municipality'";
-  //     $filter_barangay = $search_barangay == ''?'':" AND `swdi`.`psgc_brgy` = '$search_barangay'";
-  //     $filter_lowb = $search_lowb == ''?'':" AND `swdi`.`LOWB` = '$search_lowb'";
-
-  //     $search_lowb = isset($_REQUEST['filter_lowb'])? $_REQUEST["filter_lowb"] :'';
-  //     $search_keyword = isset($_REQUEST['filter_criteria'])? $_REQUEST["filter_criteria"] :'';
-
-  //     //AND (TRIM(UPPER(CONCAT(r.FIRST_NAME,' ', r.MID_NAME, ' ', r.LAST_NAME, ' ', r.EXT_NAME))) LIKE '%ba%' OR r.HOUSEHOLD_ID = 'ba')
-  //     $search_criteria =  isset($_REQUEST['filter_criteria'])? " AND (TRIM(UPPER(CONCAT(swdi.FIRSTNAME,' ', swdi.MIDDLENAME, ' ', swdi.LASTNAME))) LIKE '%".$_REQUEST['filter_criteria']."%' OR swdi.HOUSEHOLD_ID = '".$_REQUEST['filter_criteria']."') " :'';
-  //     $list_filter = "$filter_province $filter_municipality $filter_barangay $filter_lowb $search_criteria";
-  // }
-
-?>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -98,17 +59,19 @@
                       <label class="col-form-label col-md-3 col-sm-3  label-align">LOWB</label>
                       <div class="col-md-6 col-sm-6">
                         <select class="form-control" id="filter_lowb" name="filter_lowb">
-                          <option value="" selected>All</option>
-                          <option value="1" >Survival (Level 1)</option>
-                          <option value="2" >Subsistence (Level 2)</option>
-                          <option value="3" >Self-Sufficient (Level 3)</option>
+                          <option value="">All</option>
+                          <option value="1" <?=$filtered_lowb_option_data==1?"selected":"";?>    >Survival (Level 1)</option>
+                          <option value="2" <?=$filtered_lowb_option_data==2?"selected":"";?>    >Subsistence (Level 2)</option>
+                          <option value="3" <?=$filtered_lowb_option_data==3?"selected":"";?>    >Self-Sufficient (Level 3)</option>
                         </select></div>
                   </div>
+
+
 
                   <div class="field item form-group">
                       <label class="col-form-label col-md-3 col-sm-3  label-align">SEARCH CRITERIA</label>
                       <div class="col-md-6 col-sm-6">
-                        <input type="text" id="filter_criteria" name="filter_criteria" class="form-control ">
+                        <input type="text" id="filter_criteria" name="filter_criteria" class="form-control " value="<?=@$filtered_criteria_option_data;?>" >
                       </div>
                   </div>
                   <div class="form-group">
@@ -125,34 +88,6 @@
 
         <div class="x_content">
 
-            <?php
-            // $scope_FILTER = "";
-            // if ($SCOPE_TAG==0 AND addslashes($SCOPE) <> 'XII' AND addslashes($SCOPE) <> $search_municipality AND isset($_REQUEST['apply_filter'])) {
-            //     $scope_FILTER = " AND `swdi`.`psgc_city`='".addslashes($SCOPE)."'";
-
-            //     echo "
-            //     <div class=\"alert alert-danger\" role=\"alert\">
-            //           Ops! you are not allowed to access records of Municipalities other than $SCOPE
-            //     </div>
-            //     ";
-            // }elseif ($SCOPE_TAG==1 AND addslashes($SCOPE) <> 'XII' AND addslashes($SCOPE) <> $search_province AND isset($_REQUEST['apply_filter'])) {
-
-            //   $scope_FILTER = " AND `swdi`.`psgc_province`='".addslashes($SCOPE)."'";
-            //   echo "
-            //   <div class=\"alert alert-danger\" role=\"alert\">
-            //         Ops! you are not allowed to access records of Province other than $SCOPE
-            //   </div>
-            //   ";
-
-            // }else{
-            //   echo "
-            //       <p class=\"text-muted font-13 m-b-30\">
-            //           Below are the list of Pantawid Pamilyang Pilipino Program beneficiaire with 2019 SWDI Scores and level of Well Being (LOWB).
-            //       </p>
-            //   ";
-            // }
-
-            ?>
 
             <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
                 <thead>
@@ -499,17 +434,8 @@ $( document ).ready(function() {
 
                 }
             });
-
-
-            // Swal.fire({
-            //   title: "Deleted!",
-            //   text: "Your file has been deleted.",
-            //   icon: "success"
-            // });
           }
         });
-
-
     });
 
     function  notification_show(msg){
@@ -521,7 +447,7 @@ $( document ).ready(function() {
 
     }
 
-    //open intervention editor
+    //on-open intervention editor
     $(document).on('click', "#btn_interv_list_editor_open", function(e) {
         e.preventDefault();
 
@@ -542,46 +468,22 @@ $( document ).ready(function() {
 
             $.ajax({
                 type: 'POST',
-                url: 'metadata/get_dropdown_options',
-                data: {
-                    tableName: "lib_comp",
-                    valueMember: "comp_id",
-                    displayMember: "comp_desc",
-                    condition: "comp_id > 0",
-                    selected: comp_id,
-                },
+                url: 'metadata/get_options_components/'+comp_id,
                 success: function(response) {
-
                     $('#cmbComponents').html(response);
                 }
             });
             $.ajax({
                 type: 'POST',
-                url: 'metadata/get_dropdown_options',
-                data: {
-                    tableName: "lib_subcomp",
-                    valueMember: "subcomp_id",
-                    displayMember: "subcomp",
-                    condition: "comp_id = " + comp_id,
-                    selected: subcomp_id,
-                },
+                url: 'metadata/get_options_subcomponents/'+comp_id+'/'+subcomp_id,
                 success: function(response) {
-
                     $('#cmbClassification').html(response);
                 }
             });
             $.ajax({
                 type: 'POST',
-                url: 'metadata/get_dropdown_options',
-                data: {
-                    tableName: "lib_programs",
-                    valueMember: "program_id",
-                    displayMember: "program",
-                    condition: "subcomp_id = " + subcomp_id,
-                    selected: program_id,
-                },
+                url: 'metadata/get_options_programs/'+subcomp_id+'/'+program_id,
                 success: function(response) {
-
                     $('#cmbProgram').html(response);
                 }
             });
@@ -632,14 +534,7 @@ $( document ).ready(function() {
             //get interv component values
             $.ajax({
                 type: 'POST',
-                url: 'metadata/get_dropdown_options',
-                data: {
-                    tableName: "lib_comp",
-                    valueMember: "comp_id",
-                    displayMember: "comp_desc",
-                    condition: "comp_id > 0",
-                    selected: "-1"
-                },
+                url: 'metadata/get_options_components/',
                 success: function(response) {
 
                     $('#cmbComponents').html(response);
@@ -675,18 +570,12 @@ $( document ).ready(function() {
     //on change #cmbComponents
     $(document).on('change', "#cmbComponents", function(e) {
         e.preventDefault();
-        var value = $(this).children("option:selected").val()
+        var comp_id = $(this).children("option:selected").val()
 
         //get interv component values
         $.ajax({
             type: 'POST',
-            url: 'metadata/get_dropdown_options',
-            data: {
-                tableName: "lib_subcomp",
-                valueMember: "subcomp_id",
-                displayMember: "subcomp",
-                condition: "comp_id = " + value,
-            },
+            url: 'metadata/get_options_subcomponents/'+comp_id,
             success: function(response) {
 
                 $('#cmbClassification').html(response);
@@ -698,17 +587,10 @@ $( document ).ready(function() {
     //on change #cmbclassification
     $(document).on('change', "#cmbClassification", function(e) {
         e.preventDefault();
-        var value = $(this).children("option:selected").val()
+        var subcomp_id = $(this).children("option:selected").val()
         $.ajax({
             type: 'POST',
-            url: 'metadata/get_dropdown_options',
-            data: {
-                tableName: "lib_programs",
-                valueMember: "program_id",
-                displayMember: "program",
-                condition: "subcomp_id = " + value,
-               // defaultValue: '',
-            },
+            url: 'metadata/get_options_programs/'+subcomp_id,
             success: function(response) {
 
                 $('#cmbProgram').html(response);

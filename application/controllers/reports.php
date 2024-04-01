@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class reports extends CI_Controller {
+class reports extends MY_Controller {
 
 	private $a_coverage;
 

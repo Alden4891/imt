@@ -120,6 +120,7 @@
                 <ul class="nav side-menu">
                   <li><a href="<?=site_url()?>"><i class="fa fa-dashboard"></i> DASHBAORD</span></a></li>
                   <li><a href="<?=site_url('interventions')?>"><i class="fa fa-child"></i> INTERVENTIONS</span></a></li>
+                  <li><a href="<?=site_url('recovery')?>"><i class="fa fa-trash"></i> DATA RECOVERY</span></a></li>
 <!--                   <li><a href="?page=importdata"><i class="fa fa-upload"></i> IMPORT DATA</span></a></li>
                   <li><a href="?page=exportdata"><i class="fa fa-download"></i> EXPORT DATA</span></a></li>
  -->

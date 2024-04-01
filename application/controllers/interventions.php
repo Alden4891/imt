@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class interventions extends CI_Controller {
+class interventions extends MY_Controller {
     public function __construct() {
         parent::__construct();
     }
@@ -20,30 +20,31 @@ class interventions extends CI_Controller {
 			$this->load->model('metadata_model');
 
 			$data['filtered'] = 1;
-			if (isset($filter_data['filter_province'])) {
-				if ($filter_data['filter_province']!=='') {
-					$data['filtered_province_option_data'] = $this->metadata_model->get_options_provinces($filter_data['filter_province']);
-				}
+
+			//reload pre-selected filter
+			if (!empty($filter_data['filter_province'])) {
+			    $data['filtered_province_option_data'] = $this->metadata_model->get_options_provinces($filter_data['filter_province']);
+				if (!empty($filter_data['filter_municipality'])) {
+				    $data['filtered_municipality_option_data'] = $this->metadata_model->get_options_municipalities($filter_data['filter_province'], $filter_data['filter_municipality']);
+					if (!empty($filter_data['filter_barangay'])) {
+					    $data['filtered_barangay_option_data'] = $this->metadata_model->get_options_barangay($filter_data['filter_municipality'], $filter_data['filter_barangay']);
+					}else{
+					    $data['filtered_barangay_option_data'] = $this->metadata_model->get_options_barangay($filter_data['filter_municipality']);
+					}
+				}else{
+					$data['filtered_municipality_option_data'] = $this->metadata_model->get_options_municipalities($filter_data['filter_province']);
+				}		
 			}
 
-			if (isset($filter_data['filter_municipality'])) {
-				if ($filter_data['filter_municipality']!=='') {
-					$data['filtered_municipality_option_data'] = $this->metadata_model->get_options_municipalities($filter_data['filter_province'],$filter_data['filter_municipality']);
-				}
+			if (!empty($filter_data['filter_lowb'])) {
+				$data['filtered_lowb_option_data'] = $filter_data['filter_lowb'];
+			}
+			if (!empty($filter_data['filter_criteria'])) {
+				$data['filtered_criteria_option_data'] = $filter_data['filter_criteria'];
 			}
 
-			if (isset($filter_data['filter_barangay'])) {
-				if ($filter_data['filter_barangay']!=='') {
-					$data['filtered_barangay_option_data'] = $this->metadata_model->get_options_barangay($filter_data['filter_municipality'],$filter_data['filter_barangay']);
-				}
-			}
 
-			if (isset($filter_data['filter_barangay'])) {
-				if ($filter_data['filter_barangay']!=='') {
-					$data['filtered_barangay_option_data'] = $this->metadata_model->get_options_barangay($filter_data['filter_municipality'],$filter_data['filter_barangay']);
-				}
-			}
-			
+
 
 		}
 
@@ -159,4 +160,13 @@ class interventions extends CI_Controller {
     	$result = $this->Intervention_model->delete_intervention($post_data);
     	return print_r(json_encode($result));
     }
+
+    public function intervention_restore(){
+    	$this->load->model('Intervention_model');
+    	$post_data = $this->input->post();    
+    	$result = $this->Intervention_model->restore_intervention($post_data);
+    	return print_r(json_encode($result));
+    }
+
+    
 }
