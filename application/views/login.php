@@ -24,6 +24,10 @@
     <!-- jQuery -->
     <script src="<?=site_url()?>vendors/jquery/dist/jquery.min.js"></script>
 
+    <!-- Include sweetalert JavaScript and CSS files -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+
   </head>
 
   <body class="login">
@@ -81,7 +85,8 @@
 
                 <div>
                  
-                  <p>DSWD XII © 2024 All Rights Reserved.</p>
+                  <p>DSWD XII © 2024 All Rights Reserved. <br> <i>Developed by Alden A. Quinones / </i></p>
+                   <p></p>
                 </div>
                               <div id=rmessagebox></div>
 
@@ -154,8 +159,10 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> DSWDI IMT v0.1!</h1>
-                  <p>DSWD XII © 2020 All Rights Reserved.</p>
+                  <h1><i class="fa fa-paw"></i> DSWDI IMT v0.2!</h1>
+                  <p>DSWD XII © 2024 All Rights Reserved.</p>
+                 
+
 
                 </div>
                 <div id=rmessagebox2></div>
@@ -227,6 +234,16 @@ $("#btn_login").click(function(event) {
 
     if (error_count==0){
       //send POST here
+        console.log('authenticating...');
+        //https://lottiefiles.com/free-animations/please-wait
+            swal.fire({
+              title: "Logging-in! Please wait",
+              html: '<img src="https://media0.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.gif" style="width: 400px; height: 300px;">',
+              showConfirmButton: false,
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            });
+
 
         $.ajax({
             type: 'POST',
@@ -239,13 +256,23 @@ $("#btn_login").click(function(event) {
             success: function(response) {
                  var responseObject = JSON.parse(response);    
                  
-                 if (responseObject.status == false) {
-                    $('#rmessagebox').hide();
-                    $('#rmessagebox').fadeIn('slow');
-                    $('#rmessagebox').html('<br><div class="alert alert-danger">'+responseObject.message+'</div>')                    
+                 if (responseObject.success == false) {
+                    // $('#rmessagebox').hide();
+                    // $('#rmessagebox').fadeIn('slow');
+                    // $('#rmessagebox').html('<br><div class="alert alert-danger">'+responseObject.message+'</div>')        
+                    setTimeout(function() {
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Oops...",
+                                  text: "Login failed. Please check your username and password and try again. ",
+                                  footer: 'If you experience problems, contact send email to <a href="mailto:aaquinones.fo12@dswd.gov.ph">aaquinones.fo12@dswd.gov.ph</a>.'
+                                });
+
+                    }, 2000);
+
                  }else{
-                    window.location.href = "<?=site_url()?>";
-                    // console.log(responseObject);
+                    // window.location.href = "<?=site_url()?>";
+                    console.log(responseObject);
                  }
 
             }
@@ -268,143 +295,71 @@ $("#rpassword1").keyup(function() {
     }
 });
 
-// $("#btn_register").click(function(event) {
-    // event.preventDefault();
-    // // Fetch form to apply custom Bootstrap validation
-    // var form = $("#myForm2")
-    // if (form[0].checkValidity() === false) {
-    //   event.preventDefault()
-    //   event.stopPropagation()
-    // }
-    //   form.addClass('was-validated');
-    // var error_count = 0;
 
-    // if ($('#rfullname').val().trim()=='') {
-    //     $('#rmessagebox2').hide();
-    //     $('#rmessagebox2').fadeIn('slow');
-    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter fullname!.</div>')
-    //     $('#rfullname').focus();
-    //     error_count+=1;
-    //     return;
-    // }
+        // swal.fire({
+        //   title: "You are about to route documents?",
+        //   text: "Once sent, you will not be able to undo it!",
+        //   icon: "info",
+        //   showCancelButton: true,
+        //   confirmButtonColor: "#3085d6",
+        //   cancelButtonColor: "#d33",
+        //   confirmButtonText: "Yes, send it!",
+        //   cancelButtonText: "No, cancel"
+        // }).then((result) => {
+        //   if (result.isConfirmed) {
+        //     swal.fire({
+        //       title: "Routing documents! Please wait...",
+        //       html: '<img src="' + base + 'assets/images/mail-sending.gif" style="width: 400px; height: 300px;">',
+        //       showConfirmButton: false,
+        //       allowOutsideClick: false,
+        //       allowEscapeKey: false
+        //     });
 
-    // if ($('#remail').val().trim()=='') {
-    //     $('#rmessagebox2').hide();
-    //     $('#rmessagebox2').fadeIn('slow');
-    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter email address!.</div>')
-    //     $('#remail').focus();
-    //     error_count+=1;
-    //     return;
-    // }
+        //     // $.ajax(base + 'routing/send/', {
+        //     //   type: "POST",
+        //     //   data: routing_form_data,
+        //     //   error: function (data) {
+        //     //     Swal.fire({
+        //     //       icon: 'error',
+        //     //       title: 'Oops...',
+        //     //       text: 'An error has occurred!',
+        //     //       footer: 'Please contact <a href="">aaquinones.fo12@dswd.gov.ph</a>'
+        //     //     })
+        //     //   },
+        //     //   success: function (data) {
+        //     //     var send_mail_result = jQuery.parseJSON(data);
+        //     //     if (send_mail_result.result == 'success') {
+        //     //       swal.fire({
+        //     //         title: "Congratulation!",
+        //     //         text: "You have routed the document successfully!",
+        //     //         icon: "success"
+        //     //       }).then((result) => {
+        //     //         if (result.isConfirmed) {
+        //     //           // Redirect to your desired page
+        //     //           window.location.href = base+"routing";
+        //     //         }
+        //     //       });
 
-    // if ($('#rposition').val().trim()=='') {
-    //     $('#rmessagebox2').hide();
-    //     $('#rmessagebox2').fadeIn('slow');
-    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter your position/designation!.</div>')
-    //     $('#rposition').focus();
-    //     error_count+=1;
-    //     return;
-    // }
+        //     //       // Additional actions on success can be added here
 
-    // if ($('#rassignment').val().trim()=='') {
-    //     $('#rmessagebox2').hide();
-    //     $('#rmessagebox2').fadeIn('slow');
-    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter area of assignment!.</div>')
-    //     $('#rassignment').focus();
-    //     error_count+=1;
-    //     return;
-    // }
+        //     //     } else {
 
+        //     //       Swal.fire({
+        //     //         icon: 'error',
+        //     //         title: 'Oops...',
+        //     //         text: 'An error has occurred!',
+        //     //         footer: 'Please contact <a href="">aaquinones.fo12@dswd.gov.ph</a>' 
+        //     //       })
 
-    // if ($('#rrole').val()=='0'){
-    //     $('#rmessagebox2').hide();
-    //     $('#rmessagebox2').fadeIn('slow');
-    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Please select user role</div>')
-    //     $('#rrole').focus();
-    //     error_count+=1;
-    //     return;
-    // }
+        //     //     }
+        //     //   },
+        //     //   complete: function () {
+        //     //     //do nothing
+        //     //   }
+        //     // });
+        //   }
+        // });
 
-    // if ($('#rusername').val().trim()=='') {
-    //     $('#rmessagebox2').hide();
-    //     $('#rmessagebox2').fadeIn('slow');
-    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter username!.</div>')
-    //     $('#rusername').focus();
-    //     error_count+=1;
-    //     return;
-    // }
-
-    // if ($('#rpassword1').val().trim()=='') {
-    //     $('#rmessagebox2').hide();
-    //     $('#rmessagebox2').fadeIn('slow');
-    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Plese enter password!.</div>')
-    //     $('#rpassword1').focus();
-    //     error_count+=1;
-    //     return;
-    // }
-
-    // if ($('#rpassword1').val().trim()!=$('#rpassword2').val().trim()) {
-    //     $('#rmessagebox2').hide();
-    //     $('#rmessagebox2').fadeIn('slow');
-    //     $('#rmessagebox2').html('<br><div class="alert alert-danger">Password missmatch!.</div>')
-    //     $('#rpassword2').focus();
-    //     error_count+=1;
-    //     return;
-    // }
-
-    // if (error_count==0){
-    //   //send POST here
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: "<?=site_url('user/register')?>",
-    //         data: {
-    //             role_id:1,//$('#rrole').val(),
-    //             fullname:$('#rfullname').val(),
-    //             username:$('#rusername').val(),
-    //             password :$('#rpassword1').val(),
-    //             email :$('#remail').val(),
-    //             assignment :$('#rassignment').val(),
-    //             position :$('#rposition').val()
-
-    //         },
-    //         success: function(response) {
-    //              console.log(response);
-    //              var responseObject = JSON.parse(response);
-
-    //              if (responseObject.status === 'success') {
-    //                 $('#rmessagebox2').hide();
-    //                 $('#rmessagebox2').fadeIn('slow');
-    //                 $('#rmessagebox2').html('<br><div class="alert alert-success">Registration Successful. You can now LOGIN</div>')
-    //              }else if (responseObject.status === 'exists') {
-    //                 $('#rmessagebox2').hide();
-    //                 $('#rmessagebox2').fadeIn('slow');
-    //                 $('#rmessagebox2').html('<br><div class="alert alert-danger">Username already exists!.</div>')
-    //              }
-
-    //              // if (response.indexOf("**success**") > -1){
-    //              //    $('#rmessagebox').hide();
-    //              //    $('#rmessagebox').fadeIn('slow');
-    //              //    $('#rmessagebox').html('<br><div class="alert alert-success">Registration Successful. You can now LOGIN</div>')
-    //              //    //$('#registrationModal').modal('hide')
-    //              //    window.location="login.php";
-    //              // }else if (response.indexOf("**failed**") > -1){
-    //              //    $('#rmessagebox').hide();
-    //              //    $('#rmessagebox').fadeIn('slow');
-    //              //    $('#rmessagebox').html('<br><div class="alert alert-danger">Registration Failed!.</div>')
-    //              // }else if (response.indexOf("**exists**") > -1){
-    //              //    $('#rmessagebox').hide();
-    //              //    $('#rmessagebox').fadeIn('slow');
-    //              //    $('#rmessagebox').html('<br><div class="alert alert-danger">Username already exists!.</div>')
-    //              // }
-
-
-    //         }
-    //     });
-
-
-    // } //if error ==0
-
-// });
 
 
 </script>
