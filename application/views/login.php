@@ -271,8 +271,8 @@ $("#btn_login").click(function(event) {
                     }, 2000);
 
                  }else{
-                    // window.location.href = "<?=site_url()?>";
-                    console.log(responseObject);
+                    window.location.href = "<?=site_url()?>";
+                    // console.log(responseObject);
                  }
 
             }
