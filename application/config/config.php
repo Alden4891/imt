@@ -23,8 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://'.$_SERVER['REMOTE_ADDR'].':8080/';
-
+$config['base_url'] = 'https://'.$_SERVER['SERVER_ADDR'].':8080/';
 /*
 |--------------------------------------------------------------------------
 | Index File
